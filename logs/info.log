@@ -1,0 +1,18 @@
+2025-01-09 23:10:19,359 - main.py - Function: Delete Timetaken: 0.0000 seconds
+2025-01-09 23:10:19,360 - file.py - Delete executing
+2025-01-09 23:10:19,400 - main.py - Function: Delete Timetaken: 0.0000 seconds
+2025-01-09 23:10:19,401 - file.py - Delete executing
+2025-01-09 23:10:19,402 - main.py - Function: Delete Timetaken: 0.0000 seconds
+2025-01-09 23:10:19,402 - file.py - Delete executing
+2025-01-10 22:19:47,133 - main.py - Function: Copy_File Timetaken: 0.0000 seconds
+2025-01-10 22:20:04,288 - main.py - Function: Create_Folder Timetaken: 0.0000 seconds
+2025-01-10 22:20:57,462 - main.py - Function: Copy_Folder Timetaken: 0.0000 seconds
+2025-01-10 22:21:17,254 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-10 22:21:17,254 - file.py - Delete_File executing
+2025-01-12 19:00:24,144 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-12 19:00:24,192 - file.py - Delete_File executing
+2025-01-12 19:00:24,263 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-12 19:00:24,263 - file.py - Delete_File executing
+2025-01-12 19:00:24,264 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-12 19:00:24,264 - file.py - Delete_File executing
+2025-01-12 19:01:25,387 - main.py - Function: Rename Timetaken: 0.0000 seconds

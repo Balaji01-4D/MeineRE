@@ -1,0 +1,48 @@
+Settings{
+    align: center middle;
+}
+
+Settings > Container{
+
+    width: auto;
+    height: auto;
+    padding: 0 1;
+    border:rgb(68, 68, 68);
+
+    #label{
+        padding: 1 1;
+        text-align:center;
+        
+    }
+
+}
+
+Settings > Container > Vertical {
+    padding: 0 1;
+    width: 60;
+    height: 18;
+    Horizontal {
+        padding: 1 1;
+
+        Static{
+            width: 80%;
+            content-align:left middle;
+            padding: 0 1;
+            align: center middle;
+            
+        }
+
+    }
+    Switch{
+        border: none;
+        padding: 0;
+    }
+    Button{
+        border: none;
+        min-width: 7;
+        height: 1.8;
+
+    }
+
+    
+}
