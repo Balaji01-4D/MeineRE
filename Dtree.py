@@ -3,8 +3,10 @@ from textual.binding import Binding
 from pathlib import Path
 import json
 import os
-
-settings_loc = Path(__file__).parent/'tui/settings.json'
+from textual.keys import Keys
+from textual import on
+from logger_config import logger
+settings_loc = Path(__file__).parent / 'tui/settings.json'
 
 items =[]
 
@@ -14,8 +16,7 @@ class DTree(DirectoryTree):
     CLICK_CHAIN_TIME_THRESHOLD = 0.5
     auto_expand = False
     
-    BINDINGS = [Binding('left','cd_parent_directory'),Binding('ctrl+left','cd_home_directory')]
-
+    BINDINGS = [Binding('left','cd_parent_directory'),Binding('home','cd_home_directory',priority=True)]
     def filter_paths(self, paths):
         self.show_hidden = load_settings()["show_hidden_files"]
         if (self.show_hidden):
@@ -40,12 +41,19 @@ class DTree(DirectoryTree):
         os.chdir(self.path)
         self.refresh()
 
+    
+    # @on(Keys.Home)
+    # def keys_action(self):
+    #     self.path = Path('./').home()
+        
    
 def load_settings():
     try:
         with open(settings_loc,'r') as setfile:
             data = setfile.read().strip()
             return json.loads(data) 
-    except (json.JSONDecodeError,FileNotFoundError):
-        None
+    except (json.JSONDecodeError,FileNotFoundError) as e:
+        logger.error(f'{e} Function: {load_settings.__name__} in {Path(__file__).name}')
+    
+    
 

@@ -1,0 +1,5 @@
+2025-01-13 17:05:45,034 - TUIFINAL.py - ERROR: [Errno 2] No such file or directory: '/tui/settings.json' Function: on_input_submitted in TUIFINAL.py
+2025-01-13 17:07:09,767 - TUIFINAL.py - ERROR: [Errno 2] No such file or directory: '/tui/settings.json' Function: on_input_submitted in TUIFINAL.py
+2025-01-13 17:10:23,425 - TUIFINAL.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in TUIFINAL.py
+2025-01-13 17:11:53,867 - TUIFINAL.py - ERROR: [Errno 20] Not a directory: '4mb.pdf' Function: change_directory in TUIFINAL.py
+2025-01-13 17:12:07,378 - file.py - ERROR: [Errno 22] Invalid argument: PosixPath('.') Function: Delete_Folder

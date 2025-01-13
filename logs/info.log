@@ -16,3 +16,7 @@
 2025-01-12 19:00:24,264 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
 2025-01-12 19:00:24,264 - file.py - Delete_File executing
 2025-01-12 19:01:25,387 - main.py - Function: Rename Timetaken: 0.0000 seconds
+2025-01-13 16:50:44,530 - main.py - Function: Rename Timetaken: 0.0000 seconds
+2025-01-13 17:11:40,624 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-13 17:11:40,625 - file.py - Delete_File executing
+2025-01-13 17:12:07,289 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds

@@ -15,11 +15,11 @@ from main import CLI
 from MeineAI.Actions import RaiseNotify
 from tui.me import Myself
 import xdialog
+from logger_config import logger
 actions = ['uz','z','zip','del','c','mk','create','make','unzip','delete','copy','cp'
            ,'rename','rn']
-history_loc = Path(__file__).parent/'tui/history.json' 
-settings_loc = Path(__file__).parent/'/tui/settings.json'
-clicks_log = Path(__file__).parent/'tui/click.log'
+history_loc = Path(__file__).parent /'tui/history.json' 
+settings_loc = Path(__file__).parent /'tui/settings.json'
 
 
 def load_settings():
@@ -42,7 +42,7 @@ def load_history():
 
 def save_history(history):
     with open(history_loc,'w') as file:
-        if (open(settings_loc).read() == '[]'):
+        if (open(history_loc).read() == '[]'):
             json.dump([],file,indent=4)
         json.dump(history,file,indent=4)
 
@@ -119,7 +119,8 @@ class MeineAI(App):
             else:
                 self.history_index = len(self.history)
                 self.inputconsole.value = ''
-        except:
+        except Exception as e:
+            logger.error(f'{e} Function: {self.action_history_down.__name__} in {Path(__file__).name}')
             None
         
     def action_focus_dt(self):
@@ -136,14 +137,18 @@ class MeineAI(App):
             else :
                 self.push_screen(Settings(id='setting'))
                 self.notify('settings',timeout=2.5)
-        except:
+        except Exception as e:
+            logger.error(f'{e} Function: {self.key_ctrl_s.__name__} in {Path(__file__).name}')
+
             None
 
 
     def key_escape(self):
         try:
             self.pop_screen()
-        except:
+        except Exception as e:
+            logger.error(f'{e} Function: {self.key_escape.__name__} in {Path(__file__).name}')
+
             None
 
     def action_toggle_sidebar(self):
@@ -232,6 +237,8 @@ class MeineAI(App):
 
         except Exception as e:
             self.rich_log.write(f"error clicks {e}")
+            logger.error(f'{e} Function: {self.handle_files_click_input.__name__} in {Path(__file__).name}')
+
         
 
 
@@ -252,16 +259,11 @@ class MeineAI(App):
                 self.pop_screen()
         except PermissionError:
             self.notify(title='Error',message='Permission Denied',severity='error')
-        # except Exception as e:
-        #     self.notify(str(e))
+        except Exception as e:
+            logger.error(f'{e} Function: {self.on_click.__name__} in {Path(__file__).name}')
+            self.notify(str(e))
 
 
-        logs = f'''from = {event.widget} click_count = {event.chain} shift = {event.shift} ctrl = {event.ctrl} meta = {event.meta} name = {event.namespace})'''
-        self.click_log_hander(logs=logs)
-
-    async def click_log_hander(self,logs:str) -> None:
-        with open(clicks_log,'a') as click_log_file:
-            click_log_file.write(logs)
 
 
     async def on_input_submitted(self, event: Input.Submitted):
@@ -276,7 +278,7 @@ class MeineAI(App):
                         if 'cd ' in cmd:
                             cmdpath = cmd.replace('cd ', '')
                             cmdpath = Path(cmdpath)
-                            if (cmdpath.exists()):
+                            if (cmdpath.is_dir()):
                                 self.run_worker(self.change_directory(cmdpath), name="cd_worker", description="Change Directory")
                                 self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
                             else:
@@ -294,8 +296,9 @@ class MeineAI(App):
                     self.history_index = len(self.history)
                 event.input.value = ''
 
-        except Exception as e:
+        except PermissionError as e:
             console.write(f"error {str(e)}")
+            logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
 
     async def change_directory(self, cmdpath: Path):
         try:
@@ -309,6 +312,7 @@ class MeineAI(App):
         except PermissionError:
             self.rich_log.write("error Permission Denied")
         except Exception as e:
+            logger.error(f'{e} Function: {self.change_directory.__name__} in {Path(__file__).name}')
             self.rich_log.write(f"error Error changing directory: {e}")
             
 
@@ -325,6 +329,7 @@ class MeineAI(App):
             self.notify(message=e.message,title='Error',severity='error')
         
         except Exception as e:
+            logger.error(f'{e} Function: {self.execute_command.__name__} in {Path(__file__).name}')
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
 
     async def on_worker_failed(self, event: WorkerFailed):
@@ -340,10 +345,6 @@ class DTsideBar(Container):
         dtree = DTree(path=os.getcwd(),id='dt')
         self.dtree_log = RichLog(id='dtree_log')
         yield dtree
-
-
-
-
 
     
 class Settings(ModalScreen):
@@ -383,9 +384,6 @@ class Settings(ModalScreen):
                 self.setting_json['show_hidden_files'] = event.value
             save_settings(self.setting_json)
     
-
-        
-
 
 
 if (__name__ == "__main__"):
