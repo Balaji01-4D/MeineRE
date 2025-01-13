@@ -17,9 +17,9 @@ from tui.me import Myself
 import xdialog
 actions = ['uz','z','zip','del','c','mk','create','make','unzip','delete','copy','cp'
            ,'rename','rn']
-history_loc = '/home/balaji/MeineAI/tui/history.json' 
-settings_loc = '/home/balaji/MeineAI/tui/settings.json'
-clicks_log = '/home/balaji/MeineAI/tui/click.log'
+history_loc = Path(__file__).parent/'tui/history.json' 
+settings_loc = Path(__file__).parent/'/tui/settings.json'
+clicks_log = Path(__file__).parent/'tui/click.log'
 
 
 def load_settings():

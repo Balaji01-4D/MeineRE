@@ -4,7 +4,7 @@ from pathlib import Path
 import json
 import os
 
-settings_loc = '/home/balaji/MeineAI/tui/settings.json'
+settings_loc = Path(__file__).parent/'tui/settings.json'
 
 items =[]
 
