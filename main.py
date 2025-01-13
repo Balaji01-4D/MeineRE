@@ -2,6 +2,7 @@ import re
 from re import Pattern
 from pathlib import Path
 from MeineAI.Actions import File,Zip,System,RaiseNotify
+from logger_config import logger
 
 
 d: dict[Pattern[str]] = {
@@ -9,7 +10,7 @@ d: dict[Pattern[str]] = {
     'onepath':re.compile(r'''(d|rm|r|del||mk|mkdir|mkd)\s+(.+)'''),
     'rename':re.compile(r'(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)'),
     'system':re.compile(r'(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process)\s?(\s[^\s]+)?'),
-    'search_text':re.compile(r'''(find|where|search)\s+((?:"|').*(?:"|'))\s+(.+)'''),
+    'search_text':re.compile(r'''(find|where|search)\s+["'](.+)["']\s+(.+)'''),
     'notepad':re.compile(r'(write|notepad|wr)\s+(.+)'),
     'compress':re.compile(r'''(z|uzip|zip|tar|gz|7z|unzip)\s+(.+)'''),
     'backup':re.compile(r'''(backup|bk)\s+(.+)''')
@@ -129,6 +130,19 @@ async def CLI(Command):
                 return '\n'.join(results)
 
             return await zips.Compress(Path(srcs),format=act)
+        
+    async def handle_text_find(Match):
+        logger.info(str(Match.groups()))
+        
+        text = Match.group(2)
+        source = Path(Match.group(3))
+        if (source.is_dir()):
+            return await files.Text_Finder_Directory(text,source)
+        elif (source.is_file()):
+            return await files.Text_Finder_File(text,source)
+        else:
+            raise RaiseNotify("Source Not Found")
+        
 
 
     # Command-to-handler mapping
@@ -138,6 +152,7 @@ async def CLI(Command):
         "onepath": handle_one_path,
         "system": handle_system,
         "compress":handle_compress,
+        "search_text":handle_text_find
     }
 
     for key, pattern in d.items():

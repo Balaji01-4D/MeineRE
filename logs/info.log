@@ -20,3 +20,46 @@
 2025-01-13 17:11:40,624 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
 2025-01-13 17:11:40,625 - file.py - Delete_File executing
 2025-01-13 17:12:07,289 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-01-13 22:50:34,749 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:51:31,982 - main.py - Function: Text_Finder_File Timetaken: 0.0000 seconds
+2025-01-13 22:52:00,840 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:52:24,377 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:52:31,257 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:52:37,874 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:52:43,596 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:52:48,841 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:52:51,821 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:53:00,525 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:53:28,107 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:53:33,300 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:53:37,036 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:54:20,151 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:54:23,793 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 22:57:53,391 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:14:46,672 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:15:16,757 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:15:22,950 - main.py - Function: Text_Finder_File Timetaken: 0.0000 seconds
+2025-01-13 23:18:10,084 - main.py - Function: Text_Finder_File Timetaken: 0.0000 seconds
+2025-01-13 23:18:41,000 - main.py - Function: Text_Finder_File Timetaken: 0.0000 seconds
+2025-01-13 23:23:02,727 - main.py - ('find', '"hello"', 'fi.txt')
+2025-01-13 23:23:02,728 - main.py - Function: Text_Finder_File Timetaken: 0.0000 seconds
+2025-01-13 23:24:59,174 - main.py - ('find', 'hello', 'fi.txt')
+2025-01-13 23:24:59,175 - main.py - Function: Text_Finder_File Timetaken: 0.0000 seconds
+2025-01-13 23:25:42,508 - main.py - ('find', 'hello', '.')
+2025-01-13 23:25:42,508 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:25:55,374 - main.py - ('find', 'return', '.')
+2025-01-13 23:25:55,374 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:26:04,101 - main.py - ('find', 'return', '.')
+2025-01-13 23:26:04,101 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:26:06,297 - main.py - ('find', 'return', '.')
+2025-01-13 23:26:06,297 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:26:09,958 - main.py - ('find', 'return', '.')
+2025-01-13 23:26:09,959 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:26:12,025 - main.py - ('find', 'return', '.')
+2025-01-13 23:26:12,026 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:26:49,560 - main.py - ('find', 'hello', '.')
+2025-01-13 23:26:49,560 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:26:55,353 - main.py - ('find', 'hello', '.')
+2025-01-13 23:26:55,353 - main.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:28:42,207 - test.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds
+2025-01-13 23:29:52,263 - test.py - Function: Text_Finder_Directory Timetaken: 0.0000 seconds

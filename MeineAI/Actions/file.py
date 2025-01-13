@@ -173,7 +173,7 @@ class File:
             return f"[error]Error Clearing {FileName.name}: {str(e)}"
 
     @log_time    
-    async def TextFinder_File(self, Text: str, Path: str = '.') -> None:
+    async def Text_Finder_Directory(self, Text: str, Path: str = '.') -> None:
         match_tables = Table(show_lines=True)
         match_tables.add_column('Line.no')
         match_tables.add_column('Filenmae')
@@ -182,9 +182,27 @@ class File:
         if result:
             for file_path, line_num in result:
                 match_tables.add_row(str(line_num),file_path.replace('./', os.getcwd() + '/'))
-                return match_tables
+            return match_tables
         else:
             return ("Text Not Found")
+        
+
+    @log_time
+    async def Text_Finder_File(self,Text: str, file_path: str) -> Table:
+        try:
+            match_lines = Table(show_lines=True)
+            match_lines.add_column('line no')
+            match_lines.add_column('text')
+            async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
+                line_num = 0
+                async for line in f:
+                    line_num += 1
+                    if Text in line:
+                        match_lines.add_row(str(line_num),Text)
+            return match_lines
+        except (UnicodeDecodeError, IOError):
+            raise RaiseNotify('Cant read at the moment or may be Binary file')
+        
 
     @log_time        
     async def search_items(self,query: str, path: str = '.', search_type: str = 'both') -> list[str]:

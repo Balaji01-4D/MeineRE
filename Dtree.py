@@ -3,7 +3,6 @@ from textual.binding import Binding
 from pathlib import Path
 import json
 import os
-from textual.keys import Keys
 from textual import on
 from logger_config import logger
 settings_loc = Path(__file__).parent / 'tui/settings.json'
@@ -16,7 +15,8 @@ class DTree(DirectoryTree):
     CLICK_CHAIN_TIME_THRESHOLD = 0.5
     auto_expand = False
     
-    BINDINGS = [Binding('left','cd_parent_directory'),Binding('home','cd_home_directory',priority=True)]
+    BINDINGS = [Binding('left','cd_parent_directory'),Binding('home','cd_home_directory',priority=True),
+                Binding('right','select_focused_directory')]
     def filter_paths(self, paths):
         self.show_hidden = load_settings()["show_hidden_files"]
         if (self.show_hidden):
@@ -34,6 +34,19 @@ class DTree(DirectoryTree):
         os.chdir(self.path)
         self.refresh()
 
+    def action_select_focused_directory(self):
+        try:
+            focused_path = self.cursor_node.data.path
+            if (focused_path and focused_path.is_dir()):
+                self.path = focused_path
+                os.chdir(self.path)
+                self.refresh()
+            elif (focused_path.is_file()):
+                self.app.notify(f"{focused_path.name} is a file",severity='information')
+            else :
+                self.app.notify(f"select a folder",severity='warning')
+        except PermissionError :
+            self.app.notify(f'{focused_path.name} Permission Denied',severity='warning')
     
     def action_cd_parent_directory(self):
         current_path = Path(self.path)
@@ -41,12 +54,6 @@ class DTree(DirectoryTree):
         os.chdir(self.path)
         self.refresh()
 
-    
-    # @on(Keys.Home)
-    # def keys_action(self):
-    #     self.path = Path('./').home()
-        
-   
 def load_settings():
     try:
         with open(settings_loc,'r') as setfile:
