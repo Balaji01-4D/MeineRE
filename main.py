@@ -132,8 +132,6 @@ async def CLI(Command):
             return await zips.Compress(Path(srcs),format=act)
         
     async def handle_text_find(Match):
-        logger.info(str(Match.groups()))
-        
         text = Match.group(2)
         source = Path(Match.group(3))
         if (source.is_dir()):
@@ -192,10 +190,10 @@ async def Rename(Source:str,Newname:str) -> None:
         sourcePath = Path(Source.strip("'"))
         NewnamePath = Path(Newname.strip("'"))
         if (sourcePath.is_file()):
-            result = await files.Rename(sourcePath,NewnamePath)
+            result = await files.Rename_file(sourcePath,NewnamePath)
             return result
         elif (sourcePath.is_dir()):
-            result = await files.Rename(sourcePath,NewnamePath)
+            result = await files.Rename_file(sourcePath,NewnamePath)
             return result
         else:
             raise RaiseNotify(f"{Source} Not Found")

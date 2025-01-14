@@ -3,6 +3,8 @@ from textual.app import App
 from rich.panel import Panel
 from pathlib import Path
 import os
+import time
+import asyncio
 from textual.suggester import SuggestFromList
 from textual.containers import Container,Vertical,Horizontal
 from textual.events import Click
@@ -79,6 +81,7 @@ class MeineAI(App):
         self.history = load_history()
         self.history_index = len(self.history)
         self.si = {}
+        # self.call_later(self.execute_command)
 
 
     def compose(self):
@@ -98,7 +101,6 @@ class MeineAI(App):
         if (yes):
             self.inputconsole.value = yes
             self.query_one(DirectoryTree).path = yes
-
 
 
     def action_history_up(self):
@@ -317,8 +319,11 @@ class MeineAI(App):
             
 
     async def execute_command(self, cmd: str):
+        start_time = time.time()
         """Worker for executing commands."""
         try:
+
+            notify_task = asyncio.create_task(self.notify_if_delay(start_time))
             result = await CLI(cmd)
             if (not isinstance(result,Panel)):
             
@@ -332,6 +337,15 @@ class MeineAI(App):
             logger.error(f'{e} Function: {self.execute_command.__name__} in {Path(__file__).name}')
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
 
+    async def notify_if_delay(self,start_time):
+        await asyncio.sleep(3)
+
+        elapsed_time = time.time() - start_time
+
+        if (elapsed_time >= 3):
+            self.notify("Task is running in the background")
+
+
     async def on_worker_failed(self, event: WorkerFailed):
         """Handle worker failures."""
         self.rich_log.write(f"[error] Worker failed: {event}")
@@ -342,9 +356,10 @@ class MeineAI(App):
 
 class DTsideBar(Container):
     def compose(self):
-        dtree = DTree(path=os.getcwd(),id='dt')
+        dtree = DTree(path='/home/balaji/testings',id='dt')
         self.dtree_log = RichLog(id='dtree_log')
         yield dtree
+        os.chdir(dtree.path)
 
     
 class Settings(ModalScreen):

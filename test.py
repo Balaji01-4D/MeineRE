@@ -1,45 +1,65 @@
-from MeineAI.Actions import File
-f = File()
+from textual.app import App
+from textual.widgets import Header, Footer, Button, DataTable
+from textual.containers import Vertical
 import asyncio
-from rich.table import Table
-import os
-import aiofiles
 
-async def Text_Finder_Directory(self, Text: str, Path: str = '.') -> None:
-    match_tables = Table(show_lines=True)
-    match_tables.add_column('Line.no')
-    match_tables.add_column('Filenmae')
-    result = await Helper(Text, Path)
+class BackgroundTaskApp(App):
+    """Main app to manage background tasks."""
     
-    if result:
-        for file_path, line_num in result:
-            match_tables.add_row(str(line_num),file_path.replace('./', os.getcwd() + '/'))
-        return match_tables
-    else:
-        return ("Text Not Found")
-async def Helper(Text: str, Path: str) -> list[str]:
-        matching_files = []
-        for root, dirs, files in os.walk(Path):
-            # Create a list of tasks to process files concurrently
-            tasks = [search_in_file(Text, os.path.join(root, file), matching_files) for file in files]
-            # Await the completion of all tasks
-            await asyncio.gather(*tasks)
-        return matching_files
+    CSS = """
+    DataTable {
+        height: auto;
+    }
+    """
+    
+    def __init__(self):
+        super().__init__()
+        self.tasks = {}  # Initialize tasks dictionary to store tasks by ID
 
-async def search_in_file(Text: str, file_path: str, matching_files: list):
-    try:
-        async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
-            line_num = 0
-            async for line in f:
-                line_num += 1
-                if Text in line:
-                    matching_files.append((file_path, line_num))
-        print(matching_files)
-    except (UnicodeDecodeError, IOError):
-        pass
-        
+    def compose(self):
+        yield Header()
+        yield Vertical(
+            Button("Run Background Task", id="run-task-btn"),
+            DataTable(id="task-table"),
+        )
+        yield Footer()
 
-from rich.console import Console
-con = Console()
-result = asyncio.run(Text_Finder_Directory(1,"RaiseNotify"))
-con.print(result)
+    def on_mount(self):
+        # Prepare the task table
+        task_table = self.query_one("#task-table")
+        task_table.add_columns("Task ID", "Status", "Progress")
+
+    async def on_button_pressed(self, event: Button.Pressed):
+        """Handle button press to start a task."""
+        if event.button.id == "run-task-btn":
+            task_id = f"Task-{len(self.tasks) + 1}"  # Generate a unique task ID
+            self.log(f"Starting {task_id}...")
+            task = asyncio.create_task(self.add_task(task_id))
+            self.tasks[task_id] = task
+
+            # Schedule cleanup once the task is done
+            task.add_done_callback(lambda t: self.cleanup_task(task_id))
+
+    async def add_task(self, task_id: str):
+        """Add and monitor a background task."""
+        task_table = self.query_one("#task-table")
+
+        # Add task to the table
+        task_table.add_row(task_id, "Running", "0%")
+
+        # Simulate a long-running task
+        for i in range(1, 11):
+            await asyncio.sleep(1)  # Simulate work
+            task_table.update_cell(task_id, 2, f"{i * 10}%")  # Update progress
+
+        # Mark as completed
+        task_table.update_cell(task_id, 1, "Completed")
+
+    def cleanup_task(self, task_id: str):
+        """Remove completed tasks from tracking."""
+        self.log(f"Cleaning up {task_id}...")
+        if task_id in self.tasks:
+            del self.tasks[task_id]  # Remove the task from the dictionary
+
+if __name__ == "__main__":
+    BackgroundTaskApp().run()

@@ -5,3 +5,5 @@
 2025-01-13 17:12:07,378 - file.py - ERROR: [Errno 22] Invalid argument: PosixPath('.') Function: Delete_Folder
 2025-01-13 22:50:34,843 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
 2025-01-13 23:24:59,213 - __main__.py - ERROR: unable to render int; a string or other renderable object is required Function: execute_command in __main__.py
+2025-01-14 16:29:19,697 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
+2025-01-14 16:32:16,356 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py

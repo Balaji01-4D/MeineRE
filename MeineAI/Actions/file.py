@@ -60,7 +60,7 @@ class File:
 
 
     @log_time
-    async def Rename(self, OldName: Path, NewName: Path) -> str:
+    async def Rename_file(self, OldName: Path, NewName: Path) -> str:
         if NewName.suffix == "":
             if (OldName.suffixes == 1):
                 NewName = NewName.with_suffix(OldName.suffix)
@@ -71,14 +71,14 @@ class File:
         Final: Path = OldName.parent/NewName
         if (Final.exists()):
             return AlreadyExist(Final.name,Final.parent)
-        if (OldName.exists() and not OldName.is_dir()):
+        if (OldName.exists()):
             try :
                 await asyncio.to_thread(OldName.rename,NewName)
                 return(f"[success]Renamed Successfully {OldName.name} -> {NewName.name}")
             except PermissionError:
                 return(f"[error]Permission Denied")
             except Exception as e:
-                logger.error(f'{e} Function: {self.Rename.__name__}')
+                logger.error(f'{e} Function: {self.Rename_file.__name__}')
                 return(f"[error]Error In Renaming.")
         elif (not OldName.exists()):
             return(f"[error]{OldName.name} Is Not Found.")
@@ -181,7 +181,7 @@ class File:
         
         if result:
             for file_path, line_num in result:
-                match_tables.add_row(str(line_num),file_path.replace('./', os.getcwd() + '/'))
+                match_tables.add_row(str(line_num),file_path)
             return match_tables
         else:
             return ("Text Not Found")
