@@ -1,9 +1,11 @@
-2025-01-13 17:05:45,034 - TUIFINAL.py - ERROR: [Errno 2] No such file or directory: '/tui/settings.json' Function: on_input_submitted in TUIFINAL.py
-2025-01-13 17:07:09,767 - TUIFINAL.py - ERROR: [Errno 2] No such file or directory: '/tui/settings.json' Function: on_input_submitted in TUIFINAL.py
-2025-01-13 17:10:23,425 - TUIFINAL.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in TUIFINAL.py
-2025-01-13 17:11:53,867 - TUIFINAL.py - ERROR: [Errno 20] Not a directory: '4mb.pdf' Function: change_directory in TUIFINAL.py
-2025-01-13 17:12:07,378 - file.py - ERROR: [Errno 22] Invalid argument: PosixPath('.') Function: Delete_Folder
-2025-01-13 22:50:34,843 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
-2025-01-13 23:24:59,213 - __main__.py - ERROR: unable to render int; a string or other renderable object is required Function: execute_command in __main__.py
-2025-01-14 16:29:19,697 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
-2025-01-14 16:32:16,356 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
+2025-01-15 18:39:54,805 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
+2025-01-15 18:40:23,442 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
+2025-01-15 18:42:51,683 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
+2025-01-15 18:58:09,915 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py
+2025-01-15 18:58:13,703 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py
+2025-01-15 18:59:22,884 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py
+2025-01-15 18:59:24,903 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py
+2025-01-15 18:59:25,986 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py
+2025-01-15 18:59:52,141 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py
+2025-01-15 18:59:54,555 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py
+2025-01-15 18:59:57,210 - __main__.py - ERROR: Can't pop screen; there must be at least one screen on the stack Function: key_escape in __main__.py

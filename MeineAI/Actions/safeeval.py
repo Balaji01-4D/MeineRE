@@ -14,6 +14,3 @@ def a(*args) -> None:
 
 allowedfunc: dict[str,callable] = {'a':a}
 
-while True:
-    cmd = input(">>>> ")
-    print(SafeEval(cmd,allowedfunc))

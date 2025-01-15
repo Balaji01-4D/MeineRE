@@ -165,27 +165,38 @@ async def CLI(Command):
 async def Copy(Source:str,Destination:str) -> None:
         sourcePath = Path(Source.strip("'"))
         destinationPath = Path(Destination.strip("'"))
-        if (sourcePath.is_file()):
-            result = await files.Copy_File(sourcePath,destinationPath)
-            return result
-        elif (sourcePath.is_dir()):
-            result = await files.Copy_Folder(sourcePath,destinationPath)
-            return result
+        if (destinationPath.is_dir()):
+            if (sourcePath.is_file()):
+                result = await files.Copy_File(sourcePath,destinationPath)
+                return result
+            elif (sourcePath.is_dir()):
+                result = await files.Copy_Folder(sourcePath,destinationPath)
+                return result
+            else :
+                raise RaiseNotify(f'{Source} Not Found')
+        elif (destinationPath.is_file()):
+            raise RaiseNotify(f'{destinationPath} is a File')
         else :
-            raise RaiseNotify(f'{Source} Not Found')
+            raise RaiseNotify(f'{destinationPath.name} Not Found')
+
 
 async def Move(Source:str ,Destination:str) -> None:
         sourcePath = Path(Source.strip("'"))
         destinationPath = Path(Destination.strip("'"))
-        if (sourcePath.is_file()):
-            result = await files.Move_File(sourcePath,destinationPath)
-            return result
-        elif (sourcePath.is_dir()):
-            result = await files.Move_Folder(sourcePath,destinationPath)
-            return result
+        if (destinationPath.is_dir()):
+            if (sourcePath.is_file()):
+                result = await files.Move_File(sourcePath,destinationPath)
+                return result
+            elif (sourcePath.is_dir()):
+                result = await files.Move_Folder(sourcePath,destinationPath)
+                return result
+            else :
+                raise RaiseNotify(f'{Source} Not Found')
+        elif (destinationPath.is_file()):
+            raise RaiseNotify(f'{destinationPath.name} is a File')
         else :
-            raise RaiseNotify(f'{Source} Not Found')
-   
+            raise RaiseNotify(f'{destinationPath.name} Not Found')
+    
 async def Rename(Source:str,Newname:str) -> None:
         sourcePath = Path(Source.strip("'"))
         NewnamePath = Path(Newname.strip("'"))

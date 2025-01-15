@@ -93,7 +93,7 @@ class File:
         elif Source.exists() and Destination.is_dir():
             try:
                 await asyncio.to_thread(sl.copy2,Source, Final)
-                return "[success] Copied Successfully."
+                return f"{Source.name} Copied Successfully to {Destination.name}."
             except PermissionError:
                 return "[error] Permission Denied."
             except Exception as e:
@@ -318,7 +318,6 @@ class File:
 
             if Final.exists():
                 return f"[error]{Final.name} Already Exists in {Final.resolve().parent}"
-
             if not Source.exists():
                 return f"[error]{Source.name} Does Not Exist"
             if not Destination.exists():

@@ -43,20 +43,32 @@ DTsideBar{
         background: $foreground;
     }
 }
+
 DTsideBar.-hidden{
     display: none;
 }
-LogsideBar{
-    background:$panel;
-    width: 30;
-    dock: left;
+Background_process{
+    dock:top;
     height: 100%;
-
+    background:$surface;
+    align: center middle;
 
 }
-LogsideBar.-hidden{
+Background_process > Vertical{
+    width: 80;
+    height:30;
+    background:$surface;
+
+}
+Background_process > Vertical > DataTable{
+    height: 100%;
+    width: 100%;
+    border: $accent;
+}
+Background_process.-hidden{
     display: none;
 }
+
 Dtreelog{
     background:$panel;
     width: 30;
@@ -65,6 +77,7 @@ Dtreelog{
 
 
 }
+
 Dtreelog.-hidden{
     display: none;
 }

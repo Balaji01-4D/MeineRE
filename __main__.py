@@ -1,10 +1,11 @@
-from textual.widgets import RichLog,Input,DirectoryTree,Static,Switch,Button
+from textual.widgets import RichLog,Input,DirectoryTree,Static,Switch,Button,DataTable
 from textual.app import App
 from rich.panel import Panel
 from pathlib import Path
 import os
 import time
 import asyncio
+from textual import on
 from textual.suggester import SuggestFromList
 from textual.containers import Container,Vertical,Horizontal
 from textual.events import Click
@@ -18,6 +19,7 @@ from MeineAI.Actions import RaiseNotify
 from tui.me import Myself
 import xdialog
 from logger_config import logger
+from textual.keys import Keys
 actions = ['uz','z','zip','del','c','mk','create','make','unzip','delete','copy','cp'
            ,'rename','rn']
 history_loc = Path(__file__).parent /'tui/history.json' 
@@ -72,7 +74,7 @@ class MeineAI(App):
                 Binding('up','history_up','navigate the history up',show=False),
                 Binding('down','history_down','navigate the history down',show=False),
                 Binding('ctrl+d','toggle_sidebar',show=False,priority=True),
-                Binding('ctrl+l','toggle_log',show=False,priority=True),
+                Binding('ctrl+meta+end','toggle_sidebar',show=False,priority=True),
                 ]
     
 
@@ -88,11 +90,13 @@ class MeineAI(App):
         self.inputconsole = Input(placeholder='Enter command....', id="input", suggester=SuggestFromList(actions, case_sensitive=False))
         self.rich_log = RichLog(id="output")
         self.sidebar = DTsideBar(classes="-hidden")
+        self.bgprocess = Background_process(classes='-hidden')
 
         
         yield Container(
             Container(self.rich_log, self.inputconsole, id='io'),
             self.sidebar,
+            self.bgprocess,
             id="main"
         )
     
@@ -141,7 +145,6 @@ class MeineAI(App):
                 self.notify('settings',timeout=2.5)
         except Exception as e:
             logger.error(f'{e} Function: {self.key_ctrl_s.__name__} in {Path(__file__).name}')
-
             None
 
 
@@ -155,6 +158,9 @@ class MeineAI(App):
 
     def action_toggle_sidebar(self):
         self.query_one(DTsideBar).toggle_class("-hidden")
+
+    def key_ctrl_b(self):
+        self.bgprocess.toggle_class("-hidden")
 
     # def handle_files_click_input(self, widget):
     #     def quotes_for_spaced_name(name: str):
@@ -259,6 +265,8 @@ class MeineAI(App):
                     None                
             elif event.widget.id == 'setting':
                 self.pop_screen()
+            elif (event.widget.id == 'process_table'):
+                None
         except PermissionError:
             self.notify(title='Error',message='Permission Denied',severity='error')
         except Exception as e:
@@ -319,14 +327,17 @@ class MeineAI(App):
             
 
     async def execute_command(self, cmd: str):
-        start_time = time.time()
-        """Worker for executing commands."""
-        try:
+        self.bgrocess_table = self.query_one(DataTable)
 
+        start_time = time.time()
+        try:
+            executable = CLI(cmd)
+            self.added_process = self.bgrocess_table.add_row(id(executable),cmd,'[red]cancel')
             notify_task = asyncio.create_task(self.notify_if_delay(start_time))
-            result = await CLI(cmd)
+
+            result = await executable
+            logger.info(str(self.added_process))
             if (not isinstance(result,Panel)):
-            
                 self.rich_log.write(Panel(result,expand=False))
             else :
                 self.rich_log.write(result)
@@ -336,6 +347,7 @@ class MeineAI(App):
         except Exception as e:
             logger.error(f'{e} Function: {self.execute_command.__name__} in {Path(__file__).name}')
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
+        self.bgrocess_table.remove_row(self.added_process)
 
     async def notify_if_delay(self,start_time):
         await asyncio.sleep(3)
@@ -343,15 +355,12 @@ class MeineAI(App):
         elapsed_time = time.time() - start_time
 
         if (elapsed_time >= 3):
-            self.notify("Task is running in the background")
+            self.notify("Task is running in the background.\nPress (ctrl + b) for more details.",severity='information')
 
 
     async def on_worker_failed(self, event: WorkerFailed):
         """Handle worker failures."""
         self.rich_log.write(f"[error] Worker failed: {event}")
-
-
-
 
 
 class DTsideBar(Container):
@@ -360,6 +369,16 @@ class DTsideBar(Container):
         self.dtree_log = RichLog(id='dtree_log')
         yield dtree
         os.chdir(dtree.path)
+
+class Background_process(Container):
+
+    def compose(self):
+        self.dtable = DataTable(id='process_table')
+        with Vertical():
+            yield self.dtable
+    
+    def on_mount(self):
+        self.dtable.add_columns('PID','Command','Status')
 
     
 class Settings(ModalScreen):
