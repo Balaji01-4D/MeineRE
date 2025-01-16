@@ -13,7 +13,6 @@ class Directory_tree_container(Container):
         chdir(dtree.path)
 
 class Background_process_container(Container):
-
     def compose(self):
         self.dtable = DataTable(id='process_table')
         with Vertical():
@@ -22,4 +21,3 @@ class Background_process_container(Container):
     def on_mount(self):
         self.dtable.add_columns('PID','Command','Status')
 
-    

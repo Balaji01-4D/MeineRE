@@ -9,5 +9,5 @@ class web:
 
     def youtube(self):
         webbrowser.Chrome()
-    
+
     

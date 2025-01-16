@@ -6,8 +6,9 @@ from textual.suggester import SuggestFromList
 from textual.binding import Binding
 
 from Meine.utils.file_loaders import load_history,load_Path_expansion
-from Meine.utils.file_editor import save_history
+from Meine.utils.file_editor import save_history,add_custom_path_expansion
 from Meine.logger_config import logger
+from Meine.Actions.exceptions import RaiseNotify
 
 
 
@@ -15,6 +16,10 @@ actions = ['uz','z','zip','del','c','mk','create','make','unzip','delete','copy'
            ,'rename','rn']
 
 class MeineInput(Input):
+
+    ALLOWED_FUNCTION ={
+        'addpath':add_custom_path_expansion
+    }
 
 
     BINDINGS = [
@@ -37,7 +42,6 @@ class MeineInput(Input):
     def on_input_changed(self):
         keyWordMatch = search(r'\{(.+)\}',self.value)
         if (keyWordMatch):
-            logger.info(keyWordMatch.group(1))
             self.path_expansion(keyWordMatch.group(1))
         else :
             None
@@ -55,8 +59,8 @@ class MeineInput(Input):
             'parent++':current_dir.parent.parent.parent
         }
 
-        USERDEFINED_EXPANSION = load_Path_expansion()
 
+        USERDEFINED_EXPANSION = load_Path_expansion()
         if (keyword in DEFAULT_PATH_EXPANSION):
             ReplaceBy = str(DEFAULT_PATH_EXPANSION[keyword])
             self.value = self.value.replace(f'{{{keyword}}}',ReplaceBy) 
@@ -82,12 +86,19 @@ class MeineInput(Input):
             logger.error(f'{e} Function: {self.action_history_down.__name__} in {Path(__file__).name}')
             None
 
+    
+
+
     async def on_input_submitted(self, event: Input.Submitted):
+        async def safe_eval(cmd,allow_function):
+            
+            result = eval(cmd,allow_function,{})
+            self.app.query_one(RichLog).write(result)
         console = self.app.query_one('#output')
         try:
             cmd = event.value.strip()
             try:
-                self.app.query_one(RichLog).write(eval(cmd))
+                self.run_worker(safe_eval(cmd,self.ALLOWED_FUNCTION))
             except:
                 if cmd:
                     try:
@@ -106,11 +117,11 @@ class MeineInput(Input):
                             self.run_worker(self.app.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
                     except Exception as e:
                         console.write(f"[error] {str(e)}")
-                    self.history.append(cmd)
-                    save_history(self.history)
-                    self.app.query_one("#dt").refresh()
-                    self.history_index = len(self.history)
-                event.input.value = ''
+            self.history.append(cmd)
+            save_history(self.history)
+            self.app.query_one("#dt").refresh()
+            self.history_index = len(self.history)
+            event.input.value = ''
 
         except PermissionError as e:
             console.write(f"error {str(e)}")

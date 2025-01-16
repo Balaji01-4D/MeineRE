@@ -12,5 +12,13 @@ def b():
 def a(*args) -> None:
     print('hello world')
 
-allowedfunc: dict[str,callable] = {'a':a}
+allowedfunc: dict[str] = {'abb':a}
 
+
+def main():
+    x = input('>>>')
+    print(SafeEval(x,allowedfunc))
+
+
+if __name__ == '__main__':
+    main()

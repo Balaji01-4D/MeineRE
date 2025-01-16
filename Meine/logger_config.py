@@ -36,8 +36,5 @@ def log_time(func):
             return result
         except Exception:
             None
-        
-
-    
     return wrapper
 

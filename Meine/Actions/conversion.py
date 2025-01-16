@@ -83,8 +83,3 @@ class Pdf:
         except Exception as e:
             return (f"Error extracting text from PDF: {e}")
 
-
-pd = Pdf()
-
-text = pd.split_pdf('/home/balaji/Downloads/2mb.pdf','new.pdf')
-print(text)

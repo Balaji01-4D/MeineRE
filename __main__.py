@@ -1,16 +1,15 @@
+import os
+import xdialog
+import asyncio
 from textual.widgets import RichLog,DirectoryTree,DataTable
 from textual.app import App
 from rich.panel import Panel
 from pathlib import Path
-import os
-import time
 from textual import on
 from textual.containers import Container
 from textual.events import Click
 from textual.binding import Binding
 from textual.worker import WorkerFailed
-import xdialog
-
 
 from Meine.logger_config import logger
 from Meine.Actions import RaiseNotify
@@ -19,10 +18,6 @@ from Meine.utils.file_loaders import load_history
 from Meine.widgets.input import MeineInput
 from Meine.widgets.containers import Directory_tree_container,Background_process_container
 from Meine.main import CLI
-
-
-
-
 
 
 class MeineAI(App):
@@ -35,7 +30,8 @@ class MeineAI(App):
                 Binding('ctrl+d','toggle_sidebar',show=False,priority=True),
                 ]
     
-
+    RUNNING_TASKS: dict[int] = {}
+    
     def __init__(self):
         super().__init__()
         self.history = load_history()
@@ -43,36 +39,32 @@ class MeineAI(App):
         self.si = {}
         # self.call_later(self.execute_command)
 
-
     def compose(self):
         self.inputconsole = MeineInput(placeholder='Enter command....', id="input")
         self.rich_log = RichLog(id="output")
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.bgprocess = Background_process_container(classes='-hidden')
 
-        
         yield Container(
             Container(self.rich_log, self.inputconsole, id='io'),
             self.sidebar,
             self.bgprocess,
             id="main"
         )
-    
+            
     def key_ctrl_z(self):
         yes = xdialog.directory('select the directory')
         if (yes):
             self.inputconsole.value = yes
             self.query_one(DirectoryTree).path = yes
 
-
- 
-        
     def action_focus_dt(self):
         self.dt = self.query_one('#dt',DirectoryTree)
         if (not self.dt.is_disabled):
             self.dt.focus()
         else :
-            None    
+            None  
+
 
     def key_ctrl_s(self):
         try:
@@ -85,14 +77,11 @@ class MeineAI(App):
             logger.error(f'{e} Function: {self.key_ctrl_s.__name__} in {Path(__file__).name}')
             None
 
-
     def key_escape(self):
         try:
             self.pop_screen()
         except Exception as e:
             logger.error(f'{e} Function: {self.key_escape.__name__} in {Path(__file__).name}')
-
-            None
 
     def action_toggle_sidebar(self):
         self.query_one(Directory_tree_container).toggle_class("-hidden")
@@ -138,6 +127,8 @@ class MeineAI(App):
 
     #     except Exception as e:
     #         self.rich_log.write(f"Error in handle_files_click_input: {e}")
+
+    
 
 
 
@@ -203,7 +194,7 @@ class MeineAI(App):
                     None                
             elif event.widget.id == 'setting':
                 self.pop_screen()
-            elif (event.widget.id == 'process_table'):
+            else :
                 None
         except PermissionError:
             self.notify(title='Error',message='Permission Denied',severity='error')
@@ -233,10 +224,10 @@ class MeineAI(App):
         self.bgrocess_table = self.query_one(DataTable)
 
         try:
-            executable = CLI(cmd)
-            self.added_process = self.bgrocess_table.add_row(id(executable),cmd,'[red]cancel')
+            self.executable = asyncio.create_task(CLI(cmd))
+            self.added_process = self.bgrocess_table.add_row(id(self.executable),cmd,'[red]cancel')
 
-            result = await executable
+            result = await self.executable
             logger.info(str(self.added_process))
             if (not isinstance(result,Panel)):
                 self.rich_log.write(Panel(result,expand=False))
@@ -244,6 +235,9 @@ class MeineAI(App):
                 self.rich_log.write(result)
         except RaiseNotify as e:
             self.notify(message=e.message,title='Error',severity='error')
+        
+        except asyncio.CancelledError:
+            self.notify("")
         
         except Exception as e:
             logger.error(f'{e} Function: {self.execute_command.__name__} in {Path(__file__).name}')
