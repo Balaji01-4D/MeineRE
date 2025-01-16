@@ -1,0 +1,73 @@
+Input{
+    color: $text-primary;
+    background: $surface;
+}
+#_default{
+    background:$background;
+}
+
+#output{
+    background:  $surface;
+}
+
+#main{
+    layout:horizontal;
+}
+#io{
+    width: 100%;
+}
+
+
+Directory_tree_container{
+    background:black;
+    width: 30;
+    dock: right;
+    height: 100%;
+
+    #dt{
+        width: 100%;
+        background: $surface;
+        border: rgb(80, 79, 79);
+    }
+    #back{
+        color: $foreground;
+        width:0;
+        height: 3;
+        background: $foreground;
+    }
+}
+
+Directory_tree_container.-hidden{
+    display: none;
+}
+Background_process_container{
+    dock:top;
+    height: 100%;
+    background:$surface;
+    align: center middle;
+
+}
+Background_process_container > Vertical{
+    width: 80;
+    height:30;
+    background:$surface;
+
+}
+Background_process_container > Vertical > DataTable{
+    height: 100%;
+    width: 100%;
+    border: $accent;
+}
+Background_process_container.-hidden{
+    display: none;
+}
+
+
+
+
+Toast{
+    padding: 1;
+    background: black;
+    color: aqua;
+}
+

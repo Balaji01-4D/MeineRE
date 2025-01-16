@@ -1,80 +1,38 @@
-from textual.widgets import RichLog,Input,DirectoryTree,Static,Switch,Button,DataTable
+from textual.widgets import RichLog,DirectoryTree,DataTable
 from textual.app import App
 from rich.panel import Panel
 from pathlib import Path
 import os
 import time
-import asyncio
 from textual import on
-from textual.suggester import SuggestFromList
-from textual.containers import Container,Vertical,Horizontal
+from textual.containers import Container
 from textual.events import Click
 from textual.binding import Binding
-from textual.screen import ModalScreen
-import json
 from textual.worker import WorkerFailed
-from Dtree import DTree
-from main import CLI
-from MeineAI.Actions import RaiseNotify
-from tui.me import Myself
 import xdialog
-from logger_config import logger
-from textual.keys import Keys
-actions = ['uz','z','zip','del','c','mk','create','make','unzip','delete','copy','cp'
-           ,'rename','rn']
-history_loc = Path(__file__).parent /'tui/history.json' 
-settings_loc = Path(__file__).parent /'tui/settings.json'
 
 
-def load_settings():
-    try:
-        with open(settings_loc,'r') as setfile:
-            data = setfile.read().strip()
-            return json.loads(data) 
-    except (json.JSONDecodeError,FileNotFoundError):
-        None
-
-def load_history():
-    try:
-        with open(history_loc,'r') as histfile:
-            data = histfile.read().strip()
-            return json.loads(data) 
-    except (json.JSONDecodeError,FileNotFoundError):
-        with open(history_loc,'w') as histfile:
-            json.dump([],histfile)
-        return []
-
-def save_history(history):
-    with open(history_loc,'w') as file:
-        if (open(history_loc).read() == '[]'):
-            json.dump([],file,indent=4)
-        json.dump(history,file,indent=4)
-
-def clear_history():
-    with open(history_loc,'w') as file:
-        json.dump([],file,indent=4)
-
-def save_settings(settings):
-    with open(settings_loc,'a') as file:
-        json.dump(settings,file,indent=4)
+from Meine.logger_config import logger
+from Meine.Actions import RaiseNotify
+from Meine.Screens.settings import Settings
+from Meine.utils.file_loaders import load_history
+from Meine.widgets.input import MeineInput
+from Meine.widgets.containers import Directory_tree_container,Background_process_container
+from Meine.main import CLI
 
 
-show_hidden_files = False
-items = []
 
-     
+
+
 
 class MeineAI(App):
     
     theme = 'tokyo-night'
 
-    CSS_PATH = Path(__file__).parent / "tui/final.css"
+    CSS_PATH = Path(__file__).parent / "Meine/tcss/app.css"
     AUTO_FOCUS = '#input'
     BINDINGS = [
-                Binding('up','history_up','navigate the history up',show=False),
-                Binding('down','history_down','navigate the history down',show=False),
                 Binding('ctrl+d','toggle_sidebar',show=False,priority=True),
-                Binding('ctrl+meta+end','toggle_sidebar',show=False,priority=True),
                 ]
     
 
@@ -87,10 +45,10 @@ class MeineAI(App):
 
 
     def compose(self):
-        self.inputconsole = Input(placeholder='Enter command....', id="input", suggester=SuggestFromList(actions, case_sensitive=False))
+        self.inputconsole = MeineInput(placeholder='Enter command....', id="input")
         self.rich_log = RichLog(id="output")
-        self.sidebar = DTsideBar(classes="-hidden")
-        self.bgprocess = Background_process(classes='-hidden')
+        self.sidebar = Directory_tree_container(classes="-hidden")
+        self.bgprocess = Background_process_container(classes='-hidden')
 
         
         yield Container(
@@ -107,27 +65,7 @@ class MeineAI(App):
             self.query_one(DirectoryTree).path = yes
 
 
-    def action_history_up(self):
-        if (self.history_index > 0):
-            self.history_index -= 1
-            self.inputconsole.value = self.history[self.history_index]
-            self.inputconsole.cursor_position = len(self.inputconsole.value)
-            
-        
-    
-    def action_history_down(self):
-        try:
-            if (self.history_index < len(self.history) -1):
-                self.history_index += 1
-                self.inputconsole.value = self.history[self.history_index]
-                self.inputconsole.cursor_position = len(self.inputconsole.value)
-
-            else:
-                self.history_index = len(self.history)
-                self.inputconsole.value = ''
-        except Exception as e:
-            logger.error(f'{e} Function: {self.action_history_down.__name__} in {Path(__file__).name}')
-            None
+ 
         
     def action_focus_dt(self):
         self.dt = self.query_one('#dt',DirectoryTree)
@@ -157,7 +95,7 @@ class MeineAI(App):
             None
 
     def action_toggle_sidebar(self):
-        self.query_one(DTsideBar).toggle_class("-hidden")
+        self.query_one(Directory_tree_container).toggle_class("-hidden")
 
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
@@ -275,41 +213,6 @@ class MeineAI(App):
 
 
 
-
-    async def on_input_submitted(self, event: Input.Submitted):
-        console = self.query_one('#output', RichLog)
-        try:
-            cmd = event.value.strip()
-            try:
-                self.rich_log.write(eval(cmd))
-            except:
-                if cmd:
-                    try:
-                        if 'cd ' in cmd:
-                            cmdpath = cmd.replace('cd ', '')
-                            cmdpath = Path(cmdpath)
-                            if (cmdpath.is_dir()):
-                                self.run_worker(self.change_directory(cmdpath), name="cd_worker", description="Change Directory")
-                                self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
-                            else:
-                                self.notify(message="It is Not exists",severity="error")
-                            
-                        elif 'cwd' in cmd:
-                            self.notify(message=f"{os.getcwd()}",title="Current working directory")
-                        else:
-                            self.run_worker(self.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
-                    except Exception as e:
-                        console.write(f"[error] {str(e)}")
-                    self.history.append(cmd)
-                    save_history(self.history)
-                    self.query_one("#dt", DirectoryTree).refresh()
-                    self.history_index = len(self.history)
-                event.input.value = ''
-
-        except PermissionError as e:
-            console.write(f"error {str(e)}")
-            logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
-
     async def change_directory(self, cmdpath: Path):
         try:
             dtree = self.query_one("#dt", DirectoryTree)
@@ -329,11 +232,9 @@ class MeineAI(App):
     async def execute_command(self, cmd: str):
         self.bgrocess_table = self.query_one(DataTable)
 
-        start_time = time.time()
         try:
             executable = CLI(cmd)
             self.added_process = self.bgrocess_table.add_row(id(executable),cmd,'[red]cancel')
-            notify_task = asyncio.create_task(self.notify_if_delay(start_time))
 
             result = await executable
             logger.info(str(self.added_process))
@@ -349,13 +250,6 @@ class MeineAI(App):
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
         self.bgrocess_table.remove_row(self.added_process)
 
-    async def notify_if_delay(self,start_time):
-        await asyncio.sleep(3)
-
-        elapsed_time = time.time() - start_time
-
-        if (elapsed_time >= 3):
-            self.notify("Task is running in the background.\nPress (ctrl + b) for more details.",severity='information')
 
 
     async def on_worker_failed(self, event: WorkerFailed):
@@ -363,61 +257,7 @@ class MeineAI(App):
         self.rich_log.write(f"[error] Worker failed: {event}")
 
 
-class DTsideBar(Container):
-    def compose(self):
-        dtree = DTree(path='/home/balaji/testings',id='dt')
-        self.dtree_log = RichLog(id='dtree_log')
-        yield dtree
-        os.chdir(dtree.path)
 
-class Background_process(Container):
-
-    def compose(self):
-        self.dtable = DataTable(id='process_table')
-        with Vertical():
-            yield self.dtable
-    
-    def on_mount(self):
-        self.dtable.add_columns('PID','Command','Status')
-
-    
-class Settings(ModalScreen):
-
-    CSS_PATH = Path(__file__).parent / 'tui/setting.css'
-
-
-    def compose(self):
-        self.setting_json = load_settings()
-        yield Container(
-            Static('settings',id='label'),
-            Vertical(
-                Horizontal(Static('[red]show hidden files'),Switch(id='hidden_files_sw',value=self.setting_json['show_hidden_files'])),
-                Horizontal(Static('[red]clear history'),Button(label='clear',id='clear_history_bt')),
-            ),
-            Button(label='About me',variant='success',id='about_me_bt')
-        )
-
-
-    
-    def on_click(self, event:Click):
-        if (str(event.widget) == str(Settings())):
-            self.dismiss()
-
-    def on_button_pressed(self,event:Button.Pressed):
-        if (event.button.id == 'about_me_bt'):
-            self.dismiss()
-            self.app.push_screen(Myself())
-        if (event.button.id == 'clear_history_bt'):
-            self.app.history = []
-            
-    
-
-    
-    def on_switch_changed(self,event:Switch.Changed):
-            if (event.switch.id == 'hidden_files_sw'):
-                self.setting_json['show_hidden_files'] = event.value
-            save_settings(self.setting_json)
-    
 
 
 if (__name__ == "__main__"):

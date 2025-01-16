@@ -11,3 +11,89 @@
 2025-01-15 18:45:29,499 - __main__.py - <textual.widgets._data_table.RowKey object at 0x7099b5825c40>
 2025-01-15 18:46:45,413 - main.py - Function: Copy_File Timetaken: 0.0000 seconds
 2025-01-15 18:46:51,927 - __main__.py - <textual.widgets._data_table.RowKey object at 0x7099b571b290>
+2025-01-16 13:38:44,485 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-16 13:38:44,486 - file.py - Delete_File executing
+2025-01-16 13:38:44,599 - __main__.py - <textual.widgets._data_table.RowKey object at 0x77054035a330>
+2025-01-16 15:22:24,805 - input.py - c
+2025-01-16 15:22:24,997 - input.py - cw
+2025-01-16 15:22:25,810 - input.py - c
+2025-01-16 15:22:26,341 - input.py - 
+2025-01-16 15:22:26,901 - input.py - c
+2025-01-16 15:22:27,215 - input.py - cw
+2025-01-16 15:22:27,753 - input.py - c
+2025-01-16 15:22:27,909 - input.py - 
+2025-01-16 15:22:28,765 - input.py - {
+2025-01-16 15:22:29,678 - input.py - {}
+2025-01-16 15:22:30,806 - input.py - {h}
+2025-01-16 15:22:31,134 - input.py - {ho}
+2025-01-16 15:22:31,294 - input.py - {hom}
+2025-01-16 15:22:31,441 - input.py - {home}
+2025-01-16 15:22:34,029 - input.py - {home
+2025-01-16 15:22:34,156 - input.py - {hom
+2025-01-16 15:22:34,300 - input.py - {ho
+2025-01-16 15:22:34,436 - input.py - {h
+2025-01-16 15:22:34,574 - input.py - {
+2025-01-16 15:22:34,699 - input.py - 
+2025-01-16 15:22:35,405 - input.py - {
+2025-01-16 15:22:35,939 - input.py - {h
+2025-01-16 15:22:36,104 - input.py - {ho
+2025-01-16 15:22:36,279 - input.py - {hom
+2025-01-16 15:22:36,418 - input.py - {home
+2025-01-16 15:22:37,457 - input.py - {home{
+2025-01-16 15:22:37,937 - input.py - {home
+2025-01-16 15:22:38,611 - input.py - {home}
+2025-01-16 15:22:39,858 - input.py - {home
+2025-01-16 15:22:39,991 - input.py - {hom
+2025-01-16 15:22:40,139 - input.py - {ho
+2025-01-16 15:22:40,273 - input.py - {h
+2025-01-16 15:22:40,405 - input.py - {
+2025-01-16 15:22:40,534 - input.py - 
+2025-01-16 15:22:41,343 - input.py - {
+2025-01-16 15:22:41,878 - input.py - {h
+2025-01-16 15:22:42,042 - input.py - {ho
+2025-01-16 15:22:42,270 - input.py - {hom
+2025-01-16 15:22:42,401 - input.py - {home
+2025-01-16 15:22:42,998 - input.py - {home}
+2025-01-16 15:22:43,838 - input.py - {home
+2025-01-16 15:22:44,332 - input.py - {hom
+2025-01-16 15:22:44,361 - input.py - {ho
+2025-01-16 15:22:44,393 - input.py - {h
+2025-01-16 15:22:44,429 - input.py - {
+2025-01-16 15:22:44,453 - input.py - 
+2025-01-16 15:23:43,559 - input.py - d
+2025-01-16 15:23:44,422 - input.py - 
+2025-01-16 15:23:46,221 - input.py - {
+2025-01-16 15:23:46,764 - input.py - {h
+2025-01-16 15:23:46,908 - input.py - {ho
+2025-01-16 15:23:47,095 - input.py - {hom
+2025-01-16 15:23:47,217 - input.py - {home
+2025-01-16 15:23:47,854 - input.py - {home}
+2025-01-16 15:23:51,202 - input.py - {home
+2025-01-16 15:23:51,359 - input.py - {hom
+2025-01-16 15:23:51,512 - input.py - {ho
+2025-01-16 15:23:51,650 - input.py - {h
+2025-01-16 15:23:51,782 - input.py - {
+2025-01-16 15:23:51,908 - input.py - 
+2025-01-16 15:25:00,128 - input.py - ('home',)
+2025-01-16 15:25:56,275 - input.py - home
+2025-01-16 15:32:19,120 - input.py - home
+2025-01-16 15:34:59,977 - input.py - home
+2025-01-16 15:35:08,040 - input.py - home
+2025-01-16 15:35:16,088 - input.py - home
+2025-01-16 15:35:31,648 - input.py - home
+2025-01-16 15:35:41,219 - input.py - current
+2025-01-16 15:38:04,090 - input.py - home
+2025-01-16 15:38:21,890 - input.py - downloads
+2025-01-16 15:38:31,238 - input.py - parent
+2025-01-16 15:38:37,378 - input.py - parent
+2025-01-16 15:38:46,974 - input.py - home
+2025-01-16 15:39:14,004 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-01-16 15:39:14,077 - __main__.py - <textual.widgets._data_table.RowKey object at 0x750a58966de0>
+2025-01-16 15:39:21,848 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-16 15:39:21,848 - file.py - Delete_File executing
+2025-01-16 15:39:21,971 - __main__.py - <textual.widgets._data_table.RowKey object at 0x750a59e1e960>
+2025-01-16 15:39:43,316 - input.py - parent+
+2025-01-16 15:39:50,589 - input.py - parent
+2025-01-16 15:40:01,593 - input.py - parent++
+2025-01-16 15:42:09,883 - input.py - test
+2025-01-16 15:42:19,685 - input.py - none
