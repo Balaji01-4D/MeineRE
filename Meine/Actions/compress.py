@@ -12,8 +12,6 @@ import os
 class Zip:
 
 
-
-
     async def Compress(self, Source: Path, format: str = "zip") -> str:
         try:
             if not Source.exists():
@@ -21,16 +19,16 @@ class Zip:
             
             # Determine the compression format and call corresponding method
             if format in {'zip','z'}:
-                await asyncio.to_thread(self.compress_zip, Source)
+                await asyncio.to_thread(self._compress_zip, Source)
                 return f"{Source.name} Compressed Successfully as zip."
             elif format == 'tar':
-                await asyncio.to_thread(self.compress_tar, Source)
+                await asyncio.to_thread(self._compress_tar, Source)
                 return f"{Source.name} Compressed Successfully as tar."
             elif format == 'gz':
-                await asyncio.to_thread(self.compress_gz, Source)
+                await asyncio.to_thread(self._compress_gz, Source)
                 return f"{Source.name} Compressed Successfully as gz."
             elif format == '7z':
-                await asyncio.to_thread(self.compress_7z, Source)
+                await asyncio.to_thread(self._compress_7z, Source)
                 return f"{Source.name} Compressed Successfully as 7z."
             else:
                 return f"Unsupported compression format: {format}. Please use zip, tar, gz, or 7z."
@@ -41,7 +39,7 @@ class Zip:
             return f"Error in compressing {Source.name}: {str(e)}"
 
     # Helper methods for each compression format
-    def compress_zip(self, Source: Path):
+    def _compress_zip(self, Source: Path):
         with zipfile.ZipFile(str(Source) + ".zip", "w", zipfile.ZIP_DEFLATED) as zipf:
             if Source.is_dir():
                 for foldername, subfolders, filenames in os.walk(Source):
@@ -51,7 +49,7 @@ class Zip:
             else:
                 zipf.write(Source, arcname=Source.name)
 
-    def compress_tar(self, Source: Path):
+    def _compress_tar(self, Source: Path):
         if Source.is_dir():
             with tarfile.open(str(Source) + ".tar.gz", "w:gz") as tarf:
                 tarf.add(Source, arcname=Source.name)
@@ -59,7 +57,7 @@ class Zip:
             with tarfile.open(str(Source) + ".tar.gz", "w:gz") as tarf:
                 tarf.add(Source, arcname=Source.name)
 
-    def compress_gz(self, Source: Path):
+    def _compress_gz(self, Source: Path):
         if Source.is_dir():
             return "Cannot compress directories as .gz, use another format like .tar or .zip."
         else:
@@ -67,7 +65,7 @@ class Zip:
                 with gzip.open(str(Source) + ".gz", 'wb') as f_out:
                     shutil.copyfileobj(f_in, f_out)
 
-    def compress_7z(self, Source: Path):
+    def _compress_7z(self, Source: Path):
         import py7zr
         if Source.is_dir():
             with py7zr.SevenZipFile(str(Source) + ".7z", mode='w') as zf:
@@ -87,22 +85,22 @@ class Zip:
             
             # Handle '.zip' files
             if StrSource.endswith('.zip'):
-                await asyncio.to_thread(self.extract_zip, Source)
+                await asyncio.to_thread(self._extract_zip, Source)
                 return f"{Source.stem} Extracted Successfully as zip."
             
             # Handle '.tar' and '.tar.gz' files
             elif StrSource.endswith('.tar') or StrSource.endswith('.tar.gz'):
-                await asyncio.to_thread(self.extract_tar, Source)
+                await asyncio.to_thread(self._extract_tar, Source)
                 return f"{Source.stem} Extracted Successfully as tar."
             
             # Handle '.gz' files (single file extraction)
             elif StrSource.endswith('.gz'):
-                await asyncio.to_thread(self.extract_gz, Source)
+                await asyncio.to_thread(self._extract_gz, Source)
                 return f"{Source.stem} Extracted Successfully as gz."
             
             # Handle '.7z' files
             elif StrSource.endswith('.7z'):
-                await asyncio.to_thread(self.extract_7z, Source)
+                await asyncio.to_thread(self._extract_7z, Source)
                 return f"{Source.stem} Extracted Successfully as 7z."
             
             else:
@@ -114,20 +112,20 @@ class Zip:
             return f"Error In Extracting {Source.name}: {str(e)}"
 
     # Helper methods for each extraction format
-    def extract_zip(self, Source: Path):
+    def _extract_zip(self, Source: Path):
         with zipfile.ZipFile(Source, 'r') as zipf:
             zipf.extractall(Source.parent)
 
-    def extract_tar(self, Source: Path):
+    def _extract_tar(self, Source: Path):
         with tarfile.open(Source, 'r:gz') as tarf:
             tarf.extractall(Source.parent)
 
-    def extract_gz(self, Source: Path):
+    def _extract_gz(self, Source: Path):
         with gzip.open(Source, 'rb') as gz_file:
             with open(Source.stem, 'wb') as out_file:
                 shutil.copyfileobj(gz_file, out_file)
 
-    def extract_7z(self, Source: Path):
+    def _extract_7z(self, Source: Path):
         with py7zr.SevenZipFile(Source, mode='r') as zf:
             zf.extractall(path=Source.parent)
     
@@ -145,13 +143,13 @@ class Zip:
 
             # Handle based on file extension (zip, tar, 7z, etc.)
             if archive_file.suffix == ".zip":
-                return await self.list_zip_contents(archive_file, content_table)
+                return await self._list_zip_contents(archive_file, content_table)
             
             elif archive_file.suffix == ".tar" or archive_file.suffix == ".gz":
-                return await self.list_tar_contents(archive_file, content_table)
+                return await self._list_tar_contents(archive_file, content_table)
             
             elif archive_file.suffix == ".7z":
-                return await self.list_7z_contents(archive_file, content_table)
+                return await self._list_7z_contents(archive_file, content_table)
             
             else:
                 return f"{archive_file.name} is not a valid archive file format."
@@ -162,7 +160,7 @@ class Zip:
             return f"Error occurred: {str(e)}"
 
     # Function for handling .zip files
-    async def list_zip_contents(self, zip_file: Path, content_table: Table) -> str:
+    async def _list_zip_contents(self, zip_file: Path, content_table: Table) -> str:
         try:
             with zipfile.ZipFile(zip_file, 'r') as zf:
                 for file in zf.infolist():
@@ -173,7 +171,7 @@ class Zip:
             return f"Error in reading {zip_file.name}: {str(e)}"
 
     # Function for handling .tar and .gz files
-    async def list_tar_contents(self, tar_file: Path, content_table: Table) -> str:
+    async def _list_tar_contents(self, tar_file: Path, content_table: Table) -> str:
         try:
             with tarfile.open(tar_file, 'r') as tf:
                 for file in tf.getnames():
@@ -185,7 +183,7 @@ class Zip:
             return f"Error in reading {tar_file.name}: {str(e)}"
 
     # Function for handling .7z files
-    async def list_7z_contents(self, sevenz_file: Path, content_table: Table) -> str:
+    async def _list_7z_contents(self, sevenz_file: Path, content_table: Table) -> str:
         try:
             with py7zr.SevenZipFile(sevenz_file, mode='r') as zf:
                 for file in zf.getnames():

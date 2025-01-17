@@ -1,7 +1,7 @@
 import os
 import xdialog
 import asyncio
-from textual.widgets import RichLog,DirectoryTree,DataTable
+from textual.widgets import RichLog,DirectoryTree,DataTable,Input
 from textual.app import App
 from rich.panel import Panel
 from pathlib import Path
@@ -12,9 +12,10 @@ from textual.binding import Binding
 from textual.worker import WorkerFailed
 
 from Meine.logger_config import logger
-from Meine.Actions import RaiseNotify
+from Meine.exceptions import RaiseNotify
 from Meine.Screens.settings import Settings
 from Meine.utils.file_loaders import load_history
+from Meine.utils.file_editor import save_history
 from Meine.widgets.input import MeineInput
 from Meine.widgets.containers import Directory_tree_container,Background_process_container
 from Meine.main import CLI
@@ -202,6 +203,44 @@ class MeineAI(App):
             logger.error(f'{e} Function: {self.on_click.__name__} in {Path(__file__).name}')
             self.notify(str(e))
 
+    async def on_input_submitted(self, event: Input.Submitted):
+        try:
+            async def safe_eval(cmd,allow_function):
+                
+                result = eval(cmd,allow_function,{})
+                self.query_one(RichLog).write(result)
+            console = self.query_one('#output')
+            cmd = event.value.strip()
+            try:
+                console.write(eval(cmd,self.ALLOWED_FUNCTION))
+            except:
+                if cmd:
+                    try:
+                        if 'cd ' in cmd:
+                            cmdpath = cmd.replace('cd ', '')
+                            cmdpath = Path(cmdpath)
+                            if (cmdpath.is_dir()):
+                                self.run_worker(self.app.change_directory(cmdpath), name="cd_worker", description="Change Directory")
+                                self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
+                            else:
+                                self.notify(message="It is Not exists",severity="error")
+                            
+                        elif 'cwd' in cmd:
+                            self.notify(message=f"{os.getcwd()}",title="Current working directory")
+                        else:
+                            self.run_worker(self.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
+                    except Exception as e:
+                        console.write(f"[error] {str(e)}")
+            self.history.append(cmd)
+            save_history(self.history)
+            self.query_one("#dt").refresh()
+            self.history_index = len(self.history)
+            event.input.value = ''
+
+        except PermissionError as e:
+            console.write(f"error {str(e)}")
+            logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
+
 
 
     async def change_directory(self, cmdpath: Path):
@@ -233,6 +272,7 @@ class MeineAI(App):
                 self.rich_log.write(Panel(result,expand=False))
             else :
                 self.rich_log.write(result)
+            self.bgrocess_table.remove_row(self.added_process)
         except RaiseNotify as e:
             self.notify(message=e.message,title='Error',severity='error')
         
@@ -242,8 +282,8 @@ class MeineAI(App):
         except Exception as e:
             logger.error(f'{e} Function: {self.execute_command.__name__} in {Path(__file__).name}')
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
-        self.bgrocess_table.remove_row(self.added_process)
-
+            self.bgrocess_table.remove_row(self.added_process)
+        
 
 
     async def on_worker_failed(self, event: WorkerFailed):

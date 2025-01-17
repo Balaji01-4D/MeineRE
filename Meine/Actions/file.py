@@ -7,7 +7,7 @@ import os
 import aiofiles
 from rich.table import Table
 
-from .exceptions import RaiseNotify
+from Meine.exceptions import RaiseNotify
 from .Myrequest import AlreadyExist
 from Meine.logger_config import logger,log_time
 

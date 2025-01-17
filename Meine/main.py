@@ -1,13 +1,14 @@
 import re
 from re import Pattern
 from pathlib import Path
-from Meine.Actions import File,Zip,System,RaiseNotify
+from Meine.Actions import File,Zip,System
+from Meine.exceptions import RaiseNotify
 from Meine.logger_config import logger
 
 
 d: dict[Pattern[str]] = {
     'twopath':re.compile(r'''(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)'''),
-    'onepath':re.compile(r'''(d|rm|r|del||mk|mkdir|mkd)\s+(.+)'''),
+    'onepath':re.compile(r'''(d|rm|r|del||mk|mkdir|mkd|clr|show)\s+(.+)'''),
     'rename':re.compile(r'(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)'),
     'system':re.compile(r'(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process)\s?(\s[^\s]+)?'),
     'search_text':re.compile(r'''(find|where|search)\s+["'](.+)["']\s+(.+)'''),
@@ -77,6 +78,18 @@ async def CLI(Command):
                 results = [await Create(s) for s in source]
                 return '\n'.join(results)
             return await Create(source) 
+        
+        elif act == "show":
+            if isinstance(source,list):
+                raise RaiseNotify('show file content accepts a single file')
+            return await files.ShowContent_File(Path(source))
+        
+        elif act == 'clr':
+            if isinstance(source, list):
+                results = [await files.ClearContent_File(Path(s)) for s in source]
+                return '\n'.join(results)
+            return await files.ClearContent_File(Path(source))
+
 
 
     async def handle_system(Match):

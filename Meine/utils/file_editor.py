@@ -3,8 +3,9 @@ from pathlib import Path
 import xdialog
 import asyncio
 
-from Meine.Actions.exceptions import RaiseNotify
+from Meine.exceptions import RaiseNotify
 from .file_loaders import load_Path_expansion
+
 history_loc = Path(__file__).parent.parent /'resources/history.json' 
 settings_loc = Path(__file__).parent.parent /'resources/settings.json'
 custom_path_expansion_loc = Path(__file__).parent.parent /'resources/custom_path_exp.json'

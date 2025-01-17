@@ -8,7 +8,7 @@ from textual.binding import Binding
 from Meine.utils.file_loaders import load_history,load_Path_expansion
 from Meine.utils.file_editor import save_history,add_custom_path_expansion
 from Meine.logger_config import logger
-from Meine.Actions.exceptions import RaiseNotify
+from Meine.exceptions import RaiseNotify
 
 
 
@@ -89,40 +89,3 @@ class MeineInput(Input):
     
 
 
-    async def on_input_submitted(self, event: Input.Submitted):
-        async def safe_eval(cmd,allow_function):
-            
-            result = eval(cmd,allow_function,{})
-            self.app.query_one(RichLog).write(result)
-        console = self.app.query_one('#output')
-        try:
-            cmd = event.value.strip()
-            try:
-                self.run_worker(safe_eval(cmd,self.ALLOWED_FUNCTION))
-            except:
-                if cmd:
-                    try:
-                        if 'cd ' in cmd:
-                            cmdpath = cmd.replace('cd ', '')
-                            cmdpath = Path(cmdpath)
-                            if (cmdpath.is_dir()):
-                                self.run_worker(self.app.change_directory(cmdpath), name="cd_worker", description="Change Directory")
-                                self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
-                            else:
-                                self.notify(message="It is Not exists",severity="error")
-                            
-                        elif 'cwd' in cmd:
-                            self.notify(message=f"{os.getcwd()}",title="Current working directory")
-                        else:
-                            self.run_worker(self.app.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
-                    except Exception as e:
-                        console.write(f"[error] {str(e)}")
-            self.history.append(cmd)
-            save_history(self.history)
-            self.app.query_one("#dt").refresh()
-            self.history_index = len(self.history)
-            event.input.value = ''
-
-        except PermissionError as e:
-            console.write(f"error {str(e)}")
-            logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
