@@ -1,12 +1,11 @@
 import os
 from re import search
 from pathlib import Path
-from textual.widgets import Input,RichLog
+from textual.widgets import Input
 from textual.suggester import SuggestFromList
 from textual.binding import Binding
 
 from Meine.utils.file_loaders import load_history,load_Path_expansion
-from Meine.utils.file_editor import save_history,add_custom_path_expansion
 from Meine.logger_config import logger
 from Meine.exceptions import RaiseNotify
 
@@ -17,9 +16,7 @@ actions = ['uz','z','zip','del','c','mk','create','make','unzip','delete','copy'
 
 class MeineInput(Input):
 
-    ALLOWED_FUNCTION ={
-        'addpath':add_custom_path_expansion
-    }
+
 
 
     BINDINGS = [
@@ -29,8 +26,8 @@ class MeineInput(Input):
 
     def __init__(self, value = None, placeholder = "", highlighter = None, password = False, *, restrict = None, type = "text", max_length = 0, suggester = SuggestFromList(actions), validators = None, validate_on = None, valid_empty = False, select_on_focus = True, name = None, id = None, classes = None, disabled = False, tooltip = None):
         super().__init__(value, placeholder, highlighter, password, restrict=restrict, type=type, max_length=max_length, suggester=suggester, validators=validators, validate_on=validate_on, valid_empty=valid_empty, select_on_focus=select_on_focus, name=name, id=id, classes=classes, disabled=disabled, tooltip=tooltip)
-        self.history = load_history()
-        self.history_index = len(self.history)
+        self.history = self.app.history
+        self.history_index = self.app.history_index
 
 
     def action_history_up(self):
@@ -74,6 +71,7 @@ class MeineInput(Input):
 
     def action_history_down(self):
         try:
+            
             if (self.history_index < len(self.history) -1):
                 self.history_index += 1
                 self.value = self.history[self.history_index]
@@ -85,7 +83,8 @@ class MeineInput(Input):
         except Exception as e:
             logger.error(f'{e} Function: {self.action_history_down.__name__} in {Path(__file__).name}')
             None
-
     
+    def on_input_submitted(self):
+        self.history_index +=1
 
 

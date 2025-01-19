@@ -19,3 +19,8 @@
 2025-01-17 11:32:15,395 - __main__.py - ERROR: 'str' object has no attribute 'exists' Function: execute_command in __main__.py
 2025-01-17 11:51:29,860 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
 2025-01-17 11:54:29,511 - file.py - ERROR: [Errno 2] No such file or directory: 'large' Function: Copy_File
+2025-01-18 10:30:27,029 - file.py - ERROR: [Errno 16] Device or resource busy: '.' -> 'bst.c' Function: Rename_file
+2025-01-18 10:36:10,857 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
+2025-01-18 10:43:38,936 - __main__.py - ERROR: Unable to get render width for None; a str, Segment, or object with __rich_console__ method is required Function: execute_command in __main__.py
+2025-01-18 11:00:49,595 - __main__.py - ERROR: System.Processes() takes 0 positional arguments but 1 was given Function: execute_command in __main__.py
+2025-01-18 11:08:18,653 - file.py - ERROR: [Errno 2] No such file or directory: 'large' Function: Copy_File

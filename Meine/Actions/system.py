@@ -283,7 +283,7 @@ class System:
                 ) 
         return Panel(tableofdisk,border_style='#ABB2BF',expand=False)   
 
-    async def Processes():
+    async def Processes(self):
         tableofproccess = Table(show_lines=True,border_style='#ABB2BF')
         headers = ["PID", "Name", "Status", "Memory (RAM)", "CPU Usage (%)"]
         alternative = None
@@ -356,5 +356,24 @@ class System:
             "\n  sudo pacman -S networkmanager    # For Arch Linux")
 
             return panel
+        
+    async def shutdown(self,delay:int = 3) -> Panel:
+        if (os.name == 'nt'):
+            os.system(f'shutdown /s /t {delay}')
+        elif (os.name == 'posix'):
+            os.system(f'sudo shutdown {delay}')
+        else :
+            return Panel('Unsupported Operating System')
+        return Panel('shutdown in 3 seconds')
+    
+    async def shutdown(self,delay:int = 3) -> Panel:
+        if (os.name == 'nt'):
+            os.system(f'shutdown /r /t {delay}')
+        elif (os.name == 'posix'):
+            os.system(f'sudo reboot {delay}')
+        else :
+            return Panel('Unsupported Operating System')
+        return Panel('reboot in 3 seconds')
+
             
 

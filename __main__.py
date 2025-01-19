@@ -17,13 +17,16 @@ from Meine.Screens.settings import Settings
 from Meine.utils.file_loaders import load_history
 from Meine.utils.file_editor import save_history
 from Meine.widgets.input import MeineInput
+from Meine.utils.file_editor import add_custom_path_expansion
 from Meine.widgets.containers import Directory_tree_container,Background_process_container
 from Meine.main import CLI
 
 
 class MeineAI(App):
     
-    theme = 'tokyo-night'
+    ALLOWED_FUNCTION ={
+        'addpath':add_custom_path_expansion
+        }
 
     CSS_PATH = Path(__file__).parent / "Meine/tcss/app.css"
     AUTO_FOCUS = '#input'
@@ -86,6 +89,9 @@ class MeineAI(App):
 
     def action_toggle_sidebar(self):
         self.query_one(Directory_tree_container).toggle_class("-hidden")
+    
+
+
 
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
@@ -275,10 +281,8 @@ class MeineAI(App):
             self.bgrocess_table.remove_row(self.added_process)
         except RaiseNotify as e:
             self.notify(message=e.message,title='Error',severity='error')
-        
-        except asyncio.CancelledError:
-            self.notify("")
-        
+            self.bgrocess_table.remove_row(self.added_process)
+
         except Exception as e:
             logger.error(f'{e} Function: {self.execute_command.__name__} in {Path(__file__).name}')
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
