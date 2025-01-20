@@ -10,7 +10,7 @@ from Meine.logger_config import logger
 
 d: dict[Pattern[str]] = {
     'twopath':re.compile(r'''(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)'''),
-    'onepath':re.compile(r'''(d|rm|r|del||mk|mkdir|mkd|clr|show)\s+(.+)'''),
+    'onepath':re.compile(r'''(d|rm|r|del|mk|mkdir|mkd|create|clr|show)\s+(.+)'''),
     'rename':re.compile(r'(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)'),
     'system':re.compile(r'(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process|shutdown|restart|reboot)\s?(\s[^\s]+)?'),
     'search_text':re.compile(r'''(find|where|search)\s+["'](.+)["']\s+(.+)'''),

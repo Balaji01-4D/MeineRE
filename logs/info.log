@@ -29,3 +29,16 @@
 2025-01-19 23:29:40,525 - notes.py - None None TreeNode('dost', None)
 2025-01-19 23:30:27,277 - notes.py - dost None TreeNode('dost', None)
 2025-01-19 23:30:34,546 - notes.py - newdata None TreeNode('newdata', None)
+2025-01-20 11:54:17,938 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-01-20 11:54:18,028 - app.py - <textual.widgets._data_table.RowKey object at 0x77072dd13b30>
+2025-01-20 11:54:32,176 - app.py - False
+2025-01-20 11:54:39,667 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-01-20 11:54:39,846 - app.py - <textual.widgets._data_table.RowKey object at 0x77072e743c50>
+2025-01-20 11:55:03,223 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-01-20 11:55:03,327 - app.py - <textual.widgets._data_table.RowKey object at 0x7707301db680>
+2025-01-20 11:55:21,168 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-01-20 11:55:21,195 - app.py - <textual.widgets._data_table.RowKey object at 0x77072db0a150>
+2025-01-20 20:58:17,035 - app.py - False
+2025-01-20 20:59:09,636 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-20 20:59:09,636 - file.py - Delete_File executing
+2025-01-20 20:59:09,682 - app.py - <textual.widgets._data_table.RowKey object at 0x7cae99dd10d0>

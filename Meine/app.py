@@ -22,6 +22,8 @@ from Meine.main import CLI
 
 
 class MeineAI(App[None]):
+
+    ENABLE_COMMAND_PALETTE = False
     
     ALLOWED_FUNCTION ={
         'addpath':add_custom_path_expansion
