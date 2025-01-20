@@ -1,5 +1,7 @@
 import re
-from re import Pattern
+from re import Pattern,Match
+from typing import Coroutine
+from rich.table import Table
 from pathlib import Path
 from Meine.Actions import File,Zip,System
 from Meine.exceptions import RaiseNotify
@@ -13,8 +15,9 @@ d: dict[Pattern[str]] = {
     'system':re.compile(r'(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process|shutdown|restart|reboot)\s?(\s[^\s]+)?'),
     'search_text':re.compile(r'''(find|where|search)\s+["'](.+)["']\s+(.+)'''),
     'notepad':re.compile(r'(write|notepad|wr)\s+(.+)'),
-    'compress':re.compile(r'''(z|uzip|zip|tar|gz|7z|unzip)\s+(.+)'''),
+    'compress':re.compile(r'''(z|uz|zip|tar|gz|7z|unzip)\s+(.+)'''),
     'backup':re.compile(r'''(backup|bk)\s+(.+)''')
+
     }
 
 files = File()
@@ -23,9 +26,9 @@ zips = Zip()
 
 async def CLI(Command):
 
-    async def handle_rename(Match):
-        source_unknown_type:str = Match.group(2)
-        newname_unknown_type:str = Match.group(3)
+    async def handle_rename(RegexMatch: Match):
+        source_unknown_type:str = RegexMatch.group(2)
+        newname_unknown_type:str = RegexMatch.group(3)
         source:str|list = source_unknown_type.split(',') if ',' in source_unknown_type else source_unknown_type
         newname:str|list = newname_unknown_type.split(',') if ',' in newname_unknown_type else newname_unknown_type
 
@@ -39,11 +42,11 @@ async def CLI(Command):
         else:
             return await Rename(source, newname)
 
-    async def handle_two_path(Match):
-        act:str = Match.group(1)
-        source_unknown_type = Match.group(2) 
+    async def handle_two_path(RegexMatch: Match):
+        act:str = RegexMatch.group(1)
+        source_unknown_type = RegexMatch.group(2) 
         source: str|list = source_unknown_type.split(",") if "," in source_unknown_type else source_unknown_type
-        destination: str = Match.group(3)
+        destination: str = RegexMatch.group(3)
         if act in {"cp", "copy", "c"}:
             if isinstance(source, list):
                 results = [await Copy(s,destination) for s in source]
@@ -55,9 +58,9 @@ async def CLI(Command):
                 return '\n'.join(results)
             return await Move(source,destination)
 
-    async def handle_one_path(Match):
-        act = Match.group(1)
-        source_unknown_type = Match.group(2) 
+    async def handle_one_path(RegexMatch: Match):
+        act = RegexMatch.group(1)
+        source_unknown_type = RegexMatch.group(2) 
         source: str|list = source_unknown_type.split(",") if "," in source_unknown_type else source_unknown_type
 
 
@@ -92,9 +95,9 @@ async def CLI(Command):
 
 
 
-    async def handle_system(Match):
-        act = Match.group(1)
-        extra = Match.group(2)
+    async def handle_system(RegexMatch: Match):
+        act = RegexMatch.group(1)
+        extra = RegexMatch.group(2)
 
         system_actions = {
             "ip": systems.IP,
@@ -127,9 +130,9 @@ async def CLI(Command):
             return await system_actions[act]()
         raise RaiseNotify(f"[#E06C75]Unknown system action: {act}")
 
-    async def handle_compress(Match):
-        act: str = Match.group(1)
-        source_unknown: str = Match.group(2)
+    async def handle_compress(RegexMatch: Match) -> str :
+        act: str = RegexMatch.group(1)
+        source_unknown: str = RegexMatch.group(2)
         srcs:list|str = source_unknown.split(",") if "," in source_unknown else source_unknown
 
         if (act in {'unzip','uz'}):
@@ -145,9 +148,9 @@ async def CLI(Command):
 
             return await zips.Compress(Path(srcs),format=act)
         
-    async def handle_text_find(Match):
-        text = Match.group(2)
-        source = Path(Match.group(3))
+    async def handle_text_find(RegexMatch: Match) -> str|Table:
+        text = RegexMatch.group(2)
+        source = Path(RegexMatch.group(3))
         if (source.is_dir()):
             return await files.Text_Finder_Directory(text,source)
         elif (source.is_file()):
@@ -168,15 +171,15 @@ async def CLI(Command):
     }
 
     for key, pattern in d.items():
-        Match = pattern.match(Command)
-        if Match:
+        RegexMatch = pattern.match(Command)
+        if RegexMatch:
             if key in handlers:
-                return await handlers[key](Match)
+                return await handlers[key](RegexMatch)
 
     raise RaiseNotify("[#E06C75]Command not recognized.")
 
 
-async def Copy(Source:str,Destination:str) -> None:
+async def Copy(Source:str,Destination:str) -> str:
         sourcePath = Path(Source.strip("'"))
         destinationPath = Path(Destination.strip("'"))
         if (destinationPath.is_dir()):
@@ -194,7 +197,7 @@ async def Copy(Source:str,Destination:str) -> None:
             raise RaiseNotify(f'{destinationPath.name} Not Found')
 
 
-async def Move(Source:str ,Destination:str) -> None:
+async def Move(Source:str ,Destination:str) -> str:
         sourcePath = Path(Source.strip("'"))
         destinationPath = Path(Destination.strip("'"))
         if (destinationPath.is_dir()):
@@ -211,7 +214,7 @@ async def Move(Source:str ,Destination:str) -> None:
         else :
             raise RaiseNotify(f'{destinationPath.name} Not Found')
     
-async def Rename(Source:str,Newname:str) -> None:
+async def Rename(Source:str,Newname:str) -> str:
         sourcePath = Path(Source.strip("'"))
         NewnamePath = Path(Newname.strip("'"))
         if (sourcePath.is_file()):
@@ -224,7 +227,7 @@ async def Rename(Source:str,Newname:str) -> None:
             raise RaiseNotify(f"{Source} Not Found")
 
     
-async def Delete(Source:str) -> None:
+async def Delete(Source:str) -> str:
     sourcePath: Path = Path(Source.strip("'"))
     if (sourcePath.is_file()):
         result = await files.Delete_File(sourcePath)
@@ -236,7 +239,7 @@ async def Delete(Source:str) -> None:
         raise RaiseNotify(f"{Source} Not Found")
 
     
-async def Create(source:str,hint='folder'):
+async def Create(source:str,hint='folder') -> str:
     source = source.strip("'")
     if (hint != 'folder'):
         result = await files.Create_File(Path(source))

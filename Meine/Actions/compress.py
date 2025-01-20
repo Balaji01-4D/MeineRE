@@ -76,7 +76,7 @@ class Zip:
 
 
 
-    async def Extract(self, Source: Path) -> None:
+    async def Extract(self, Source: Path) -> str:
         if not Source.exists():
             return f"{Source.name} Not Found."
         

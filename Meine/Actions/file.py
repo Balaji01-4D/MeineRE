@@ -4,6 +4,7 @@ from rich.panel import Panel
 from rich.text import Text
 import asyncio
 import os
+from typing import Coroutine
 import aiofiles
 from rich.table import Table
 
@@ -18,7 +19,7 @@ class File:
     
 
     @log_time
-    async def Delete_File(self, FileName: Path) -> str:
+    async def Delete_File(self, FileName: Path) -> Coroutine[None,None,str]:
         logger.info(f'{self.Delete_File.__name__} executing')
         if FileName.is_dir():
             return self.Delete_Folder(FileName)
@@ -39,7 +40,7 @@ class File:
             return f"[error] {FileName.name} Not Found."
 
     @log_time        
-    async def Move_File(self, Source: Path, Destination: Path) -> str:
+    async def Move_File(self, Source: Path, Destination: Path) -> Coroutine[None,None,str]:
         Final = Destination / Source.name
 
         if Final.exists():
@@ -60,7 +61,7 @@ class File:
 
 
     @log_time
-    async def Rename_file(self, OldName: Path, NewName: Path) -> str:
+    async def Rename_file(self, OldName: Path, NewName: Path) -> Coroutine[None,None,str]:
         if NewName.suffix == "":
             if (OldName.suffixes == 1):
                 NewName = NewName.with_suffix(OldName.suffix)
@@ -86,7 +87,7 @@ class File:
             return(f"[error]Error {NewName.name} Is Aleady in {NewName.resolve().parent.name} Directory.")
 
     @log_time    
-    async def Copy_File(self, Source: Path, Destination: Path) -> str:
+    async def Copy_File(self, Source: Path, Destination: Path) -> Coroutine[None,None,str]:
         Final = Destination / Source.name
         if Final.exists():
             return AlreadyExist(Final.name, Final.parent)
@@ -105,7 +106,7 @@ class File:
             return f"[error] {Source.name} Does Not Exist."
 
     @log_time    
-    async def Create_File(self,Name:Path) -> str:
+    async def Create_File(self,Name:Path) -> Coroutine[None,None,str]:
         if (Name.exists()):
             return AlreadyExist(Name.name,Name.resolve().parent)
         try:
@@ -122,7 +123,7 @@ class File:
         
 
     @log_time    
-    async def ShowContent_File(self, FileName: Path) -> str:
+    async def ShowContent_File(self, FileName: Path) -> Coroutine[None,None,str]:
         """
         Displays the content of a file or the structure of a directory.
 
@@ -149,7 +150,7 @@ class File:
 
 
     @log_time
-    async def ClearContent_File(self, FileName: Path) -> str:
+    async def ClearContent_File(self, FileName: Path) -> Coroutine[None,None,str]:
         """
         Clears the content of a file. Handles errors gracefully.
 
@@ -173,7 +174,7 @@ class File:
             return f"[error]Error Clearing {FileName.name}: {str(e)}"
 
     @log_time    
-    async def Text_Finder_Directory(self, Text: str, Path: str = '.') -> None:
+    async def Text_Finder_Directory(self, Text: str, Path: str = '.') -> Coroutine[None,None,Table|str]:
         match_tables = Table(show_lines=True)
         match_tables.add_column('Line.no')
         match_tables.add_column('Filenmae')
@@ -188,7 +189,7 @@ class File:
         
 
     @log_time
-    async def Text_Finder_File(self,Text: str, file_path: str) -> Table:
+    async def Text_Finder_File(self,Text: str, file_path: str) -> Coroutine[None,None,Table]:
         try:
             match_lines = Table(show_lines=True)
             match_lines.add_column('line no')
@@ -205,7 +206,7 @@ class File:
         
 
     @log_time        
-    async def search_items(self,query: str, path: str = '.', search_type: str = 'both') -> list[str]:
+    async def search_items(self,query: str, path: str = '.', search_type: str = 'both') -> Coroutine[None,None,Table|str]:
         """
         Search for files or folders matching a query in the given path.
 
@@ -239,7 +240,7 @@ class File:
             return []
 
     @log_time
-    async def Create_Folder(self, Source: Path) -> str:
+    async def Create_Folder(self, Source: Path) -> Coroutine[None,None,str]:
         """
         Creates a directory at the specified Source path.
 
@@ -269,7 +270,7 @@ class File:
 
         
     @log_time
-    async def Move_Folder(self, Source: Path, Destination: Path) -> str:
+    async def Move_Folder(self, Source: Path, Destination: Path) -> Coroutine[None,None,str]:
         """
         Moves a file or directory from Source to Destination.
 
@@ -305,7 +306,7 @@ class File:
             return f"[error]Error Moving File or Directory: {str(e)}"
         
     @log_time
-    async def Copy_Folder(self, Source: Path, Destination: Path) -> str:
+    async def Copy_Folder(self, Source: Path, Destination: Path) -> Coroutine[None,None,str]:
         """
         Copies a file or directory from Source to Destination.
 
@@ -345,7 +346,7 @@ class File:
             return f"[error]Error in Copying: {str(e)}"
 
     @log_time
-    async def Delete_Folder(self, FolderName: Path) -> str:
+    async def Delete_Folder(self, FolderName: Path) -> Coroutine[None,None,str]:
         """
         Deletes a folder or file asynchronously.
 

@@ -40,6 +40,7 @@ class MeineAI(App[None]):
         self.history = load_history()
         self.history_index = len(self.history)
         self.si = {}
+        super().__init__()
         # self.call_later(self.execute_command)
 
     def compose(self):
@@ -134,12 +135,6 @@ class MeineAI(App[None]):
     #     except Exception as e:
     #         self.rich_log.write(f"Error in handle_files_click_input: {e}")
 
-    
-
-
-
-
-
 
     def handle_files_click_input(self, widget):
 
@@ -223,13 +218,16 @@ class MeineAI(App[None]):
                 if cmd:
                     try:
                         if 'cd ' in cmd:
-                            cmdpath = cmd.replace('cd ', '')
+                            cmdpath = cmd.strip('cd ')
                             cmdpath = Path(cmdpath)
                             if (cmdpath.is_dir()):
                                 self.run_worker(self.app.change_directory(cmdpath), name="cd_worker", description="Change Directory")
                                 self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
+            
                             else:
-                                self.notify(message="It is Not exists",severity="error")
+                                message = f'{cmdpath} is file' if cmdpath.is_file() else f'{cmdpath} Not Found' 
+                                logger.info(f'{cmdpath.is_dir()}')
+                                self.notify(message=message,severity="error")
                             
                         elif 'cwd' in cmd:
                             self.notify(message=f"{os.getcwd()}",title="Current working directory")

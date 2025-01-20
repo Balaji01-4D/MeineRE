@@ -1,0 +1,31 @@
+2025-01-19 14:15:29,543 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-19 14:15:29,543 - file.py - Delete_File executing
+2025-01-19 14:15:29,889 - app.py - <textual.widgets._data_table.RowKey object at 0x7a7f204db350>
+2025-01-19 23:23:05,388 - notes.py - TreeNode('Notes', None) None True
+2025-01-19 23:23:06,521 - notes.py - TreeNode('folder1', None) TreeNode('Notes', None) False
+2025-01-19 23:23:07,441 - notes.py - TreeNode('boss', None) TreeNode('folder1', None) False
+2025-01-19 23:23:21,618 - notes.py - TreeNode('folder1', None) TreeNode('Notes', None) False
+2025-01-19 23:23:23,372 - notes.py - TreeNode('folder1', None) TreeNode('Notes', None) False
+2025-01-19 23:23:25,151 - notes.py - TreeNode('boss', None) TreeNode('folder1', None) False
+2025-01-19 23:23:29,292 - notes.py - TreeNode('folder1', None) TreeNode('Notes', None) False
+2025-01-19 23:23:30,130 - notes.py - TreeNode('folder1', None) TreeNode('Notes', None) False
+2025-01-19 23:23:34,274 - notes.py - TreeNode('today', None) TreeNode('folder', None) False
+2025-01-19 23:23:36,811 - notes.py - TreeNode('today', None) TreeNode('folder', None) False
+2025-01-19 23:23:38,243 - notes.py - TreeNode('dost', None) TreeNode('folder', None) False
+2025-01-19 23:23:39,998 - notes.py - TreeNode('newdata', None) TreeNode('folder', None) False
+2025-01-19 23:23:43,622 - notes.py - TreeNode('folder', None) TreeNode('Notes', None) False
+2025-01-19 23:23:44,218 - notes.py - TreeNode('folder', None) TreeNode('Notes', None) False
+2025-01-19 23:23:45,114 - notes.py - TreeNode('today', None) TreeNode('folder', None) False
+2025-01-19 23:23:46,060 - notes.py - TreeNode('dost', None) TreeNode('folder', None) False
+2025-01-19 23:23:46,956 - notes.py - TreeNode('newdata', None) TreeNode('folder', None) False
+2025-01-19 23:28:04,607 - notes.py - TreeNode('folder', None) TreeNode('Notes', None) TreeNode('folder', None)
+2025-01-19 23:28:05,701 - notes.py - TreeNode('today', None) TreeNode('folder', None) TreeNode('today', None)
+2025-01-19 23:28:06,969 - notes.py - TreeNode('dost', None) TreeNode('folder', None) TreeNode('dost', None)
+2025-01-19 23:28:07,964 - notes.py - TreeNode('dost', None) TreeNode('folder', None) TreeNode('dost', None)
+2025-01-19 23:28:08,899 - notes.py - TreeNode('newdata', None) TreeNode('folder', None) TreeNode('newdata', None)
+2025-01-19 23:28:09,508 - notes.py - TreeNode('newdata', None) TreeNode('folder', None) TreeNode('newdata', None)
+2025-01-19 23:29:29,377 - notes.py - None None TreeNode('today', None)
+2025-01-19 23:29:40,354 - notes.py - None None TreeNode('dost', None)
+2025-01-19 23:29:40,525 - notes.py - None None TreeNode('dost', None)
+2025-01-19 23:30:27,277 - notes.py - dost None TreeNode('dost', None)
+2025-01-19 23:30:34,546 - notes.py - newdata None TreeNode('newdata', None)
