@@ -227,5 +227,16 @@
     "cd ../..",
     "cd balaji",
     "del .sudo_as_admin_successful",
-    "cd .."
+    "cd ..",
+    "cwd",
+    "j",
+    "j",
+    "j",
+    "j",
+    "j",
+    "j",
+    "j",
+    "j",
+    "j",
+    "j"
 ]

@@ -4,20 +4,17 @@ from pathlib import Path
 import os
 
 from Meine.utils.file_loaders import load_settings
-from Meine.logger_config import logger
-
-
-
-items =[]
 
 class DTree(DirectoryTree):
     
+
 
     CLICK_CHAIN_TIME_THRESHOLD = 0.5
     auto_expand = False
     
     BINDINGS = [Binding('left','cd_parent_directory'),Binding('home','cd_home_directory',priority=True),
                 Binding('right','select_focused_directory')]
+    
     def filter_paths(self, paths):
         self.show_hidden = load_settings()["show_hidden_files"]
         if (self.show_hidden):
@@ -28,6 +25,10 @@ class DTree(DirectoryTree):
     
     def on_directory_tree_directory_selected(self,event:DirectoryTree.DirectorySelected):
         self.auto_expand = False
+        if (event.node.is_root):
+            self.path = event.path.parent
+        else :
+            self.path = event.path
     
     
     def action_cd_home_directory(self):

@@ -1,16 +1,29 @@
-from textual.widgets import RichLog,DataTable
+from textual.widgets import RichLog,DataTable,Input
 from textual.containers import Container,Vertical
-from os import chdir
+from textual import on
+from os import chdir,listdir
+from pathlib import Path
+from ..logger_config import logger
 
 
 from .directory_tree import DTree
 
 class Directory_tree_container(Container):
     def compose(self):
-        dtree = DTree(path='/home/balaji/testings',id='dt')
-        self.dtree_log = RichLog(id='dtree_log')
-        yield dtree
-        chdir(dtree.path)
+        self.dtree = DTree(path='/home/balaji/testings',id='dt')
+        self.Dtree_query = Input(id='query')
+        yield self.Dtree_query
+        yield self.dtree
+        chdir(self.dtree.path)
+
+    # @on(Input.Changed)
+    # def on_input_changed(self,event:Input.Changed):
+    #     list_path = listdir(self.dtree.path)
+    #     a = [Path(path) for path in list_path if path.startswith(event.value)]
+    #     self.dtree.filter_paths(a)
+    #     self.dtree.refresh()
+    #     logger.info('hello wrold')
+        
 
 class Background_process_container(Container):
     def compose(self):

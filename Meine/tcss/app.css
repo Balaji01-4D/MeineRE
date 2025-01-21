@@ -29,12 +29,13 @@ Directory_tree_container{
         background: $surface;
         border: rgb(80, 79, 79);
     }
-    #back{
-        color: $foreground;
-        width:0;
-        height: 3;
-        background: $foreground;
+    #query{
+        background: $surface;
+        width: 100%;
+        height:1;
+        border:none;
     }
+
 }
 
 Directory_tree_container.-hidden{
