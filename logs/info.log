@@ -90,3 +90,20 @@
 2025-01-21 21:55:55,980 - containers.py - hello wrold
 2025-01-21 21:55:56,230 - containers.py - hello wrold
 2025-01-21 21:55:57,248 - containers.py - hello wrold
+2025-01-25 18:43:45,142 - app.py - False
+2025-01-25 18:44:03,052 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-25 18:44:03,052 - file.py - Delete_File executing
+2025-01-25 18:44:03,128 - app.py - <textual.widgets._data_table.RowKey object at 0x7a796394d4c0>
+2025-01-25 18:44:50,385 - app.py - False
+2025-01-25 18:44:54,969 - app.py - False
+2025-01-25 18:45:02,878 - app.py - False
+2025-01-25 18:45:06,075 - app.py - False
+2025-01-25 18:45:14,597 - app.py - False
+2025-01-25 18:45:18,266 - app.py - False
+2025-01-25 18:45:22,697 - app.py - False
+2025-01-25 18:45:26,868 - app.py - False
+2025-01-25 18:45:29,893 - app.py - False
+2025-01-25 18:45:35,909 - app.py - False
+2025-01-25 18:46:22,844 - app.py - False
+2025-01-25 18:46:25,917 - app.py - False
+2025-01-25 18:46:32,635 - app.py - False

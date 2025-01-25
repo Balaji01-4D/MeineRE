@@ -86,5 +86,3 @@ class MeineInput(Input):
     
     def on_input_submitted(self):
         self.history_index +=1
-
-

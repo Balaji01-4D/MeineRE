@@ -27,8 +27,7 @@ class DTree(DirectoryTree):
         self.auto_expand = False
         if (event.node.is_root):
             self.path = event.path.parent
-        else :
-            self.path = event.path
+
     
     
     def action_cd_home_directory(self):

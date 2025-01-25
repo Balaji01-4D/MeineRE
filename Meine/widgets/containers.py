@@ -11,8 +11,6 @@ from .directory_tree import DTree
 class Directory_tree_container(Container):
     def compose(self):
         self.dtree = DTree(path='/home/balaji/testings',id='dt')
-        self.Dtree_query = Input(id='query')
-        yield self.Dtree_query
         yield self.dtree
         chdir(self.dtree.path)
 
