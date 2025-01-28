@@ -1,5 +1,4 @@
 import os
-import xdialog
 import asyncio
 from textual.widgets import RichLog,DirectoryTree,DataTable,Input
 from textual.app import App
@@ -13,6 +12,8 @@ from textual.worker import WorkerFailed
 from Meine.logger_config import logger
 from Meine.exceptions import RaiseNotify
 from Meine.Screens.settings import Settings
+from Meine.Screens.help import HelpScreen
+
 from Meine.utils.file_loaders import load_history
 from Meine.utils.file_editor import save_history
 from Meine.widgets.input import MeineInput
@@ -58,11 +59,15 @@ class MeineAI(App[None]):
             id="main"
         )
             
-    def key_ctrl_z(self):
-        yes = xdialog.directory('select the directory')
-        if (yes):
-            self.inputconsole.value = yes
-            self.query_one(DirectoryTree).path = yes
+    def key_ctrl_k(self):
+        try:
+            if (self.screen_stack[-1] == 'help_screen'):
+                self.pop_screen()
+            else :
+                self.push_screen(HelpScreen(id='help_screen'))
+                self.notify('help')
+        except:
+            None
 
     def action_focus_dt(self):
         self.dt = self.query_one('#dt',DirectoryTree)

@@ -42,36 +42,36 @@ Input_manual ='''\
 
 | Action     | Command                                       |
 |-------------|-----------------------------------------------|
-| Single     | `mk|create <filename>`, `mkdir|mkd <foldername>`|
-| Multiple   | `mk|create <filename1>, <filename2>, ...`, `mkdir|mkd <foldername1>, <foldername2>, ...` |
+| Single     | `mk (or) create <filename>`, `mkdir|mkd <foldername>`|
+| Multiple   | `mk (or) create <filename1>, <filename2>, ...`, `mkdir|mkd <foldername1>, <foldername2>, ...` |
 
 ### **Rename Command**
 
 | Action     | Command                                        |
 |-------------|-----------------------------------------------|
-| Single     | `rn|rename <oldname> as <newname>`             |
-| Multiple   | `rn|rename <oldname1>, <oldname2>, ... as <newname1>, <newname2>, ...` |
+| Single     | `rn (or) rename <oldname> as <newname>`             |
+| Multiple   | `rn (or) rename <oldname1>, <oldname2>, ... as <newname1>, <newname2>, ...` |
 
 ### **Copy Command**
 
 | Action     | Command                                       |
 |-------------|-----------------------------------------------|
-| Single     | `cp|c|copy <source> to <destination>`         |
-| Multiple   | `cp|c|copy <source1>, <source2>, ... to <destination>` |
+| Single     | `cp (or) c (or) copy <source> to <destination>`         |
+| Multiple   | `cp (or) c (or) copy <source1>, <source2>, ... to <destination>` |
 
 ### **Move Command**
 
 | Action     | Command                                       |
 |-------------|-----------------------------------------------|
-| Single     | `mv|m|move <source> to <destination>`         |
-| Multiple   | `mv|m|move <source1>, <source2>, ... to <destination>` |
+| Single     | `mv (or) m (or) move <source> to <destination>`         |
+| Multiple   | `mv (or) m (or) move <source1>, <source2>, ... to <destination>` |
 
 ### **Search Text Command**
 
 | Action     | Command                                       |
 |-------------|-----------------------------------------------|
-| Folder     | `search|find|where "text" <folder path>`      |
-| File       | `search|find|where "text" <file path>`        |
+| Folder     | `search (or) find (or) where "text" <folder path>`      |
+| File       | `search (or) find (or) where "text" <file path>`        |
 
 ---
 
@@ -89,7 +89,7 @@ Input_manual ='''\
 | `time`  | Display current system time              |
 | `os`    | Display operating system information     |
 | `sys`   | Display system information               |
-| `user|me` | Display current user information        |
+| `user,me` | Display current user information        |
 | `net`   | Display network details                  |
 | `env`   | Display environmental variables          |
 
@@ -103,10 +103,11 @@ class HelpScreen(ModalScreen[None]):
         
         yield Static('Help Screen',id='header')
         with TabbedContent():
+            with TabPane("Input console",id='Input'):
+                yield Markdown(Input_manual)
             with TabPane("Directory Tree",id='tab_Dtree'):
                 yield Markdown(directory_tree_manual)
-            with TabPane("Green",id='Input'):
-                yield Markdown(Input_manual)
+
 
 class hellp(App[None]):
 
@@ -121,6 +122,6 @@ class hellp(App[None]):
 
         self.push_screen(HelpScreen(id='helpscreen'))
 
-hellp().run()
+
 
 

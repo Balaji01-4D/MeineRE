@@ -8,7 +8,6 @@ from Meine.utils.file_loaders import load_settings
 class DTree(DirectoryTree):
     
 
-
     CLICK_CHAIN_TIME_THRESHOLD = 0.5
     auto_expand = False
     

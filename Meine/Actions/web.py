@@ -1,5 +1,4 @@
 import webbrowser
-from pytube import YouTube
 
 from Meine.utils.file_loaders import load_custom_urls
 from Meine.exceptions import RaiseNotify
