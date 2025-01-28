@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from textual.widgets import Static,Switch,Button 
+from textual.widgets import Static,Switch,Button ,Input
 from textual.containers import Container,Vertical,Horizontal
 from textual.events import Click
 from textual.screen import ModalScreen
@@ -48,3 +48,21 @@ class Settings(ModalScreen):
                 self.setting_json['show_hidden_files'] = event.value
             save_settings(self.setting_json)
     
+
+class NameGetterScreen(ModalScreen):
+     
+    CSS_PATH = Path(__file__).parent.parent / 'tcss/setting.css'
+
+    def __init__(self, title , callback , name = None, id = None, classes = None):
+        super().__init__(name, id, classes)
+        self.callback = callback
+        self.title = title
+
+    def compose(self):
+        with Container():
+            yield Static(self.title,id='title')
+            yield Input(id='Input_of_utils')
+
+    def on_input_submitted(self, event: Input.Submitted):
+        result = self.callback(event.value)
+        self.app.notify(result)

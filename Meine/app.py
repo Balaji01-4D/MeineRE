@@ -1,17 +1,19 @@
 import os
 import asyncio
 from textual.widgets import RichLog,DirectoryTree,DataTable,Input
-from textual.app import App
+from textual.app import App,SystemCommand
 from rich.panel import Panel
 from pathlib import Path
 from textual.containers import Container
 from textual.events import Click
 from textual.binding import Binding
 from textual.worker import WorkerFailed
+from textual.command import Provider,Hits,Hit
+from functools import partial
 
 from Meine.logger_config import logger
 from Meine.exceptions import RaiseNotify
-from Meine.Screens.settings import Settings
+from Meine.Screens.settings import Settings,NameGetterScreen
 from Meine.Screens.help import HelpScreen
 
 from Meine.utils.file_loaders import load_history
@@ -21,14 +23,34 @@ from Meine.utils.file_editor import add_custom_path_expansion
 from Meine.widgets.containers import Directory_tree_container,Background_process_container
 from Meine.main import CLI
 
+class CustomCommand(Provider):
+
+    async def search(self,query: str) -> Hits:
+
+        C = 'add custom path expansions'
+        matcher = self.matcher(query)
+
+        score = matcher.match(C)
+        if (score > 0):
+            yield Hit(
+                score,
+                matcher.highlight(query),
+                partial(self.app.push_screen,NameGetterScreen(title=f'{C}',callback=add_custom_path_expansion)),
+                help=f'{C}'
+            )
+        
+
+
 
 class MeineAI(App[None]):
 
-    ENABLE_COMMAND_PALETTE = False
+    COMMANDS = App.COMMANDS | {CustomCommand}
+    def get_system_commands(self, screen):
+        yield from super().get_system_commands(screen)
+        yield SystemCommand("Settings","open settings",self.key_ctrl_s)
+        yield SystemCommand("Help","open the help screen",self.key_ctrl_k)
+        yield SystemCommand("add custom path",'add path exp',partial(self.push_NameGetter_screen,'something',add_custom_path_expansion))
     
-    ALLOWED_FUNCTION ={
-        'addpath':add_custom_path_expansion
-        }
 
     CSS_PATH = Path(__file__).parent / "tcss/app.css"
     AUTO_FOCUS = '#input'
@@ -37,6 +59,9 @@ class MeineAI(App[None]):
                 ]
     
     RUNNING_TASKS: dict[int] = {}
+
+    def push_NameGetter_screen(self, title, callback):
+        self.push_screen(NameGetterScreen(title,callback))
     
     def __init__(self):
         super().__init__()
@@ -209,48 +234,50 @@ class MeineAI(App[None]):
         except Exception as e:
             logger.error(f'{e} Function: {self.on_click.__name__} in {Path(__file__).name}')
             self.notify(str(e))
+        logger.info(f'{event.widget.id} {event.screen_offset}')
             
 
     async def on_input_submitted(self, event: Input.Submitted):
-        try:
-            async def safe_eval(cmd,allow_function):
-                
-                result = eval(cmd,allow_function,{})
-                self.query_one(RichLog).write(result)
-            console = self.query_one('#output')
-            cmd = event.value.strip()
+        if (self.screen == '#_default'):
             try:
-                console.write(eval(cmd,self.ALLOWED_FUNCTION))
-            except:
-                if cmd:
-                    try:
-                        if 'cd ' in cmd:
-                            cmdpath = cmd.strip('cd ')
-                            cmdpath = Path(cmdpath)
-                            if (cmdpath.is_dir()):
-                                self.run_worker(self.app.change_directory(cmdpath), name="cd_worker", description="Change Directory")
-                                self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
-            
+                async def safe_eval(cmd,allow_function):
+                    
+                    result = eval(cmd,allow_function,{})
+                    self.query_one(RichLog).write(result)
+                console = self.query_one('#output')
+                cmd = event.value.strip()
+                try:
+                    console.write(eval(cmd,{},{}))
+                except:
+                    if cmd:
+                        try:
+                            if 'cd ' in cmd:
+                                cmdpath = cmd.strip('cd ')
+                                cmdpath = Path(cmdpath)
+                                if (cmdpath.is_dir()):
+                                    self.run_worker(self.app.change_directory(cmdpath), name="cd_worker", description="Change Directory")
+                                    self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
+                
+                                else:
+                                    message = f'{cmdpath} is file' if cmdpath.is_file() else f'{cmdpath} Not Found' 
+                                    logger.info(f'{cmdpath.is_dir()}')
+                                    self.notify(message=message,severity="error")
+                                
+                            elif 'cwd' in cmd:
+                                self.notify(message=f"{os.getcwd()}",title="Current working directory")
                             else:
-                                message = f'{cmdpath} is file' if cmdpath.is_file() else f'{cmdpath} Not Found' 
-                                logger.info(f'{cmdpath.is_dir()}')
-                                self.notify(message=message,severity="error")
-                            
-                        elif 'cwd' in cmd:
-                            self.notify(message=f"{os.getcwd()}",title="Current working directory")
-                        else:
-                            self.run_worker(self.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
-                    except Exception as e:
-                        console.write(f"[error] {str(e)}")
-            self.history.append(cmd)
-            save_history(self.history)
-            self.query_one("#dt").refresh()
-            self.history_index = len(self.history)
-            event.input.value = ''
+                                self.run_worker(self.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
+                        except Exception as e:
+                            console.write(f"[error] {str(e)}")
+                self.history.append(cmd)
+                save_history(self.history)
+                self.query_one("#dt").refresh()
+                self.history_index = len(self.history)
+                event.input.value = ''
 
-        except PermissionError as e:
-            console.write(f"error {str(e)}")
-            logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
+            except PermissionError as e:
+                console.write(f"error {str(e)}")
+                logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
 
 
 

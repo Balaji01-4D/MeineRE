@@ -24,6 +24,7 @@ def save_settings(settings: dict[str|bool]) -> None:
 def add_custom_path_expansion(Name: str|None = None) -> None:
     if (not Name):
         raise RaiseNotify('Need a Name')
+    
     new_path = xdialog.directory()
     data = load_Path_expansion()
     data[Name] = new_path
