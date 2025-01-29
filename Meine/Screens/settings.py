@@ -64,5 +64,6 @@ class NameGetterScreen(ModalScreen):
             yield Input(id='Input_of_utils')
 
     def on_input_submitted(self, event: Input.Submitted):
+        self.app.pop_screen()
         result = self.callback(event.value)
         self.app.notify(result)

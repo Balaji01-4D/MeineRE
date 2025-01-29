@@ -14,9 +14,25 @@ from rich.table import Table
 import asyncio
 
 from .other import SizeHelper
+from ..exceptions import RaiseNotify
 
 class System:
 
+    def ShutDown(self) :
+        os_type = platform.system()
+
+
+
+        if (os_type == 'Windows'):
+            os.system(r"shutdown \s \t 5")
+            raise RaiseNotify('going to shutdown in 5 seconds')
+        elif (os_type == 'Linux' or os_type == 'Darwin'):
+            os.system("sleep 5 && shutdown -h now")
+            raise RaiseNotify('going to shutdown in 5 seconds')
+        else:
+            raise RaiseNotify('Unsupported Os')
+        
+        
     async def Time(self) -> Panel :
         date = dt.datetime.now().date()
         time = dt.datetime.now().time()

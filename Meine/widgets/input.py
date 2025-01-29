@@ -57,7 +57,7 @@ class MeineInput(Input):
         }
 
 
-        USERDEFINED_EXPANSION = load_Path_expansion()
+        USERDEFINED_EXPANSION = load_Path_expansion()['path_expansions']
         if (keyword in DEFAULT_PATH_EXPANSION):
             ReplaceBy = str(DEFAULT_PATH_EXPANSION[keyword])
             self.value = self.value.replace(f'{{{keyword}}}',ReplaceBy) 

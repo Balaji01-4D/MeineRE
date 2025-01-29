@@ -15,6 +15,7 @@ from Meine.logger_config import logger
 from Meine.exceptions import RaiseNotify
 from Meine.Screens.settings import Settings,NameGetterScreen
 from Meine.Screens.help import HelpScreen
+from Meine.Actions.system import System
 
 from Meine.utils.file_loaders import load_history
 from Meine.utils.file_editor import save_history
@@ -34,9 +35,9 @@ class CustomCommand(Provider):
         if (score > 0):
             yield Hit(
                 score,
-                matcher.highlight(query),
+                matcher.highlight(C),
                 partial(self.app.push_screen,NameGetterScreen(title=f'{C}',callback=add_custom_path_expansion)),
-                help=f'{C}'
+                help=f'adding a custom path expansions'
             )
         
 
@@ -49,7 +50,7 @@ class MeineAI(App[None]):
         yield from super().get_system_commands(screen)
         yield SystemCommand("Settings","open settings",self.key_ctrl_s)
         yield SystemCommand("Help","open the help screen",self.key_ctrl_k)
-        yield SystemCommand("add custom path",'add path exp',partial(self.push_NameGetter_screen,'something',add_custom_path_expansion))
+        yield SystemCommand("shutdown","shutdown the system now",self.safe_shutdown)
     
 
     CSS_PATH = Path(__file__).parent / "tcss/app.css"
@@ -122,6 +123,18 @@ class MeineAI(App[None]):
     def action_toggle_sidebar(self):
         self.query_one(Directory_tree_container).toggle_class("-hidden")
     
+
+    def safe_shutdown(self):
+        try:
+            sys = System()
+            sys.ShutDown()
+        except RaiseNotify as e :
+            if ('5' in e):
+                self.notify(e.message)
+                self.exit()
+            else :
+                self.notify(e.message)
+
 
 
 
@@ -234,7 +247,6 @@ class MeineAI(App[None]):
         except Exception as e:
             logger.error(f'{e} Function: {self.on_click.__name__} in {Path(__file__).name}')
             self.notify(str(e))
-        logger.info(f'{event.widget.id} {event.screen_offset}')
             
 
     async def on_input_submitted(self, event: Input.Submitted):

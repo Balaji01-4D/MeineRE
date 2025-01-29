@@ -21,7 +21,7 @@ def load_history() -> list[str]:
 def load_Path_expansion() -> dict[str]:
     with open(customs_loc,'r') as path_exp:
         data = path_exp.read().strip()
-        return json.loads(data)['path_expansions']
+        return json.loads(data)
     
 def load_custom_urls() -> dict[str]:
     with open(customs_loc,'r') as file:
