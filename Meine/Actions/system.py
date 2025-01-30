@@ -6,8 +6,6 @@ from time import ctime
 import psutil
 from rich.console import Group
 import platform
-from tabulate import tabulate
-import pywifi
 from rich.progress import Progress, BarColumn
 from rich.panel import Panel
 from rich.table import Table
@@ -18,20 +16,31 @@ from ..exceptions import RaiseNotify
 
 class System:
 
+    os_type = platform.system()
+
     def ShutDown(self) :
-        os_type = platform.system()
 
-
-
-        if (os_type == 'Windows'):
-            os.system(r"shutdown \s \t 5")
-            raise RaiseNotify('going to shutdown in 5 seconds')
-        elif (os_type == 'Linux' or os_type == 'Darwin'):
-            os.system("sleep 5 && shutdown -h now")
-            raise RaiseNotify('going to shutdown in 5 seconds')
+        if (self.os_type == 'Windows'):
+            os.system(r"shutdown \s \t 60")
+            raise RaiseNotify('shutting down in 1 Minute')
+        elif (self.os_type == 'Linux' or self.os_type == 'Darwin'):
+            os.system("shutdown -h +1")
+            raise RaiseNotify('shutting down in 1 Minute')
         else:
-            raise RaiseNotify('Unsupported Os')
-        
+            raise RaiseNotify('Unsupported OS')
+    
+    def Reboot(self):
+
+        if (self.os_type == 'Windows'):
+            os.system(r"shutdown \r \t 60")
+            raise RaiseNotify('restarting in 1 Minute')
+        elif (self.os_type == 'Linux' or self.os_type == 'Darwin'):
+            os.system("shutdown -r +1")
+            raise RaiseNotify('restarting in 1 Minute')
+        else:
+            raise RaiseNotify('Unsupported OS')
+
+    
         
     async def Time(self) -> Panel :
         date = dt.datetime.now().date()
@@ -333,63 +342,4 @@ class System:
             return (f"Permission denied to terminate the process {pid}")
         
 
-    async def Scan_Wifi_Window(self) -> Panel:                                                #windows
-        wifi = asyncio.to_thread(pywifi.PyWiFi)  
-        iface = wifi.interfaces()[0]  
-
-        iface.scan() 
-        scan_results = iface.scan_results() 
-
-        wifi_data = []
-        for network in scan_results:
-            encryption_status = "Locked" if network.akm else "Open"
-            wifi_data.append([network.ssid, network.signal, encryption_status])
-
-        headers = ["SSID", "Signal Strength", "Encryption"]
-        return(tabulate(wifi_data, headers=headers, tablefmt="fancy_grid"))
-
-
-
-    async def scan_wifi_linux(self) -> Panel:
-        import subprocess
-        result = asyncio.to_thread(subprocess.run,['nmcli', '-v'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if result.returncode == 0:
-            result = asyncio.to_thread(subprocess.run,['nmcli', '-t', '-f', 'SSID,SECURITY', 'dev', 'wifi'], stdout=subprocess.PIPE)
-            networks = result.stdout.decode('utf-8').strip().split('\n')
-
-            wifi_data = []
-            for network in networks:
-                if network.strip():  
-                    ssid, security = network.split(':', 1)
-                    status = "Locked" if security else "Open"
-                    wifi_data.append([ssid, status])
-            headers = ["SSID", "Security"]
-            return(tabulate(wifi_data, headers=headers, tablefmt="fancy_grid"))
-        else:
-            panel = Panel("This script requires 'nmcli' for managing Wi-Fi.",
-            "\n  sudo apt install network-manager  # For Debian/Ubuntu",
-            "\nTo install it, run:","\n  sudo yum install NetworkManager  # For RHEL/Fedora",
-            "\n  sudo pacman -S networkmanager    # For Arch Linux")
-
-            return panel
-        
-    async def shutdown(self,delay:int = 3) -> Panel:
-        if (os.name == 'nt'):
-            os.system(f'shutdown /s /t {delay}')
-        elif (os.name == 'posix'):
-            os.system(f'sudo shutdown {delay}')
-        else :
-            return Panel('Unsupported Operating System')
-        return Panel('shutdown in 3 seconds')
-    
-    async def shutdown(self,delay:int = 3) -> Panel:
-        if (os.name == 'nt'):
-            os.system(f'shutdown /r /t {delay}')
-        elif (os.name == 'posix'):
-            os.system(f'sudo reboot {delay}')
-        else :
-            return Panel('Unsupported Operating System')
-        return Panel('reboot in 3 seconds')
-
-            
 

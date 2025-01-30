@@ -139,3 +139,6 @@
 2025-01-29 22:16:16,966 - app.py - None Offset(x=18, y=22)
 2025-01-29 22:16:18,413 - app.py - input Offset(x=26, y=22)
 2025-01-29 22:16:25,354 - app.py - input Offset(x=0, y=22)
+2025-01-30 21:49:08,595 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-01-30 21:49:08,619 - file.py - Delete_File executing
+2025-01-30 21:49:08,654 - app.py - <textual.widgets._data_table.RowKey object at 0x745cfe9a3e90>

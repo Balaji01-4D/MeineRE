@@ -260,5 +260,9 @@
     "cd ..",
     "cd django",
     "cd django",
-    "cd django"
+    "cd django",
+    "cwd",
+    "cd /home/balaji/Downloads",
+    "ls",
+    "del MeineAI_2025-01-30T21_32_22_128484.svg"
 ]

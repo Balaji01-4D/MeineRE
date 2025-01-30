@@ -45,13 +45,15 @@ class CustomCommand(Provider):
 
 class MeineAI(App[None]):
 
+    
+
     COMMANDS = App.COMMANDS | {CustomCommand}
     def get_system_commands(self, screen):
         yield from super().get_system_commands(screen)
         yield SystemCommand("Settings","open settings",self.key_ctrl_s)
         yield SystemCommand("Help","open the help screen",self.key_ctrl_k)
-        yield SystemCommand("shutdown","shutdown the system now",self.safe_shutdown)
-    
+        yield SystemCommand("shutdown","shutdown the system after 1 Minute",self.safe_shutdown)
+        yield SystemCommand("reboot","reboot the system after 1 Minute",self.safe_reboot)
 
     CSS_PATH = Path(__file__).parent / "tcss/app.css"
     AUTO_FOCUS = '#input'
@@ -129,14 +131,23 @@ class MeineAI(App[None]):
             sys = System()
             sys.ShutDown()
         except RaiseNotify as e :
-            if ('5' in e):
+            if ('going' in e.message):
                 self.notify(e.message)
-                self.exit()
+                self.set_timer(5,self.exit)
             else :
                 self.notify(e.message)
-
-
-
+    
+    def safe_reboot(self):
+        try:
+            sys = System()
+            sys.Reboot()
+        except RaiseNotify as e:
+            if ('going' in e.message):
+                self.notify(e.message)
+                self.set_timer(5,self.exit)
+            else :
+                self.notify(e.message)
+        
 
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
@@ -250,46 +261,40 @@ class MeineAI(App[None]):
             
 
     async def on_input_submitted(self, event: Input.Submitted):
-        if (self.screen == '#_default'):
+        try:
+            cmd = event.value.strip()
             try:
-                async def safe_eval(cmd,allow_function):
-                    
-                    result = eval(cmd,allow_function,{})
-                    self.query_one(RichLog).write(result)
-                console = self.query_one('#output')
-                cmd = event.value.strip()
-                try:
-                    console.write(eval(cmd,{},{}))
-                except:
-                    if cmd:
-                        try:
-                            if 'cd ' in cmd:
-                                cmdpath = cmd.strip('cd ')
-                                cmdpath = Path(cmdpath)
-                                if (cmdpath.is_dir()):
-                                    self.run_worker(self.app.change_directory(cmdpath), name="cd_worker", description="Change Directory")
-                                    self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
-                
-                                else:
-                                    message = f'{cmdpath} is file' if cmdpath.is_file() else f'{cmdpath} Not Found' 
-                                    logger.info(f'{cmdpath.is_dir()}')
-                                    self.notify(message=message,severity="error")
-                                
-                            elif 'cwd' in cmd:
-                                self.notify(message=f"{os.getcwd()}",title="Current working directory")
+                self.rich_log.write(eval(cmd,{},{}))
+            except:
+                if cmd and event.input.id == "input":
+                    try:
+                        if 'cd ' in cmd:
+                            cmdpath = cmd.strip('cd ')
+                            cmdpath = Path(cmdpath)
+                            if (cmdpath.is_dir()):
+                                self.run_worker(self.app.change_directory(cmdpath), name="cd_worker", description="Change Directory")
+                                self.notify(message=f'{str(cmdpath.resolve())}',title="changed directory")
+            
                             else:
-                                self.run_worker(self.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
-                        except Exception as e:
-                            console.write(f"[error] {str(e)}")
-                self.history.append(cmd)
-                save_history(self.history)
-                self.query_one("#dt").refresh()
-                self.history_index = len(self.history)
-                event.input.value = ''
+                                message = f'{cmdpath} is file' if cmdpath.is_file() else f'{cmdpath} Not Found' 
+                                logger.info(f'{cmdpath.is_dir()}')
+                                self.notify(message=message,severity="error")
+                            
+                        elif 'cwd' in cmd:
+                            self.notify(message=f"{os.getcwd()}",title="Current working directory")
+                        else:
+                            self.run_worker(self.execute_command(cmd), name="cmd_worker", description=f"Executing: {cmd}")
+                    except Exception as e:
+                        self.rich_log.write(f"[error] {str(e)}")
+            self.history.append(cmd)
+            save_history(self.history)
+            self.query_one("#dt").refresh()
+            self.history_index = len(self.history)
+            event.input.value = ''
 
-            except PermissionError as e:
-                console.write(f"error {str(e)}")
-                logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
+        except PermissionError as e:
+            self.rich_log.write(f"error {str(e)}")
+            logger.error(f'{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}')
 
 
 
