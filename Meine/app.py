@@ -131,7 +131,7 @@ class MeineAI(App[None]):
             sys = System()
             sys.ShutDown()
         except RaiseNotify as e :
-            if ('going' in e.message):
+            if ('Minute' in e.message):
                 self.notify(e.message)
                 self.set_timer(5,self.exit)
             else :
@@ -142,7 +142,7 @@ class MeineAI(App[None]):
             sys = System()
             sys.Reboot()
         except RaiseNotify as e:
-            if ('going' in e.message):
+            if ('Minute' in e.message):
                 self.notify(e.message)
                 self.set_timer(5,self.exit)
             else :
