@@ -3,7 +3,7 @@ from pathlib import Path
 import xdialog
 import asyncio
 
-from Meine.exceptions import RaiseNotify
+from Meine.exceptions import InfoNotify
 from .file_loaders import load_Path_expansion
 
 history_loc = Path(__file__).parent.parent /'resources/history.json' 
@@ -23,7 +23,7 @@ def save_settings(settings: dict[str|bool]) -> None:
 
 def add_custom_path_expansion(Name: str|None = None) -> None:
     if (not Name):
-        raise RaiseNotify('Need a Name')
+        raise InfoNotify('Need a Name')
     
     selected_path = xdialog.directory()
     data = load_Path_expansion()

@@ -12,7 +12,7 @@ from textual.command import Provider,Hits,Hit
 from functools import partial
 
 from Meine.logger_config import logger
-from Meine.exceptions import RaiseNotify
+from Meine.exceptions import InfoNotify,ErrorNotify,WarningNotify
 from Meine.Screens.settings import Settings,NameGetterScreen
 from Meine.Screens.help import HelpScreen
 from Meine.Actions.system import System
@@ -130,7 +130,7 @@ class MeineAI(App[None]):
         try:
             sys = System()
             sys.ShutDown()
-        except RaiseNotify as e :
+        except InfoNotify as e :
             if ('Minute' in e.message):
                 self.notify(e.message)
                 self.set_timer(5,self.exit)
@@ -141,7 +141,7 @@ class MeineAI(App[None]):
         try:
             sys = System()
             sys.Reboot()
-        except RaiseNotify as e:
+        except InfoNotify as e:
             if ('Minute' in e.message):
                 self.notify(e.message)
                 self.set_timer(5,self.exit)
@@ -232,8 +232,6 @@ class MeineAI(App[None]):
         except Exception as e:
             self.rich_log.write(f"error clicks {e}")
             logger.error(f'{e} Function: {self.handle_files_click_input.__name__} in {Path(__file__).name}')
-
-        
 
 
     def on_click(self, event: Click):
@@ -328,7 +326,7 @@ class MeineAI(App[None]):
             else :
                 self.rich_log.write(result)
             self.bgrocess_table.remove_row(self.added_process)
-        except RaiseNotify as e:
+        except ErrorNotify as e:
             self.notify(message=e.message,title='Error',severity='error')
             self.bgrocess_table.remove_row(self.added_process)
 

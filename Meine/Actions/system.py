@@ -12,7 +12,7 @@ from rich.table import Table
 import asyncio
 
 from .other import SizeHelper
-from ..exceptions import RaiseNotify
+from ..exceptions import InfoNotify
 
 class System:
 
@@ -22,23 +22,23 @@ class System:
 
         if (self.os_type == 'Windows'):
             os.system(r"shutdown \s \t 60")
-            raise RaiseNotify('shutting down in 1 Minute')
+            raise InfoNotify('shutting down in 1 Minute')
         elif (self.os_type == 'Linux' or self.os_type == 'Darwin'):
             os.system("shutdown -h +1")
-            raise RaiseNotify('shutting down in 1 Minute')
+            raise InfoNotify('shutting down in 1 Minute')
         else:
-            raise RaiseNotify('Unsupported OS')
+            raise InfoNotify('Unsupported OS')
     
     def Reboot(self):
 
         if (self.os_type == 'Windows'):
             os.system(r"shutdown \r \t 60")
-            raise RaiseNotify('restarting in 1 Minute')
+            raise InfoNotify('restarting in 1 Minute')
         elif (self.os_type == 'Linux' or self.os_type == 'Darwin'):
             os.system("shutdown -r +1")
-            raise RaiseNotify('restarting in 1 Minute')
+            raise InfoNotify('restarting in 1 Minute')
         else:
-            raise RaiseNotify('Unsupported OS')
+            raise InfoNotify('Unsupported OS')
 
     
         

@@ -1,0 +1,2 @@
+2025-01-31 22:43:21,306 - app.py - ERROR: [#E06C75]Command not recognized. Function: execute_command in app.py
+2025-01-31 22:52:02,758 - app.py - ERROR: ErrorNotify.__init__() missing 1 required positional argument: 'App' Function: execute_command in app.py

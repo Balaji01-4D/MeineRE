@@ -8,7 +8,7 @@ from typing import Coroutine
 import aiofiles
 from rich.table import Table
 
-from Meine.exceptions import RaiseNotify
+from Meine.exceptions import InfoNotify
 from .Myrequest import AlreadyExist
 from Meine.logger_config import logger,log_time
 
@@ -29,10 +29,10 @@ class File:
                 await asyncio.to_thread(FileName.unlink)
                 return f"[success] {FileName.name} Deleted Successfully."
             except FileNotFoundError:
-                RaiseNotify(f'File Not found')
+                InfoNotify(f'File Not found')
 
             except PermissionError:
-                RaiseNotify(f'Permission denied')
+                InfoNotify(f'Permission denied')
             except Exception as e:
                 logger.error(f'{e} Function: {self.Delete_File.__name__}')
                 return f"[error] Error In Deleting {FileName.name}: {e}"
@@ -202,7 +202,7 @@ class File:
                         match_lines.add_row(str(line_num),Text)
             return match_lines
         except (UnicodeDecodeError, IOError):
-            raise RaiseNotify('Cant read at the moment or may be Binary file')
+            raise InfoNotify('Cant read at the moment or may be Binary file')
         
 
     @log_time        

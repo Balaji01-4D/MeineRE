@@ -1,7 +1,7 @@
 import webbrowser
 
 from Meine.utils.file_loaders import load_custom_urls
-from Meine.exceptions import RaiseNotify
+from Meine.exceptions import InfoNotify
 
 
 class web:
@@ -12,7 +12,7 @@ class web:
     def lanuch(self,url: str) -> None:
         if (url in self.urls):
             webbrowser.open(url=url)
-            raise RaiseNotify('Opened from the saved urls')
+            raise InfoNotify('Opened from the saved urls')
         else :
             webbrowser.open(url=url)
 

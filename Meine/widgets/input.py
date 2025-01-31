@@ -7,7 +7,7 @@ from textual.binding import Binding
 
 from Meine.utils.file_loaders import load_history,load_Path_expansion
 from Meine.logger_config import logger
-from Meine.exceptions import RaiseNotify
+from Meine.exceptions import InfoNotify
 
 
 
