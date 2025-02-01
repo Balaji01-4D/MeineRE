@@ -23,12 +23,11 @@ class MeineInput(Input):
             Binding('up','history_up','navigate the history up',show=False),
             Binding('down','history_down','navigate the history down',show=False)
             ]
-
-    def __init__(self, value = None, placeholder = "", highlighter = None, password = False, *, restrict = None, type = "text", max_length = 0, suggester = SuggestFromList(actions), validators = None, validate_on = None, valid_empty = False, select_on_focus = True, name = None, id = None, classes = None, disabled = False, tooltip = None):
+    
+    def __init__(self, history, history_index, value = None, placeholder = "", highlighter = None, password = False, *, restrict = None, type = "text", max_length = 0, suggester = None, validators = None, validate_on = None, valid_empty = False, select_on_focus = True, name = None, id = None, classes = None, disabled = False, tooltip = None):
         super().__init__(value, placeholder, highlighter, password, restrict=restrict, type=type, max_length=max_length, suggester=suggester, validators=validators, validate_on=validate_on, valid_empty=valid_empty, select_on_focus=select_on_focus, name=name, id=id, classes=classes, disabled=disabled, tooltip=tooltip)
-        self.history = self.app.history
-        self.history_index = self.app.history_index
-
+        self.history = history
+        self.history_index = history_index
 
     def action_history_up(self):
         if (self.history_index > 0):

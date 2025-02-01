@@ -1,6 +1,5 @@
 from textual.widgets import RichLog,DataTable,Input
 from textual.containers import Container,Vertical
-from textual import on
 from os import chdir,listdir
 from pathlib import Path
 from ..logger_config import logger
@@ -9,8 +8,13 @@ from ..logger_config import logger
 from .directory_tree import DTree
 
 class Directory_tree_container(Container):
-    def compose(self):
+
+    def __init__(self, *children, name = None, id = None, classes = None, disabled = False):
         self.dtree = DTree(path='/home/balaji/testings',id='dt')
+
+        super().__init__(*children, name=name, id=id, classes=classes, disabled=disabled)
+
+    def compose(self):
         yield self.dtree
         chdir(self.dtree.path)
 

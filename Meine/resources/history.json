@@ -267,5 +267,22 @@
     "del MeineAI_2025-01-30T21_32_22_128484.svg",
     "hello world",
     "hello world",
-    "hello world"
+    "hello world",
+    "cwd",
+    "cd /home/balaji/Downloads",
+    "cd ..",
+    "cd txt",
+    "del twohund.png",
+    "cd projects",
+    "cd ..",
+    "cd js",
+    "cd ..",
+    "cd pdf",
+    "cd ..",
+    "cp projects to zip",
+    "cp large to projects",
+    "cd projects",
+    "del large",
+    "cwd",
+    "cd projects"
 ]

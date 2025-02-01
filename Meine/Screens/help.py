@@ -1,7 +1,6 @@
 from textual.screen import ModalScreen
-from textual.widgets import Markdown,Tabs,Tab,Static,TabbedContent,TabPane
+from textual.widgets import Markdown,Static,TabbedContent,TabPane
 from pathlib import Path
-from textual.app import App,SystemCommand
 
 directory_tree_manual = '''\
 # Directory Tree
@@ -107,21 +106,4 @@ class HelpScreen(ModalScreen[None]):
                 yield Markdown(Input_manual)
             with TabPane("Directory Tree",id='tab_Dtree'):
                 yield Markdown(directory_tree_manual)
-
-
-class hellp(App[None]):
-
-    def compose(self):
-        yield Static("summa app")
-    
-    def get_system_commands(self, screen):
-        yield from super().get_system_commands(screen)
-        yield SystemCommand("Bell","ring the bell",self.bell)
-
-    def key_h(self):
-
-        self.push_screen(HelpScreen(id='helpscreen'))
-
-
-
 
