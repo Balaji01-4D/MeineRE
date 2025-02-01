@@ -2,10 +2,15 @@ from textual.widgets import DirectoryTree
 from textual.binding import Binding
 from pathlib import Path
 import os
-
+from textual.widgets import TextArea
+from Meine.exceptions import ErrorNotify
+from textual.keys import Keys
+from Meine.logger_config import logger
 from Meine.utils.file_loaders import load_settings
 
 class DTree(DirectoryTree):
+
+
     
 
     CLICK_CHAIN_TIME_THRESHOLD = 0.5
@@ -14,7 +19,14 @@ class DTree(DirectoryTree):
     BINDINGS = [Binding('left','cd_parent_directory'),Binding('home','cd_home_directory',priority=True),
                 Binding('right','select_focused_directory')]
     
+
+    def __init__(self, path, *, name = None, id = None, classes = None, disabled = False):
+        super().__init__(path, name=name, id=id, classes=classes, disabled=disabled)
+        self.previous_file = None
+    
     def filter_paths(self, paths):
+        
+        
         self.show_hidden = load_settings()["show_hidden_files"]
         if (self.show_hidden):
             return paths
@@ -27,7 +39,15 @@ class DTree(DirectoryTree):
         if (event.node.is_root):
             self.path = event.path.parent
 
-    
+    def on_directory_tree_file_selected(self,event:DirectoryTree.FileSelected):
+        if (self.previous_file is None):
+            self.text_area: TextArea = self.screen.replace_IO_TextArea(event.path)
+            self.previous_file = event.path
+        
+
+
+
+        
     
     def action_cd_home_directory(self):
         self.path = Path.home()

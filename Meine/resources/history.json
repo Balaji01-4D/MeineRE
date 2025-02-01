@@ -284,5 +284,12 @@
     "cd projects",
     "del large",
     "cwd",
-    "cd projects"
+    "cd projects",
+    "cwd",
+    "cd pdf",
+    "rn 30MB-TESTFILE.ORG.pdf as 30mb.pdf",
+    "cd pdf",
+    "rn 30mb.pdf as 30mbsize.pdf",
+    "rn 30mbsize.pdf as 30mb.pdf",
+    "rn 30mbsize.pdf as 30mb.pdf"
 ]

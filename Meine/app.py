@@ -12,6 +12,13 @@ from Meine.Actions.system import System
 
 from Meine.utils.file_editor import add_custom_path_expansion
 
+
+HOME_SCREEN_ID = "home_screen"
+HELP_SCREEN_ID = "help_screen"
+SETTINGS_SCREEN_ID = "settings_screen"
+CUSTOM_PATH_COMMAND = "Add custom path expansion"
+CUSTOM_PATH_HELP = "Add a custom path expansion"
+
 class CustomCommand(Provider):
 
     async def search(self,query: str) -> Hits:
@@ -39,7 +46,7 @@ class MeineAI(App[None]):
 
 
     async def on_mount(self):
-        await self.push_screen(HomeScreen(id='home'))
+        await self.push_screen(HomeScreen(id=HOME_SCREEN_ID))
 
  
     def get_system_commands(self, screen):
@@ -55,25 +62,27 @@ class MeineAI(App[None]):
             if (self.screen_stack[-1] == 'help_screen'):
                 self.pop_screen()
             else :
-                self.push_screen(HelpScreen(id='help_screen'))
-                self.notify('help')
+                self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
+                self.notify('Help Screen')
         except:
             None
 
     def key_ctrl_s(self):
+        if (self.focused.id == 'text_editor'):
+            return
         try:
-            if (self.screen_stack[-1].id == 'setting'):
-                self.pop_screen()
-            else :
-                self.push_screen(Settings(id='setting'))
+            if (self.screen_stack[-1].id != SETTINGS_SCREEN_ID ):
+                self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
                 self.notify('settings',timeout=2.5)
+            else :
+                self.pop_screen()
         except Exception as e:
             logger.error(f'{e} Function: {self.key_ctrl_s.__name__} in {Path(__file__).name}')
             None
 
     def key_escape(self):
         try:
-            if (self.screen_stack[-1].id != 'home'):
+            if (self.screen_stack[-1].id != HOME_SCREEN_ID):
                 self.pop_screen()
         except Exception as e:
             logger.error(f'{e} Function: {self.key_escape.__name__} in {Path(__file__).name}')

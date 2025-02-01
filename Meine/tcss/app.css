@@ -13,7 +13,7 @@ Input{
 #main{
     layout:horizontal;
 }
-#io{
+#IO{
     width: 100%;
 }
 
@@ -40,6 +40,17 @@ Directory_tree_container{
 
 Directory_tree_container.-hidden{
     display: none;
+}
+#IO.-hidden{
+    width: 0%;
+}
+#textarea{
+    display: none;
+}
+
+#textarea.-show{
+    display: block;
+    width: 100%;
 }
 Background_process_container{
     dock:top;

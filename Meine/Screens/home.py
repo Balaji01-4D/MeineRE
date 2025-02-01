@@ -6,17 +6,20 @@ from textual.screen import Screen
 from textual.widgets import RichLog
 from textual.binding import Binding
 from textual.events import Click
-from textual.widgets import Input,DataTable,DirectoryTree
+from textual.widgets import Input,DataTable,DirectoryTree,TextArea
 
 
 from Meine.exceptions import InfoNotify,ErrorNotify,WarningNotify
 from Meine.widgets.containers import Directory_tree_container,Container
 from Meine.widgets.containers import Background_process_container
 from Meine.widgets.input import MeineInput
+from Meine.widgets.TextArea import TextEditor
 from Meine.logger_config import logger
 from Meine.utils.file_loaders import load_history
 from Meine.utils.file_editor import save_history
 from Meine.main import CLI
+
+from textual import work
 
 
 
@@ -45,9 +48,11 @@ class HomeScreen(Screen[None]):
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes='-hidden')
+        self.text_area = TextEditor.code_editor(id='text_editor')
 
         yield Container(
-            Container(self.rich_log, self.inputconsole, id='io'),
+            Container(self.rich_log, self.inputconsole, id='IO'),
+            self.text_area,
             self.sidebar,
             self.bgprocess,
             id="main"
@@ -57,6 +62,14 @@ class HomeScreen(Screen[None]):
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
 
+    @work(exclusive=True)
+    async def replace_IO_TextArea(self, filepath: Path) -> TextArea:
+        self.query_one('#IO',Container).toggle_class("-hidden")
+        self.text_area.toggle_class('-show')
+        await self.text_area.load_file(filepath)
+        
+
+    
 
     def handle_files_click_input(self, widget):
 
