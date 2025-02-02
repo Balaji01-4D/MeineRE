@@ -48,7 +48,7 @@ class HomeScreen(Screen[None]):
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes='-hidden')
-        self.text_area = TextEditor.code_editor(id='text_editor',language='python')
+        self.text_area = TextEditor.code_editor(id='text_editor',language='python',theme='monokai')
         self.IO_container = Container(self.rich_log, self.inputconsole, id='IO')
 
         yield Container(
@@ -266,3 +266,8 @@ class HomeScreen(Screen[None]):
 
     #     except Exception as e:
     #         self.rich_log.write(f"Error in handle_files_click_input: {e}")
+
+
+
+SYNTAX_SUPPORTED = [
+    'py','java','css','html','json','rust','go','sql','xml','bash','toml','md']
