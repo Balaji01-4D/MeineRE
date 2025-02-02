@@ -2,11 +2,11 @@ from textual.widgets import DirectoryTree
 from textual.binding import Binding
 from pathlib import Path
 import os
-from textual.widgets import TextArea
-from Meine.exceptions import ErrorNotify
-from textual.keys import Keys
-from Meine.logger_config import logger
 from Meine.utils.file_loaders import load_settings
+import json,csv
+from Meine.exceptions import ErrorNotify
+from textual import work
+
 
 class DTree(DirectoryTree):
 
@@ -25,8 +25,7 @@ class DTree(DirectoryTree):
         self.previous_file = None
     
     def filter_paths(self, paths):
-        
-        
+
         self.show_hidden = load_settings()["show_hidden_files"]
         if (self.show_hidden):
             return paths
@@ -39,16 +38,31 @@ class DTree(DirectoryTree):
         if (event.node.is_root):
             self.path = event.path.parent
 
-    def on_directory_tree_file_selected(self,event:DirectoryTree.FileSelected):
-        if (self.previous_file is None):
-            self.text_area: TextArea = self.screen.replace_IO_TextArea(event.path)
-            self.previous_file = event.path
-        
+    async def on_directory_tree_file_selected(self,event:DirectoryTree.FileSelected):
+        try:
+            self.loading = True
+            self.filepath = event.path
+            loaded_text = self.read_file()
+            loaded_text = await loaded_text.wait()
+            
+            if (loaded_text):
+                if (self.previous_file is None or self.previous_file != event.path):
+                    self.screen.show_textarea()
+                    self.screen.text_area.text = loaded_text
+                    self.screen.text_area.filepath = event.path
+                    
+                    self.previous_file = event.path
+                elif (self.previous_file == event.path):
+                    self.screen.hide_textarea()
+                    self.previous_file = None
+            else:
+                self.notify('Unsupported file format')
+        except :
+            self.notify('Unsupported file format')
+        finally:
+            self.loading = False
+            
 
-
-
-        
-    
     def action_cd_home_directory(self):
         self.path = Path.home()
         os.chdir(self.path)
@@ -74,3 +88,45 @@ class DTree(DirectoryTree):
         os.chdir(self.path)
         self.refresh()
 
+
+
+    @work(exclusive=True)
+    async def read_file(self) -> str:
+        try:
+            extension = self.filepath.suffix
+            if (extension == 'csv'):
+                return self.read_csv_files(self.filepath)
+            elif (extension == 'json'):
+                return self.read_json_files(self.filepath)
+            else :
+                return self.read_txt_files(self.filepath)
+        except :
+            return None
+            
+    def read_csv_files(self, filepath: Path) -> str:
+        try:
+            with open(filepath,'r') as file:
+                reader = csv.reader(file)
+                return '\n'.join([','.join(row) for row in reader])
+        except Exception as e:
+            self.notify(f'Error in reading csv file {e}')
+            raise
+
+    def read_txt_files(self, filepath: str) -> str:
+        try:
+            with open(filepath,'r') as file:
+                return file.read()
+        except Exception as e:
+            self.notify(f'Error in reading json file  {e}')
+            return None
+
+    def read_json_files(self, filepath: Path) -> str:
+
+        try:
+            with open(filepath,'r') as file:
+                data = json.load(file)
+                return json.dumps(data,indent=4)
+        except json.JSONDecodeError:
+            raise ErrorNotify("Error in reading the file")
+        except Exception as e:
+            self.notify(f'Error in reading json file  {e}')

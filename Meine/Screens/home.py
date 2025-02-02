@@ -48,10 +48,11 @@ class HomeScreen(Screen[None]):
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes='-hidden')
-        self.text_area = TextEditor.code_editor(id='text_editor')
+        self.text_area = TextEditor.code_editor(id='text_editor',language='python')
+        self.IO_container = Container(self.rich_log, self.inputconsole, id='IO')
 
         yield Container(
-            Container(self.rich_log, self.inputconsole, id='IO'),
+            self.IO_container,
             self.text_area,
             self.sidebar,
             self.bgprocess,
@@ -63,13 +64,18 @@ class HomeScreen(Screen[None]):
         self.bgprocess.toggle_class("-hidden")
 
     @work(exclusive=True)
-    async def replace_IO_TextArea(self, filepath: Path) -> TextArea:
-        self.query_one('#IO',Container).toggle_class("-hidden")
-        self.text_area.toggle_class('-show')
-        await self.text_area.load_file(filepath)
+    async def show_textarea(self) -> None:
+        self.IO_container.add_class("-hidden")
+        self.text_area.add_class('-show')
+        return self.text_area
+    
+    @work(exclusive=True)
+    async def hide_textarea(self) -> None:
+        self.IO_container.remove_class('-hidden')
+        self.text_area.remove_class('-show')
+
         
 
-    
 
     def handle_files_click_input(self, widget):
 

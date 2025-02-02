@@ -1,0 +1,4 @@
+2025-02-02 08:36:55,146 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-02 08:36:55,186 - home.py - <textual.widgets._data_table.RowKey object at 0x7350f81e3fb0>
+2025-02-02 08:37:09,920 - main.py - Function: Create_File Timetaken: 0.0000 seconds
+2025-02-02 08:37:09,959 - home.py - <textual.widgets._data_table.RowKey object at 0x7350f805c830>
