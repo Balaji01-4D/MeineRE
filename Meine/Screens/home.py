@@ -6,7 +6,7 @@ from textual.screen import Screen
 from textual.widgets import RichLog
 from textual.binding import Binding
 from textual.events import Click
-from textual.widgets import Input,DataTable,DirectoryTree,TextArea
+from textual.widgets import Input,DataTable,DirectoryTree
 
 
 from Meine.exceptions import InfoNotify,ErrorNotify,WarningNotify
@@ -48,7 +48,7 @@ class HomeScreen(Screen[None]):
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes='-hidden')
-        self.text_area = TextEditor.code_editor(id='text_editor',language='python',theme='monokai')
+        self.text_area = TextEditor.code_editor(id='text_editor',language='bash',theme='dracula')
         self.IO_container = Container(self.rich_log, self.inputconsole, id='IO')
 
         yield Container(
@@ -269,5 +269,3 @@ class HomeScreen(Screen[None]):
 
 
 
-SYNTAX_SUPPORTED = [
-    'py','java','css','html','json','rust','go','sql','xml','bash','toml','md']
