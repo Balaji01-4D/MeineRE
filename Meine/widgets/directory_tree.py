@@ -4,7 +4,6 @@ from pathlib import Path
 import os
 from Meine.utils.file_loaders import load_settings
 import json,csv
-from Meine.exceptions import ErrorNotify
 from textual import work
 
 SYNTAX_HIGHLIGHTING_SUPPORTED_FILES = {
@@ -29,14 +28,12 @@ DOCUMENTATION_AND_MIXED_CONTENT_FILES = {
 
 class DTree(DirectoryTree):
 
-
     
-
-    CLICK_CHAIN_TIME_THRESHOLD = 0.5
-    auto_expand = False
-    
-    BINDINGS = [Binding('left','cd_parent_directory'),Binding('home','cd_home_directory',priority=True),
-                Binding('right','select_focused_directory')]
+    BINDINGS = [
+                Binding('left','cd_parent_directory'),
+                Binding('home','cd_home_directory',priority=True),
+                Binding('right','select_focused_directory')
+            ]
     
 
     def __init__(self, path, *, name = None, id = None, classes = None, disabled = False):
@@ -63,14 +60,12 @@ class DTree(DirectoryTree):
             self.filepath = event.path
             loaded_text = self.read_file()
             loaded_text,syntax = await loaded_text.wait()
-            self.notify(f'{syntax}')
             if (loaded_text):
                 if (self.previous_file is None or self.previous_file != event.path):
                     self.screen.show_textarea()
                     self.screen.text_area.text = loaded_text
                     self.screen.text_area.filepath = event.path
                     self.screen.text_area.language = syntax
-                    
                     self.previous_file = event.path
                 elif (self.previous_file == event.path):
                     self.screen.hide_textarea()
@@ -116,7 +111,7 @@ class DTree(DirectoryTree):
             if (extension == 'csv'):
                 return (self.read_csv_files(self.filepath),'json')
             elif (extension == 'json'):
-                return self.read_json_files(self.filepath),'json'
+                return (self.read_json_files(self.filepath),'json')
             else :
                 text = self.read_txt_files(self.filepath)
                 syntax = await self.get_syntax_highlighting(extension)
@@ -125,7 +120,6 @@ class DTree(DirectoryTree):
             return None
             
     async def get_syntax_highlighting(self,extension):
-        self.notify(f'extension = {extension}')
 
         if (extension in SYNTAX_HIGHLIGHTING_SUPPORTED_FILES):
             return SYNTAX_HIGHLIGHTING_SUPPORTED_FILES[extension]
@@ -137,14 +131,12 @@ class DTree(DirectoryTree):
             return 'markdown'
         
 
-    
-
     def read_csv_files(self, filepath: Path) -> str:
         try:
             with open(filepath,'r') as file:
                 reader = csv.reader(file)
                 return '\n'.join([','.join(row) for row in reader])
-        except Exception as e:
+        except Exception :
             return None
 
 
@@ -152,13 +144,14 @@ class DTree(DirectoryTree):
         try:
             with open(filepath,'r') as file:
                 return file.read()
-        except Exception as e:
+        except Exception :
             return None
+
 
     def read_json_files(self, filepath: Path) -> str:
         try:
             with open(filepath,'r') as file:
                 data = json.load(file)
                 return json.dumps(data,indent=4)
-        except Exception as e:
+        except Exception:
             return None
