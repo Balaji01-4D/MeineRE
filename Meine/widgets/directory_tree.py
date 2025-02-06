@@ -109,9 +109,11 @@ class DTree(DirectoryTree):
         try:
             extension = self.filepath.suffix
             if (extension == 'csv'):
-                return (self.read_csv_files(self.filepath),'json')
+                text = await self.read_csv_files(self.filepath).wait()
+                return (text,'json')
             elif (extension == 'json'):
-                return (self.read_json_files(self.filepath),'json')
+                text = await self.read_json_files(self.filepath).wait()
+                return (text,'json')
             else :
                 text = self.read_txt_files(self.filepath)
                 syntax = await self.get_syntax_highlighting(extension)
@@ -130,8 +132,8 @@ class DTree(DirectoryTree):
         else:
             return 'markdown'
         
-
-    def read_csv_files(self, filepath: Path) -> str:
+    @work(exclusive=True)
+    async def read_csv_files(self, filepath: Path) -> str:
         try:
             with open(filepath,'r') as file:
                 reader = csv.reader(file)
@@ -139,16 +141,16 @@ class DTree(DirectoryTree):
         except Exception :
             return None
 
-
-    def read_txt_files(self, filepath: str) -> str:
+    @work(exclusive=True)
+    async def read_txt_files(self, filepath: str) -> str:
         try:
             with open(filepath,'r') as file:
                 return file.read()
         except Exception :
             return None
 
-
-    def read_json_files(self, filepath: Path) -> str:
+    @work(exclusive=True)
+    async def read_json_files(self, filepath: Path) -> str:
         try:
             with open(filepath,'r') as file:
                 data = json.load(file)
