@@ -72,8 +72,8 @@ class DTree(DirectoryTree):
                     self.previous_file = None
             else:
                 self.notify('Unsupported file format')
-        except :
-            self.notify('Unsupported file format')
+        except Exception as e:
+            self.notify(f'Unsupported file format {e}')
         finally:
             self.screen.text_area.loading = False
             
@@ -132,7 +132,7 @@ class DTree(DirectoryTree):
         else:
             return 'markdown'
         
-    @work(exclusive=True)
+    @work()
     async def read_csv_files(self, filepath: Path) -> str:
         try:
             with open(filepath,'r') as file:
@@ -141,7 +141,7 @@ class DTree(DirectoryTree):
         except Exception :
             return None
 
-    @work(exclusive=True)
+    @work()
     async def read_txt_files(self, filepath: str) -> str:
         try:
             with open(filepath,'r') as file:
@@ -149,7 +149,7 @@ class DTree(DirectoryTree):
         except Exception :
             return None
 
-    @work(exclusive=True)
+    @work()
     async def read_json_files(self, filepath: Path) -> str:
         try:
             with open(filepath,'r') as file:
