@@ -74,8 +74,6 @@ class HomeScreen(Screen[None]):
         self.IO_container.remove_class('-hidden')
         self.text_area.remove_class('-show')
 
-        
-
 
     def handle_files_click_input(self, widget):
 
