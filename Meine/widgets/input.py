@@ -1,13 +1,10 @@
-import os
 from re import search
 from pathlib import Path
 from textual.widgets import Input
-from textual.suggester import SuggestFromList
 from textual.binding import Binding
 
-from Meine.utils.file_loaders import load_history,load_Path_expansion
+from Meine.utils.file_loaders import load_Path_expansion
 from Meine.logger_config import logger
-from Meine.exceptions import InfoNotify
 
 
 
@@ -36,7 +33,7 @@ class MeineInput(Input):
             self.cursor_position = len(self.value)
 
     def on_input_changed(self):
-        keyWordMatch = search(r'\{(.+)\}',self.value)
+        keyWordMatch = search(r'f\{(.+)\}',self.value)
         if (keyWordMatch):
             self.path_expansion(keyWordMatch.group(1))
         else :
@@ -56,13 +53,10 @@ class MeineInput(Input):
         }
 
 
-        USERDEFINED_EXPANSION = load_Path_expansion()['path_expansions']
+        DEFAULT_PATH_EXPANSION |= load_Path_expansion()['path_expansions']
         if (keyword in DEFAULT_PATH_EXPANSION):
             ReplaceBy = str(DEFAULT_PATH_EXPANSION[keyword])
-            self.value = self.value.replace(f'{{{keyword}}}',ReplaceBy) 
-        elif (keyword in USERDEFINED_EXPANSION):
-            ReplaceBy = USERDEFINED_EXPANSION[keyword]
-            self.value = self.value.replace(f'{{{keyword}}}',ReplaceBy)
+            self.value = self.value.replace(f'f{{{keyword}}}',ReplaceBy) 
         else :
             self.notify(f'{keyword} Is Not Found and It Is Removed For Good.',severity='error',title='Not Found')
 

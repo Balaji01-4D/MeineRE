@@ -4,48 +4,34 @@ Settings{
 
 Settings > Container{
 
-    width: auto;
+    width: 60%;
     height: auto;
     padding: 0 1;
-    border:rgb(68, 68, 68);
+    border: $primary;
 
-    #label{
-        padding: 1 1;
-        text-align:center;
-        
+    #settings-title{
+        content-align: center middle;
+        padding: 1;
     }
-
-}
-
-Settings > Container > Vertical {
-    padding: 0 1;
-    width: 60;
-    height: 18;
-    Horizontal {
-        padding: 1 1;
-
-        Static{
-            width: 80%;
-            content-align:left middle;
-            padding: 0 1;
-            align: center middle;
-            
-        }
-
+    /* Button{
+        border: none;
     }
     Switch{
         border: none;
-        padding: 0;
-    }
-    Button{
-        border: none;
-        min-width: 7;
-        height: 1.8;
+    } */
 
-    }
 
-    
+
 }
+.caption{
+    /* padding: 0 2;
+    border: $background;
+    width: 20; */
+    padding: 1 0;
+    width: 30;
+    content-align: center middle;
+}
+
 
 NameGetterScreen{
     align: center middle;
@@ -66,34 +52,8 @@ NameGetterScreen > Container{
 
 }
 
-#select-theme{
-    width: 30;
-    border:none;
-    height: 3;
 
-}
-#select-language{
-    width: 30;
-    border:none;
-    height: 3;
 
-}
-TextEditorSettings{
-    align: center middle;
-}
-
-TextEditorSettings > Container {
-    width: 60;
-    height: 18;
-    padding: 0 2;
-    border: $primary;
-}
-
-#themes-static{
-    padding: 0 2;
-    border: $background;
-    width: 20;
-}
 
 #title{
     padding:1 ;

@@ -6,3 +6,5 @@ from textual.worker import Worker
 
 from textual.screen import ModalScreen
 
+
+print(App()._registered_themes.keys())

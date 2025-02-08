@@ -11,11 +11,12 @@ from Meine.Screens.home import HomeScreen
 from Meine.Actions.system import System
 
 from Meine.utils.file_editor import add_custom_path_expansion
+from Meine.utils.file_loaders import load_settings
 
 
-HOME_SCREEN_ID = "home_screen"
-HELP_SCREEN_ID = "help_screen"
-SETTINGS_SCREEN_ID = "settings_screen"
+HOME_SCREEN_ID = "home-screen"
+HELP_SCREEN_ID = "help-screen"
+SETTINGS_SCREEN_ID = "settings-screen"
 CUSTOM_PATH_COMMAND = "Add custom path expansion"
 CUSTOM_PATH_HELP = "Add a custom path expansion"
 
@@ -38,15 +39,18 @@ class CustomCommand(Provider):
 
 
 class MeineAI(App[None]):
-
     
 
+    SETTINGS = load_settings()
+    
+    
     COMMANDS = App.COMMANDS | {CustomCommand}
 
 
 
     async def on_mount(self):
         await self.push_screen(HomeScreen(id=HOME_SCREEN_ID))
+        self.theme = self.SETTINGS['app_theme']
 
  
     def get_system_commands(self, screen):
@@ -68,12 +72,9 @@ class MeineAI(App[None]):
             None
 
     def key_ctrl_s(self):
-        if (self.focused.id == 'text_editor'):
-            return
         try:
             if (self.screen_stack[-1].id != SETTINGS_SCREEN_ID ):
                 self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
-                self.notify('settings',timeout=2.5)
             else :
                 self.pop_screen()
         except Exception as e:

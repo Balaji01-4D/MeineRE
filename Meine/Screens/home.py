@@ -15,7 +15,7 @@ from Meine.widgets.containers import Background_process_container
 from Meine.widgets.input import MeineInput
 from Meine.widgets.TextArea import TextEditor
 from Meine.logger_config import logger
-from Meine.utils.file_loaders import load_history
+from Meine.utils.file_loaders import load_history,load_settings
 from Meine.utils.file_editor import save_history
 from Meine.main import CLI
 
@@ -26,7 +26,7 @@ from textual import work
 
 class HomeScreen(Screen[None]):
 
-    AUTO_FOCUS = '#input'
+    AUTO_FOCUS = '#command-input'
 
 
     CSS_PATH = Path(__file__).parent.parent / "tcss/app.css"
@@ -43,12 +43,12 @@ class HomeScreen(Screen[None]):
         self.si = {}
 
     def compose(self):
-        self.inputconsole = MeineInput(placeholder='Enter command....', id="input",history=self.HISTORY,history_index=self.HISTORY_INDEX)
+        self.inputconsole = MeineInput(placeholder='Enter command....', id="command-input",history=self.HISTORY,history_index=self.HISTORY_INDEX)
         self.rich_log = RichLog(id="output")
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes='-hidden')
-        self.text_area = TextEditor.code_editor(id='text_editor',language='bash')
+        self.text_area = TextEditor.code_editor(id='text_editor',language='bash',theme=self.app.SETTINGS['text_editor_theme'])
         self.IO_container = Container(self.rich_log, self.inputconsole, id='IO')
 
         yield Container(
@@ -122,7 +122,7 @@ class HomeScreen(Screen[None]):
             try:
                 self.rich_log.write(eval(cmd,{},{}))
             except:
-                if cmd and event.input.id == "input":
+                if cmd and event.input.id == "command-input":
                     try:
                         if 'cd ' in cmd:
                             cmdpath = cmd.strip('cd ')

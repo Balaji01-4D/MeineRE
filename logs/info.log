@@ -2,3 +2,270 @@
 2025-02-02 08:36:55,186 - home.py - <textual.widgets._data_table.RowKey object at 0x7350f81e3fb0>
 2025-02-02 08:37:09,920 - main.py - Function: Create_File Timetaken: 0.0000 seconds
 2025-02-02 08:37:09,959 - home.py - <textual.widgets._data_table.RowKey object at 0x7350f805c830>
+2025-02-08 23:21:35,990 - home.py - False
+2025-02-08 23:22:04,846 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-08 23:22:04,846 - file.py - Delete_File executing
+2025-02-08 23:22:04,924 - home.py - <textual.widgets._data_table.RowKey object at 0x7c2a10062870>
+2025-02-08 23:25:18,099 - home.py - False
+2025-02-08 23:25:24,528 - home.py - False
+2025-02-08 23:25:31,358 - home.py - False
+2025-02-08 23:25:36,249 - home.py - False
+2025-02-08 23:25:51,798 - home.py - False
+2025-02-09 00:01:16,294 - TextArea.py - 
+
+TextArea {
+    width: 1fr;
+    height: 1fr;
+    border: tall $border-blurred;
+    padding: 0 1;
+    color: $foreground;
+    background: $surface;
+    & .text-area--cursor {
+        text-style: $input-cursor-text-style;
+    }
+    & .text-area--gutter {
+        color: $foreground 40%;
+    }
+
+    & .text-area--cursor-gutter {
+        color: $foreground 60%;
+        background: $boost;
+        text-style: bold;
+    }
+
+    & .text-area--cursor-line {
+       background: $boost;
+    }
+
+    & .text-area--selection {
+        background: $input-selection-background;
+    }
+
+    & .text-area--matching-bracket {
+        background: $foreground 30%;
+    }
+
+    &:focus {
+        border: tall $border;
+    }
+
+    &:ansi {
+        & .text-area--selection {
+            background: transparent;
+            text-style: reverse;
+        }
+    }
+
+    &:dark {
+        .text-area--cursor {
+            color: $input-cursor-foreground;
+            background: $input-cursor-background;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+
+    &:light {
+        .text-area--cursor {
+            color: $text 90%;
+            background: $foreground 70%;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+}
+
+2025-02-09 00:03:49,535 - TextArea.py - TextArea {
+    width: 1fr;
+    height: 1fr;
+    border: tall $border-blurred;
+    padding: 0 1;
+    color: $foreground;
+    background: $surface;
+    & .text-area--cursor {
+        text-style: $input-cursor-text-style;
+    }
+    & .text-area--gutter {
+        color: $foreground 40%;
+    }
+
+    & .text-area--cursor-gutter {
+        color: $foreground 60%;
+        background: $boost;
+        text-style: bold;
+    }
+
+    & .text-area--cursor-line {
+       background: $boost;
+    }
+
+    & .text-area--selection {
+        background: $input-selection-background;
+    }
+
+    & .text-area--matching-bracket {
+        background: $foreground 30%;
+    }
+
+    &:focus {
+        border: tall $border;
+    }
+
+    &:ansi {
+        & .text-area--selection {
+            background: transparent;
+            text-style: reverse;
+        }
+    }
+
+    &:dark {
+        .text-area--cursor {
+            color: $input-cursor-foreground;
+            background: $input-cursor-background;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+
+    &:light {
+        .text-area--cursor {
+            color: $text 90%;
+            background: $foreground 70%;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+}
+
+2025-02-09 00:04:04,149 - TextArea.py - TextArea {
+    width: 1fr;
+    height: 1fr;
+    border: tall $border-blurred;
+    padding: 0 1;
+    color: $foreground;
+    background: $surface;
+    & .text-area--cursor {
+        text-style: $input-cursor-text-style;
+    }
+    & .text-area--gutter {
+        color: $foreground 40%;
+    }
+
+    & .text-area--cursor-gutter {
+        color: $foreground 60%;
+        background: $boost;
+        text-style: bold;
+    }
+
+    & .text-area--cursor-line {
+       background: $boost;
+    }
+
+    & .text-area--selection {
+        background: $input-selection-background;
+    }
+
+    & .text-area--matching-bracket {
+        background: $foreground 30%;
+    }
+
+    &:focus {
+        border: tall $border;
+    }
+
+    &:ansi {
+        & .text-area--selection {
+            background: transparent;
+            text-style: reverse;
+        }
+    }
+
+    &:dark {
+        .text-area--cursor {
+            color: $input-cursor-foreground;
+            background: $input-cursor-background;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+
+    &:light {
+        .text-area--cursor {
+            color: $text 90%;
+            background: $foreground 70%;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+}
+
+2025-02-09 00:04:17,609 - TextArea.py - TextArea {
+    width: 1fr;
+    height: 1fr;
+    border: tall $border-blurred;
+    padding: 0 1;
+    color: $foreground;
+    background: $surface;
+    & .text-area--cursor {
+        text-style: $input-cursor-text-style;
+    }
+    & .text-area--gutter {
+        color: $foreground 40%;
+    }
+
+    & .text-area--cursor-gutter {
+        color: $foreground 60%;
+        background: $boost;
+        text-style: bold;
+    }
+
+    & .text-area--cursor-line {
+       background: $boost;
+    }
+
+    & .text-area--selection {
+        background: $input-selection-background;
+    }
+
+    & .text-area--matching-bracket {
+        background: $foreground 30%;
+    }
+
+    &:focus {
+        border: tall $border;
+    }
+
+    &:ansi {
+        & .text-area--selection {
+            background: transparent;
+            text-style: reverse;
+        }
+    }
+
+    &:dark {
+        .text-area--cursor {
+            color: $input-cursor-foreground;
+            background: $input-cursor-background;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+
+    &:light {
+        .text-area--cursor {
+            color: $text 90%;
+            background: $foreground 70%;
+        }
+        &.-read-only .text-area--cursor {
+            background: $warning-darken-1;
+        }
+    }
+}
+

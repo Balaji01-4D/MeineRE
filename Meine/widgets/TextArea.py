@@ -3,11 +3,11 @@ from textual import work
 from pathlib import Path
 import json,csv
 from textual.worker import Worker
-from textual import events
 from textual.events import Key
+from textual.binding import Binding
+from Meine.logger_config import logger
 
 
-from Meine.Screens.settings import TextEditorSettings
 
 
 SYNTAX_HIGHLIGHTING_SUPPORTED_FILES = {
@@ -31,24 +31,32 @@ DOCUMENTATION_AND_MIXED_CONTENT_FILES = {
 }
 
 class TextEditor(TextArea):
-
+    
     BRACKET_PAIRS = {
         '{':'}','[':']',
         '(':')','"':'"',
         "'":"'"
     }
 
+    BINDINGS = [
+        Binding("ctrl+shift+up",'open_settings','open settings',priority=True)
+    ]
+
     def __init__(self, text = "", *, language = None, theme = "css", soft_wrap = True, tab_behavior = "focus", read_only = False, show_line_numbers = False, line_number_start = 1, max_checkpoints = 50, name = None, id = None, classes = None, disabled = False, tooltip = None):
         super().__init__(text, language=language, theme=theme, soft_wrap=soft_wrap, tab_behavior=tab_behavior, read_only=read_only, show_line_numbers=show_line_numbers, line_number_start=line_number_start, max_checkpoints=max_checkpoints, name=name, id=id, classes=classes, disabled=disabled, tooltip=tooltip)
         self.filepath: Path|None = None
             
 
+    def action_open_settings(self):
+        self.notify("opened settings")
 
     @work(thread=True)
     async def key_ctrl_s(self):
         with open(self.filepath,'w') as file:
             file.writelines(self.text)
         self.notify(f'{self.filepath.name} saved successfully')
+
+        
     
     
     async def read_file(self) -> None:
@@ -66,21 +74,13 @@ class TextEditor(TextArea):
         except Exception as e:
             self.notify(f'{e}')
 
-    def _on_key(self, event: events.Key):
+    def _on_key(self, event: Key):
         if (event.character in self.BRACKET_PAIRS):
             self.insert(f"{event.character}{self.BRACKET_PAIRS[event.character]}")
             self.move_cursor_relative(columns=-1)
             event.prevent_default()
-    
-
-    def key_ctrl_s(self, event: Key):
-        if (self.app.screen.id == 'texteditor-setting'):
-            self.app.pop_screen()
-        else:
-            self.app.push_screen(TextEditorSettings(id='texteditor-setting'))
-        event.stop()
-
         
+    
 
     @work(thread=True)
     def get_syntax_highlighting(self, extension: str) -> None:

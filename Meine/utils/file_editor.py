@@ -1,7 +1,7 @@
 from json import dump
 from pathlib import Path
 import xdialog
-import asyncio
+import json
 
 from Meine.exceptions import InfoNotify
 from .file_loaders import load_Path_expansion
@@ -12,9 +12,15 @@ custom_path_expansion_loc = Path(__file__).parent.parent /'resources/customs.jso
 
 
 
-def save_history(history:list[str]) -> None:
+def save_history(history: list[str]) -> None:
     with open(history_loc,'w') as file:
         dump(history,file,indent=4)
+
+def clear_history() -> None:
+    with open(history_loc,'w') as file:
+        json.dump([],file,indent=4)
+        
+
 
 
 def save_settings(settings: dict[str|bool]) -> None:
