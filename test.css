@@ -1,16 +1,34 @@
-Input {
-    dock: top;
-    width: 100%;
-}
+#select-theme{
+    width: 30;
+    border:none;
+    height: 3;
 
-#weather-container {
-    width: 100%;
-    height: 1fr;
+}
+#select-language{
+    width: 30;
+    border:none;
+    height: 3;
+
+}
+TextEditorSettings{
     align: center middle;
-    overflow: auto;
 }
 
-#weather {
-    width: auto;
-    height: auto;
+TextEditorSettings > Container {
+    width: 60;
+    height: 18;
+    padding: 0 2;
+    border: $primary;
+}
+
+#themes-static{
+    padding: 0 2;
+    border: $background;
+    width: 20;
+}
+
+#title{
+    padding:1 ;
+    color:$secondary;
+    content-align:center middle;
 }

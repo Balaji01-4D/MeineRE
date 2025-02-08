@@ -1,9 +1,9 @@
-from textual.widgets import DirectoryTree
-from textual.binding import Binding
-from pathlib import Path
 import os
-from Meine.utils.file_loaders import load_settings
+from pathlib import Path
+from textual.binding import Binding
+from textual.widgets import DirectoryTree
 
+from Meine.utils.file_loaders import load_settings
 
 
 class DTree(DirectoryTree):
@@ -21,20 +21,17 @@ class DTree(DirectoryTree):
         self.previous_file = None
     
     def filter_paths(self, paths):
-
         self.show_hidden = load_settings()["show_hidden_files"]
         if (self.show_hidden):
             return paths
         else :
             return [path for path in paths if not path.name.startswith('.')]
 
-    
     def on_directory_tree_directory_selected(self,event:DirectoryTree.DirectorySelected):
         self.auto_expand = False
         if (event.node.is_root):
             self.path = event.path.parent
         
-
     async def on_directory_tree_file_selected(self,event:DirectoryTree.FileSelected):
         try:
             self.text_area = self.screen.text_area
@@ -42,8 +39,9 @@ class DTree(DirectoryTree):
             if (self.previous_file is None or self.previous_file != event.path):
                 self.screen.show_textarea()
                 self.text_area.filepath = self.file_path
+                
                 self.previous_file = event.path
-                self.app.run_worker(self.text_area.read_file())
+                self.run_worker(self.text_area.read_file(),exclusive=True)
             elif (self.previous_file == event.path):
                 self.screen.hide_textarea()
                 self.previous_file = None

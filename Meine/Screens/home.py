@@ -48,7 +48,7 @@ class HomeScreen(Screen[None]):
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes='-hidden')
-        self.text_area = TextEditor.code_editor(id='text_editor',language='bash',theme='dracula')
+        self.text_area = TextEditor.code_editor(id='text_editor',language='bash')
         self.IO_container = Container(self.rich_log, self.inputconsole, id='IO')
 
         yield Container(
@@ -63,13 +63,13 @@ class HomeScreen(Screen[None]):
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
 
-    @work(exclusive=True)
+    @work()
     async def show_textarea(self) -> None:
         self.IO_container.add_class("-hidden")
         self.text_area.add_class('-show')
         return self.text_area
     
-    @work(exclusive=True)
+    @work()
     async def hide_textarea(self) -> None:
         self.IO_container.remove_class('-hidden')
         self.text_area.remove_class('-show')
