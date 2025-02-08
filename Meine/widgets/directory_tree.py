@@ -37,26 +37,18 @@ class DTree(DirectoryTree):
 
     async def on_directory_tree_file_selected(self,event:DirectoryTree.FileSelected):
         try:
-            self.screen.text_area.loading = True
-            self.filepath = event.path
-            loaded_text = self.read_file()
-            loaded_text,syntax = await loaded_text.wait()
-            if (loaded_text):
-                if (self.previous_file is None or self.previous_file != event.path):
-                    self.screen.show_textarea()
-                    self.screen.text_area.text = loaded_text
-                    self.screen.text_area.filepath = event.path
-                    self.screen.text_area.language = syntax
-                    self.previous_file = event.path
-                elif (self.previous_file == event.path):
-                    self.screen.hide_textarea()
-                    self.previous_file = None
-            else:
-                self.notify('Unsupported file format')
+            self.text_area = self.screen.text_area
+            self.file_path = event.path
+            if (self.previous_file is None or self.previous_file != event.path):
+                self.screen.show_textarea()
+                self.text_area.filepath = self.file_path
+                self.previous_file = event.path
+                self.app.run_worker(self.text_area.read_file())
+            elif (self.previous_file == event.path):
+                self.screen.hide_textarea()
+                self.previous_file = None
         except Exception as e:
             self.notify(f'Unsupported file format {e}')
-        finally:
-            self.screen.text_area.loading = False
             
 
     def action_cd_home_directory(self):

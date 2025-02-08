@@ -29,7 +29,7 @@ class TextEditor(TextArea):
 
     def __init__(self, text = "", *, language = None, theme = "css", soft_wrap = True, tab_behavior = "focus", read_only = False, show_line_numbers = False, line_number_start = 1, max_checkpoints = 50, name = None, id = None, classes = None, disabled = False, tooltip = None):
         super().__init__(text, language=language, theme=theme, soft_wrap=soft_wrap, tab_behavior=tab_behavior, read_only=read_only, show_line_numbers=show_line_numbers, line_number_start=line_number_start, max_checkpoints=max_checkpoints, name=name, id=id, classes=classes, disabled=disabled, tooltip=tooltip)
-        self.filepath = None
+        self.filepath: Path|None = None
             
 
 
@@ -40,63 +40,62 @@ class TextEditor(TextArea):
         self.notify(f'{self.filepath.name} saved successfully')
     
 
-    @work(thread=True,name='read-file')
-    async def read_file(self) -> str:
+    async def read_file(self) -> None:
         try:
+            self.loading = True
             extension = self.filepath.suffix
+            self.get_syntax_highlighting(extension)
             if (extension == 'csv'):
-                text = await self.read_csv_files(self.filepath).wait()
-                return (text,'json')
+                self.run_worker(self.read_csv_files(self.filepath))
             elif (extension == 'json'):
-                text = await self.read_json_files(self.filepath).wait()
-                return (text,'json')
+                self.run_worker(self.read_json_files(self.filepath))
             else :
-                text = self.read_txt_files(self.filepath)
-                syntax = await self.get_syntax_highlighting(extension)
-                return (text,syntax)
-        except :
-            return None
+                self.run_worker(self.read_txt_files(self.filepath))
             
-    async def get_syntax_highlighting(self,extension):
-
+        except Exception as e:
+            self.notify(f'{e}')
+    
+    @work(thread=True)
+    def get_syntax_highlighting(self, extension: str) -> None:
+        ''' sets a syntax highlighting based on the file extension & category '''
         if (extension in SYNTAX_HIGHLIGHTING_SUPPORTED_FILES):
-            return SYNTAX_HIGHLIGHTING_SUPPORTED_FILES[extension]
+            self.language = SYNTAX_HIGHLIGHTING_SUPPORTED_FILES[extension]
         elif (extension in PROGRAMMING_AND_SCRIPTING_LANGUAGES):
-            return 'bash'
+            self.language = 'bash'
         elif (extension in CONFIG_AND_DATA_FILES):
-            return 'json'
+            self.language = 'json'
         else:
-            return 'markdown'
+            self.language = 'markdown'
         
-    @work()
-    async def read_csv_files(self, filepath: Path) -> str:
+    
+    async def read_csv_files(self, filepath: Path) -> None:
         try:
             with open(filepath,'r') as file:
                 reader = csv.reader(file)
-                return '\n'.join([','.join(row) for row in reader])
+                self.text = '\n'.join([','.join(row) for row in reader])
         except Exception :
-            return None
+            self.text = ""
+            self.notify("unsupported file format")
 
-    @work()
     async def read_txt_files(self, filepath: str) -> str:
         try:
             with open(filepath,'r') as file:
-                return file.read()
+                self.text = file.read()
         except Exception :
-            return None
+            self.text = ""
+            self.notify("unsupported file format")
 
-    @work(thread=True)
     async def read_json_files(self, filepath: Path) -> str:
         try:
             with open(filepath,'r') as file:
                 data = json.load(file)
                 return json.dumps(data,indent=4)
         except Exception:
-            return None
-
+            self.text = ""
+            self.notify("unsupported file format")
 
     def on_worker_state_changed(self, event:Worker.StateChanged):
-        if (event.worker.name == 'read-file' and event.worker.is_finished):
-            self.text = event.worker.result
+        if (event.worker.is_finished):
+            self.loading = False
 
 
