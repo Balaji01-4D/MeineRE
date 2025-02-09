@@ -96,10 +96,12 @@ class TextEditor(TextArea):
         self.notify("opened settings")
 
     @work(thread=True)
-    async def key_ctrl_s(self):
+    async def key_ctrl_s(self, event: Key):
         with open(self.filepath, "w") as file:
             file.writelines(self.text)
         self.notify(f"{self.filepath.name} saved successfully")
+        event.stop()
+
 
     async def read_file(self) -> None:
         try:
