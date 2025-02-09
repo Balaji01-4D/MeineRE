@@ -70,8 +70,8 @@ else:
     st.register_type_strategy(
         pydantic.NameEmail,
         st.builds(
-            '{} <{}>'.format,  # type: ignore[arg-type]
-            st.from_regex('[A-Za-z0-9_]+( [A-Za-z0-9_]+){0,5}', fullmatch=True),
+            "{} <{}>".format,  # type: ignore[arg-type]
+            st.from_regex("[A-Za-z0-9_]+( [A-Za-z0-9_]+){0,5}", fullmatch=True),
             st.emails().filter(is_valid_email),
         ),
     )
@@ -80,13 +80,17 @@ else:
 st.register_type_strategy(
     pydantic.PyObject,  # type: ignore[arg-type]
     st.sampled_from(
-        [cast(pydantic.PyObject, f'math.{name}') for name in sorted(vars(math)) if not name.startswith('_')]
+        [
+            cast(pydantic.PyObject, f"math.{name}")
+            for name in sorted(vars(math))
+            if not name.startswith("_")
+        ]
     ),
 )
 
 # CSS3 Colors; as name, hex, rgb(a) tuples or strings, or hsl strings
 _color_regexes = (
-    '|'.join(
+    "|".join(
         (
             pydantic.color.r_hex_short,
             pydantic.color.r_hex_long,
@@ -97,9 +101,12 @@ _color_regexes = (
         )
     )
     # Use more precise regex patterns to avoid value-out-of-range errors
-    .replace(pydantic.color._r_sl, r'(?:(\d\d?(?:\.\d+)?|100(?:\.0+)?)%)')
-    .replace(pydantic.color._r_alpha, r'(?:(0(?:\.\d+)?|1(?:\.0+)?|\.\d+|\d{1,2}%))')
-    .replace(pydantic.color._r_255, r'(?:((?:\d|\d\d|[01]\d\d|2[0-4]\d|25[0-4])(?:\.\d+)?|255(?:\.0+)?))')
+    .replace(pydantic.color._r_sl, r"(?:(\d\d?(?:\.\d+)?|100(?:\.0+)?)%)")
+    .replace(pydantic.color._r_alpha, r"(?:(0(?:\.\d+)?|1(?:\.0+)?|\.\d+|\d{1,2}%))")
+    .replace(
+        pydantic.color._r_255,
+        r"(?:((?:\d|\d\d|[01]\d\d|2[0-4]\d|25[0-4])(?:\.\d+)?|255(?:\.0+)?))",
+    )
 )
 st.register_type_strategy(
     pydantic.color.Color,
@@ -109,7 +116,7 @@ st.register_type_strategy(
             st.integers(0, 255),
             st.integers(0, 255),
             st.integers(0, 255),
-            st.none() | st.floats(0, 1) | st.floats(0, 100).map('{}%'.format),
+            st.none() | st.floats(0, 1) | st.floats(0, 100).map("{}%".format),
         ),
         st.from_regex(_color_regexes, fullmatch=True),
     ),
@@ -121,23 +128,23 @@ st.register_type_strategy(
 
 def add_luhn_digit(card_number: str) -> str:
     # See https://en.wikipedia.org/wiki/Luhn_algorithm
-    for digit in '0123456789':
+    for digit in "0123456789":
         with contextlib.suppress(Exception):
             pydantic.PaymentCardNumber.validate_luhn_check_digit(card_number + digit)
             return card_number + digit
-    raise AssertionError('Unreachable')  # pragma: no cover
+    raise AssertionError("Unreachable")  # pragma: no cover
 
 
 card_patterns = (
     # Note that these patterns omit the Luhn check digit; that's added by the function above
-    '4[0-9]{14}',  # Visa
-    '5[12345][0-9]{13}',  # Mastercard
-    '3[47][0-9]{12}',  # American Express
-    '[0-26-9][0-9]{10,17}',  # other (incomplete to avoid overlap)
+    "4[0-9]{14}",  # Visa
+    "5[12345][0-9]{13}",  # Mastercard
+    "3[47][0-9]{12}",  # American Express
+    "[0-26-9][0-9]{10,17}",  # other (incomplete to avoid overlap)
 )
 st.register_type_strategy(
     pydantic.PaymentCardNumber,
-    st.from_regex('|'.join(card_patterns), fullmatch=True).map(add_luhn_digit),  # type: ignore[arg-type]
+    st.from_regex("|".join(card_patterns), fullmatch=True).map(add_luhn_digit),  # type: ignore[arg-type]
 )
 
 # UUIDs
@@ -169,8 +176,14 @@ st.register_type_strategy(pydantic.StrictStr, st.text())
 
 
 # FutureDate, PastDate
-st.register_type_strategy(pydantic.FutureDate, st.dates(min_value=datetime.date.today() + datetime.timedelta(days=1)))
-st.register_type_strategy(pydantic.PastDate, st.dates(max_value=datetime.date.today() - datetime.timedelta(days=1)))
+st.register_type_strategy(
+    pydantic.FutureDate,
+    st.dates(min_value=datetime.date.today() + datetime.timedelta(days=1)),
+)
+st.register_type_strategy(
+    pydantic.PastDate,
+    st.dates(max_value=datetime.date.today() - datetime.timedelta(days=1)),
+)
 
 
 # Constrained-type resolver functions
@@ -187,12 +200,14 @@ def _registered(typ: Type[pydantic.types.T]) -> Type[pydantic.types.T]:
 
 
 @overload
-def _registered(typ: pydantic.types.ConstrainedNumberMeta) -> pydantic.types.ConstrainedNumberMeta:
+def _registered(
+    typ: pydantic.types.ConstrainedNumberMeta,
+) -> pydantic.types.ConstrainedNumberMeta:
     pass
 
 
 def _registered(
-    typ: Union[Type[pydantic.types.T], pydantic.types.ConstrainedNumberMeta]
+    typ: Union[Type[pydantic.types.T], pydantic.types.ConstrainedNumberMeta],
 ) -> Union[Type[pydantic.types.T], pydantic.types.ConstrainedNumberMeta]:
     # This function replaces the version in `pydantic.types`, in order to
     # effect the registration of new constrained types so that Hypothesis
@@ -202,11 +217,13 @@ def _registered(
         if issubclass(typ, supertype):
             st.register_type_strategy(typ, resolver(typ))  # type: ignore
             return typ
-    raise NotImplementedError(f'Unknown type {typ!r} has no resolver to register')  # pragma: no cover
+    raise NotImplementedError(
+        f"Unknown type {typ!r} has no resolver to register"
+    )  # pragma: no cover
 
 
 def resolves(
-    typ: Union[type, pydantic.types.ConstrainedNumberMeta]
+    typ: Union[type, pydantic.types.ConstrainedNumberMeta],
 ) -> Callable[[Callable[..., st.SearchStrategy]], Callable[..., st.SearchStrategy]]:  # type: ignore[type-arg]
     def inner(f):  # type: ignore
         assert f not in RESOLVERS
@@ -229,9 +246,13 @@ def resolve_json(cls):  # type: ignore[no-untyped-def]
             base=st.one_of(st.none(), st.booleans(), st.integers(), finite, st.text()),
             extend=lambda x: st.lists(x) | st.dictionaries(st.text(), x),  # type: ignore
         )
-    inner_type = getattr(cls, 'inner_type', None)
+    inner_type = getattr(cls, "inner_type", None)
     return st.builds(
-        cls.inner_type.json if lenient_issubclass(inner_type, pydantic.BaseModel) else json.dumps,
+        (
+            cls.inner_type.json
+            if lenient_issubclass(inner_type, pydantic.BaseModel)
+            else json.dumps
+        ),
         inner,
         ensure_ascii=st.booleans(),
         indent=st.none() | st.integers(0, 16),
@@ -246,17 +267,17 @@ def resolve_conbytes(cls):  # type: ignore[no-untyped-def]  # pragma: no cover
     if not cls.strip_whitespace:
         return st.binary(min_size=min_size, max_size=max_size)
     # Fun with regex to ensure we neither start nor end with whitespace
-    repeats = '{{{},{}}}'.format(
+    repeats = "{{{},{}}}".format(
         min_size - 2 if min_size > 2 else 0,
-        max_size - 2 if (max_size or 0) > 2 else '',
+        max_size - 2 if (max_size or 0) > 2 else "",
     )
     if min_size >= 2:
-        pattern = rf'\W.{repeats}\W'
+        pattern = rf"\W.{repeats}\W"
     elif min_size == 1:
-        pattern = rf'\W(.{repeats}\W)?'
+        pattern = rf"\W(.{repeats}\W)?"
     else:
         assert min_size == 0
-        pattern = rf'(\W(.{repeats}\W)?)?'
+        pattern = rf"(\W(.{repeats}\W)?)?"
     return st.from_regex(pattern.encode(), fullmatch=True)
 
 
@@ -265,10 +286,10 @@ def resolve_condecimal(cls):  # type: ignore[no-untyped-def]
     min_value = cls.ge
     max_value = cls.le
     if cls.gt is not None:
-        assert min_value is None, 'Set `gt` or `ge`, but not both'
+        assert min_value is None, "Set `gt` or `ge`, but not both"
         min_value = cls.gt
     if cls.lt is not None:
-        assert max_value is None, 'Set `lt` or `le`, but not both'
+        assert max_value is None, "Set `lt` or `le`, but not both"
         max_value = cls.lt
     s = st.decimals(min_value, max_value, allow_nan=False, places=cls.decimal_places)
     if cls.lt is not None:
@@ -286,23 +307,31 @@ def resolve_confloat(cls):  # type: ignore[no-untyped-def]
     exclude_max = False
 
     if cls.gt is not None:
-        assert min_value is None, 'Set `gt` or `ge`, but not both'
+        assert min_value is None, "Set `gt` or `ge`, but not both"
         min_value = cls.gt
         exclude_min = True
     if cls.lt is not None:
-        assert max_value is None, 'Set `lt` or `le`, but not both'
+        assert max_value is None, "Set `lt` or `le`, but not both"
         max_value = cls.lt
         exclude_max = True
 
     if cls.multiple_of is None:
-        return st.floats(min_value, max_value, exclude_min=exclude_min, exclude_max=exclude_max, allow_nan=False)
+        return st.floats(
+            min_value,
+            max_value,
+            exclude_min=exclude_min,
+            exclude_max=exclude_max,
+            allow_nan=False,
+        )
 
     if min_value is not None:
         min_value = math.ceil(min_value / cls.multiple_of)
         if exclude_min:
             min_value = min_value + 1
     if max_value is not None:
-        assert max_value >= cls.multiple_of, 'Cannot build model with max value smaller than multiple of'
+        assert (
+            max_value >= cls.multiple_of
+        ), "Cannot build model with max value smaller than multiple of"
         max_value = math.floor(max_value / cls.multiple_of)
         if exclude_max:
             max_value = max_value - 1
@@ -315,10 +344,10 @@ def resolve_conint(cls):  # type: ignore[no-untyped-def]
     min_value = cls.ge
     max_value = cls.le
     if cls.gt is not None:
-        assert min_value is None, 'Set `gt` or `ge`, but not both'
+        assert min_value is None, "Set `gt` or `ge`, but not both"
         min_value = cls.gt + 1
     if cls.lt is not None:
-        assert max_value is None, 'Set `lt` or `le`, but not both'
+        assert max_value is None, "Set `lt` or `le`, but not both"
         max_value = cls.lt - 1
 
     if cls.multiple_of is None or cls.multiple_of == 1:
@@ -336,14 +365,14 @@ def resolve_conint(cls):  # type: ignore[no-untyped-def]
 @resolves(pydantic.ConstrainedDate)
 def resolve_condate(cls):  # type: ignore[no-untyped-def]
     if cls.ge is not None:
-        assert cls.gt is None, 'Set `gt` or `ge`, but not both'
+        assert cls.gt is None, "Set `gt` or `ge`, but not both"
         min_value = cls.ge
     elif cls.gt is not None:
         min_value = cls.gt + datetime.timedelta(days=1)
     else:
         min_value = datetime.date.min
     if cls.le is not None:
-        assert cls.lt is None, 'Set `lt` or `le`, but not both'
+        assert cls.lt is None, "Set `lt` or `le`, but not both"
         max_value = cls.le
     elif cls.lt is not None:
         max_value = cls.lt - datetime.timedelta(days=1)
@@ -365,17 +394,17 @@ def resolve_constr(cls):  # type: ignore[no-untyped-def]  # pragma: no cover
         if cls.strip_whitespace:
             strategy = strategy.filter(lambda s: s == s.strip())
     elif cls.strip_whitespace:
-        repeats = '{{{},{}}}'.format(
+        repeats = "{{{},{}}}".format(
             min_size - 2 if min_size > 2 else 0,
-            max_size - 2 if (max_size or 0) > 2 else '',
+            max_size - 2 if (max_size or 0) > 2 else "",
         )
         if min_size >= 2:
-            strategy = st.from_regex(rf'\W.{repeats}\W')
+            strategy = st.from_regex(rf"\W.{repeats}\W")
         elif min_size == 1:
-            strategy = st.from_regex(rf'\W(.{repeats}\W)?')
+            strategy = st.from_regex(rf"\W(.{repeats}\W)?")
         else:
             assert min_size == 0
-            strategy = st.from_regex(rf'(\W(.{repeats}\W)?)?')
+            strategy = st.from_regex(rf"(\W(.{repeats}\W)?)?")
 
     if min_size == 0 and max_size is None:
         return strategy

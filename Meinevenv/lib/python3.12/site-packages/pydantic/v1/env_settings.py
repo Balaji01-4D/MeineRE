@@ -1,7 +1,19 @@
 import os
 import warnings
 from pathlib import Path
-from typing import AbstractSet, Any, Callable, ClassVar, Dict, List, Mapping, Optional, Tuple, Type, Union
+from typing import (
+    AbstractSet,
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    List,
+    Mapping,
+    Optional,
+    Tuple,
+    Type,
+    Union,
+)
 
 from pydantic.v1.config import BaseConfig, Extra
 from pydantic.v1.fields import ModelField
@@ -12,7 +24,7 @@ from pydantic.v1.utils import deep_update, lenient_issubclass, path_type, sequen
 
 env_file_sentinel = str(object())
 
-SettingsSourceCallable = Callable[['BaseSettings'], Dict[str, Any]]
+SettingsSourceCallable = Callable[["BaseSettings"], Dict[str, Any]]
 DotenvType = Union[StrPath, List[StrPath], Tuple[StrPath, ...]]
 
 
@@ -58,19 +70,31 @@ class BaseSettings(BaseModel):
         # Configure built-in sources
         init_settings = InitSettingsSource(init_kwargs=init_kwargs)
         env_settings = EnvSettingsSource(
-            env_file=(_env_file if _env_file != env_file_sentinel else self.__config__.env_file),
+            env_file=(
+                _env_file
+                if _env_file != env_file_sentinel
+                else self.__config__.env_file
+            ),
             env_file_encoding=(
-                _env_file_encoding if _env_file_encoding is not None else self.__config__.env_file_encoding
+                _env_file_encoding
+                if _env_file_encoding is not None
+                else self.__config__.env_file_encoding
             ),
             env_nested_delimiter=(
-                _env_nested_delimiter if _env_nested_delimiter is not None else self.__config__.env_nested_delimiter
+                _env_nested_delimiter
+                if _env_nested_delimiter is not None
+                else self.__config__.env_nested_delimiter
             ),
             env_prefix_len=len(self.__config__.env_prefix),
         )
-        file_secret_settings = SecretsSettingsSource(secrets_dir=_secrets_dir or self.__config__.secrets_dir)
+        file_secret_settings = SecretsSettingsSource(
+            secrets_dir=_secrets_dir or self.__config__.secrets_dir
+        )
         # Provide a hook to set built-in sources priority and add / remove sources
         sources = self.__config__.customise_sources(
-            init_settings=init_settings, env_settings=env_settings, file_secret_settings=file_secret_settings
+            init_settings=init_settings,
+            env_settings=env_settings,
+            file_secret_settings=file_secret_settings,
         )
         if sources:
             return deep_update(*reversed([source(self) for source in sources]))
@@ -80,7 +104,7 @@ class BaseSettings(BaseModel):
             return {}
 
     class Config(BaseConfig):
-        env_prefix: str = ''
+        env_prefix: str = ""
         env_file: Optional[DotenvType] = None
         env_file_encoding: Optional[str] = None
         env_nested_delimiter: Optional[str] = None
@@ -95,13 +119,13 @@ class BaseSettings(BaseModel):
             env_names: Union[List[str], AbstractSet[str]]
             field_info_from_config = cls.get_field_info(field.name)
 
-            env = field_info_from_config.get('env') or field.field_info.extra.get('env')
+            env = field_info_from_config.get("env") or field.field_info.extra.get("env")
             if env is None:
                 if field.has_alias:
                     warnings.warn(
-                        'aliases are no longer used by BaseSettings to define which environment variables to read. '
+                        "aliases are no longer used by BaseSettings to define which environment variables to read. "
                         'Instead use the "env" field setting. '
-                        'See https://pydantic-docs.helpmanual.io/usage/settings/#environment-variable-names',
+                        "See https://pydantic-docs.helpmanual.io/usage/settings/#environment-variable-names",
                         FutureWarning,
                     )
                 env_names = {cls.env_prefix + field.name}
@@ -112,11 +136,13 @@ class BaseSettings(BaseModel):
             elif sequence_like(env):
                 env_names = list(env)
             else:
-                raise TypeError(f'invalid field env: {env!r} ({display_as_type(env)}); should be string, list or set')
+                raise TypeError(
+                    f"invalid field env: {env!r} ({display_as_type(env)}); should be string, list or set"
+                )
 
             if not cls.case_sensitive:
                 env_names = env_names.__class__(n.lower() for n in env_names)
-            field.field_info.extra['env_names'] = env_names
+            field.field_info.extra["env_names"] = env_names
 
         @classmethod
         def customise_sources(
@@ -136,7 +162,7 @@ class BaseSettings(BaseModel):
 
 
 class InitSettingsSource:
-    __slots__ = ('init_kwargs',)
+    __slots__ = ("init_kwargs",)
 
     def __init__(self, init_kwargs: Dict[str, Any]):
         self.init_kwargs = init_kwargs
@@ -145,11 +171,16 @@ class InitSettingsSource:
         return self.init_kwargs
 
     def __repr__(self) -> str:
-        return f'InitSettingsSource(init_kwargs={self.init_kwargs!r})'
+        return f"InitSettingsSource(init_kwargs={self.init_kwargs!r})"
 
 
 class EnvSettingsSource:
-    __slots__ = ('env_file', 'env_file_encoding', 'env_nested_delimiter', 'env_prefix_len')
+    __slots__ = (
+        "env_file",
+        "env_file_encoding",
+        "env_nested_delimiter",
+        "env_prefix_len",
+    )
 
     def __init__(
         self,
@@ -180,7 +211,7 @@ class EnvSettingsSource:
 
         for field in settings.__fields__.values():
             env_val: Optional[str] = None
-            for env_name in field.field_info.extra['env_names']:
+            for env_name in field.field_info.extra["env_names"]:
                 env_val = env_vars.get(env_name)
                 if env_val is not None:
                     break
@@ -198,10 +229,14 @@ class EnvSettingsSource:
                         env_val = settings.__config__.parse_env_var(field.name, env_val)
                     except ValueError as e:
                         if not allow_parse_failure:
-                            raise SettingsError(f'error parsing env var "{env_name}"') from e
+                            raise SettingsError(
+                                f'error parsing env var "{env_name}"'
+                            ) from e
 
                     if isinstance(env_val, dict):
-                        d[field.alias] = deep_update(env_val, self.explode_env_vars(field, env_vars))
+                        d[field.alias] = deep_update(
+                            env_val, self.explode_env_vars(field, env_vars)
+                        )
                     else:
                         d[field.alias] = env_val
             elif env_val is not None:
@@ -223,7 +258,11 @@ class EnvSettingsSource:
             env_path = Path(env_file).expanduser()
             if env_path.is_file():
                 dotenv_vars.update(
-                    read_env_file(env_path, encoding=self.env_file_encoding, case_sensitive=case_sensitive)
+                    read_env_file(
+                        env_path,
+                        encoding=self.env_file_encoding,
+                        case_sensitive=case_sensitive,
+                    )
                 )
 
         return dotenv_vars
@@ -237,27 +276,38 @@ class EnvSettingsSource:
 
         if field.is_complex():
             allow_parse_failure = False
-        elif is_union(get_origin(field.type_)) and field.sub_fields and any(f.is_complex() for f in field.sub_fields):
+        elif (
+            is_union(get_origin(field.type_))
+            and field.sub_fields
+            and any(f.is_complex() for f in field.sub_fields)
+        ):
             allow_parse_failure = True
         else:
             return False, False
 
         return True, allow_parse_failure
 
-    def explode_env_vars(self, field: ModelField, env_vars: Mapping[str, Optional[str]]) -> Dict[str, Any]:
+    def explode_env_vars(
+        self, field: ModelField, env_vars: Mapping[str, Optional[str]]
+    ) -> Dict[str, Any]:
         """
         Process env_vars and extract the values of keys containing env_nested_delimiter into nested dictionaries.
 
         This is applied to a single field, hence filtering by env_var prefix.
         """
-        prefixes = [f'{env_name}{self.env_nested_delimiter}' for env_name in field.field_info.extra['env_names']]
+        prefixes = [
+            f"{env_name}{self.env_nested_delimiter}"
+            for env_name in field.field_info.extra["env_names"]
+        ]
         result: Dict[str, Any] = {}
         for env_name, env_val in env_vars.items():
             if not any(env_name.startswith(prefix) for prefix in prefixes):
                 continue
             # we remove the prefix before splitting in case the prefix has characters in common with the delimiter
             env_name_without_prefix = env_name[self.env_prefix_len :]
-            _, *keys, last_key = env_name_without_prefix.split(self.env_nested_delimiter)
+            _, *keys, last_key = env_name_without_prefix.split(
+                self.env_nested_delimiter
+            )
             env_var = result
             for key in keys:
                 env_var = env_var.setdefault(key, {})
@@ -267,13 +317,13 @@ class EnvSettingsSource:
 
     def __repr__(self) -> str:
         return (
-            f'EnvSettingsSource(env_file={self.env_file!r}, env_file_encoding={self.env_file_encoding!r}, '
-            f'env_nested_delimiter={self.env_nested_delimiter!r})'
+            f"EnvSettingsSource(env_file={self.env_file!r}, env_file_encoding={self.env_file_encoding!r}, "
+            f"env_nested_delimiter={self.env_nested_delimiter!r})"
         )
 
 
 class SecretsSettingsSource:
-    __slots__ = ('secrets_dir',)
+    __slots__ = ("secrets_dir",)
 
     def __init__(self, secrets_dir: Optional[StrPath]):
         self.secrets_dir: Optional[StrPath] = secrets_dir
@@ -294,11 +344,15 @@ class SecretsSettingsSource:
             return secrets
 
         if not secrets_path.is_dir():
-            raise SettingsError(f'secrets_dir must reference a directory, not a {path_type(secrets_path)}')
+            raise SettingsError(
+                f"secrets_dir must reference a directory, not a {path_type(secrets_path)}"
+            )
 
         for field in settings.__fields__.values():
-            for env_name in field.field_info.extra['env_names']:
-                path = find_case_path(secrets_path, env_name, settings.__config__.case_sensitive)
+            for env_name in field.field_info.extra["env_names"]:
+                path = find_case_path(
+                    secrets_path, env_name, settings.__config__.case_sensitive
+                )
                 if not path:
                     # path does not exist, we currently don't return a warning for this
                     continue
@@ -307,9 +361,13 @@ class SecretsSettingsSource:
                     secret_value = path.read_text().strip()
                     if field.is_complex():
                         try:
-                            secret_value = settings.__config__.parse_env_var(field.name, secret_value)
+                            secret_value = settings.__config__.parse_env_var(
+                                field.name, secret_value
+                            )
                         except ValueError as e:
-                            raise SettingsError(f'error parsing env var "{env_name}"') from e
+                            raise SettingsError(
+                                f'error parsing env var "{env_name}"'
+                            ) from e
 
                     secrets[field.alias] = secret_value
                 else:
@@ -320,7 +378,7 @@ class SecretsSettingsSource:
         return secrets
 
     def __repr__(self) -> str:
-        return f'SecretsSettingsSource(secrets_dir={self.secrets_dir!r})'
+        return f"SecretsSettingsSource(secrets_dir={self.secrets_dir!r})"
 
 
 def read_env_file(
@@ -329,16 +387,22 @@ def read_env_file(
     try:
         from dotenv import dotenv_values
     except ImportError as e:
-        raise ImportError('python-dotenv is not installed, run `pip install pydantic[dotenv]`') from e
+        raise ImportError(
+            "python-dotenv is not installed, run `pip install pydantic[dotenv]`"
+        ) from e
 
-    file_vars: Dict[str, Optional[str]] = dotenv_values(file_path, encoding=encoding or 'utf8')
+    file_vars: Dict[str, Optional[str]] = dotenv_values(
+        file_path, encoding=encoding or "utf8"
+    )
     if not case_sensitive:
         return {k.lower(): v for k, v in file_vars.items()}
     else:
         return file_vars
 
 
-def find_case_path(dir_path: Path, file_name: str, case_sensitive: bool) -> Optional[Path]:
+def find_case_path(
+    dir_path: Path, file_name: str, case_sensitive: bool
+) -> Optional[Path]:
     """
     Find a file within path's directory matching filename, optionally ignoring case.
     """

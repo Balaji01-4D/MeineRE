@@ -5,10 +5,10 @@ from __future__ import annotations as _annotations
 from .version import version_short
 
 __all__ = (
-    'PydanticDeprecatedSince20',
-    'PydanticDeprecationWarning',
-    'PydanticDeprecatedSince26',
-    'PydanticExperimentalWarning',
+    "PydanticDeprecatedSince20",
+    "PydanticDeprecationWarning",
+    "PydanticDeprecatedSince26",
+    "PydanticExperimentalWarning",
 )
 
 
@@ -29,20 +29,26 @@ class PydanticDeprecationWarning(DeprecationWarning):
     expected_removal: tuple[int, int]
 
     def __init__(
-        self, message: str, *args: object, since: tuple[int, int], expected_removal: tuple[int, int] | None = None
+        self,
+        message: str,
+        *args: object,
+        since: tuple[int, int],
+        expected_removal: tuple[int, int] | None = None,
     ) -> None:
         super().__init__(message, *args)
-        self.message = message.rstrip('.')
+        self.message = message.rstrip(".")
         self.since = since
-        self.expected_removal = expected_removal if expected_removal is not None else (since[0] + 1, 0)
+        self.expected_removal = (
+            expected_removal if expected_removal is not None else (since[0] + 1, 0)
+        )
 
     def __str__(self) -> str:
         message = (
-            f'{self.message}. Deprecated in Pydantic V{self.since[0]}.{self.since[1]}'
-            f' to be removed in V{self.expected_removal[0]}.{self.expected_removal[1]}.'
+            f"{self.message}. Deprecated in Pydantic V{self.since[0]}.{self.since[1]}"
+            f" to be removed in V{self.expected_removal[0]}.{self.expected_removal[1]}."
         )
         if self.since == (2, 0):
-            message += f' See Pydantic V2 Migration Guide at https://errors.pydantic.dev/{version_short()}/migration/'
+            message += f" See Pydantic V2 Migration Guide at https://errors.pydantic.dev/{version_short()}/migration/"
         return message
 
 

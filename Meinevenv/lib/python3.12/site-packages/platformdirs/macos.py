@@ -27,7 +27,9 @@ class MacOS(PlatformDirsABC):
     @property
     def user_data_dir(self) -> str:
         """:return: data directory tied to the user, e.g. ``~/Library/Application Support/$appname/$version``"""
-        return self._append_app_name_and_version(os.path.expanduser("~/Library/Application Support"))  # noqa: PTH111
+        return self._append_app_name_and_version(
+            os.path.expanduser("~/Library/Application Support")
+        )  # noqa: PTH111
 
     @property
     def site_data_dir(self) -> str:
@@ -40,8 +42,14 @@ class MacOS(PlatformDirsABC):
           ``/opt/homebrew/share/$appname/$version:/Library/Application Support/$appname/$version``
         """
         is_homebrew = sys.prefix.startswith("/opt/homebrew")
-        path_list = [self._append_app_name_and_version("/opt/homebrew/share")] if is_homebrew else []
-        path_list.append(self._append_app_name_and_version("/Library/Application Support"))
+        path_list = (
+            [self._append_app_name_and_version("/opt/homebrew/share")]
+            if is_homebrew
+            else []
+        )
+        path_list.append(
+            self._append_app_name_and_version("/Library/Application Support")
+        )
         if self.multipath:
             return os.pathsep.join(path_list)
         return path_list[0]
@@ -64,7 +72,9 @@ class MacOS(PlatformDirsABC):
     @property
     def user_cache_dir(self) -> str:
         """:return: cache directory tied to the user, e.g. ``~/Library/Caches/$appname/$version``"""
-        return self._append_app_name_and_version(os.path.expanduser("~/Library/Caches"))  # noqa: PTH111
+        return self._append_app_name_and_version(
+            os.path.expanduser("~/Library/Caches")
+        )  # noqa: PTH111
 
     @property
     def site_cache_dir(self) -> str:
@@ -77,7 +87,11 @@ class MacOS(PlatformDirsABC):
           ``/opt/homebrew/var/cache/$appname/$version:/Library/Caches/$appname/$version``
         """
         is_homebrew = sys.prefix.startswith("/opt/homebrew")
-        path_list = [self._append_app_name_and_version("/opt/homebrew/var/cache")] if is_homebrew else []
+        path_list = (
+            [self._append_app_name_and_version("/opt/homebrew/var/cache")]
+            if is_homebrew
+            else []
+        )
         path_list.append(self._append_app_name_and_version("/Library/Caches"))
         if self.multipath:
             return os.pathsep.join(path_list)
@@ -96,7 +110,9 @@ class MacOS(PlatformDirsABC):
     @property
     def user_log_dir(self) -> str:
         """:return: log directory tied to the user, e.g. ``~/Library/Logs/$appname/$version``"""
-        return self._append_app_name_and_version(os.path.expanduser("~/Library/Logs"))  # noqa: PTH111
+        return self._append_app_name_and_version(
+            os.path.expanduser("~/Library/Logs")
+        )  # noqa: PTH111
 
     @property
     def user_documents_dir(self) -> str:
@@ -131,7 +147,9 @@ class MacOS(PlatformDirsABC):
     @property
     def user_runtime_dir(self) -> str:
         """:return: runtime directory tied to the user, e.g. ``~/Library/Caches/TemporaryItems/$appname/$version``"""
-        return self._append_app_name_and_version(os.path.expanduser("~/Library/Caches/TemporaryItems"))  # noqa: PTH111
+        return self._append_app_name_and_version(
+            os.path.expanduser("~/Library/Caches/TemporaryItems")
+        )  # noqa: PTH111
 
     @property
     def site_runtime_dir(self) -> str:

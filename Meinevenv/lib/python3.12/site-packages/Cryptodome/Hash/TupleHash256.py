@@ -61,10 +61,9 @@ def new(**kwargs):
             raise ValueError("'digest_bytes' must be at least 8")
     else:
         if digest_bits < 64 or digest_bits % 8:
-            raise ValueError("'digest_bytes' must be at least 64 "
-                             "in steps of 8")
+            raise ValueError("'digest_bytes' must be at least 64 " "in steps of 8")
         digest_bytes = digest_bits // 8
 
-    custom = kwargs.pop("custom", b'')
+    custom = kwargs.pop("custom", b"")
 
     return TupleHash(custom, cSHAKE256, digest_bytes)

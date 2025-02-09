@@ -34,7 +34,7 @@ else:
     enum = None
 
 
-__all__ = ['pid_exists', 'wait_pid', 'disk_usage', 'get_terminal_map']
+__all__ = ["pid_exists", "wait_pid", "disk_usage", "get_terminal_map"]
 
 
 def pid_exists(pid):
@@ -63,7 +63,7 @@ def pid_exists(pid):
 # https://bugs.python.org/issue21076
 if enum is not None and hasattr(signal, "Signals"):
     Negsignal = enum.IntEnum(
-        'Negsignal', dict([(x.name, -x.value) for x in signal.Signals])
+        "Negsignal", dict([(x.name, -x.value) for x in signal.Signals])
     )
 
     def negsig_to_enum(num):
@@ -84,7 +84,7 @@ def wait_pid(
     timeout=None,
     proc_name=None,
     _waitpid=os.waitpid,
-    _timer=getattr(time, 'monotonic', time.time),  # noqa: B008
+    _timer=getattr(time, "monotonic", time.time),  # noqa: B008
     _min=min,
     _sleep=time.sleep,
     _pid_exists=pid_exists,
@@ -233,7 +233,7 @@ def get_terminal_map():
     Used by Process.terminal().
     """
     ret = {}
-    ls = glob.glob('/dev/tty*') + glob.glob('/dev/pts/*')
+    ls = glob.glob("/dev/tty*") + glob.glob("/dev/pts/*")
     for name in ls:
         assert name not in ret, name
         try:

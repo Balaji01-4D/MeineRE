@@ -20,4 +20,5 @@ __all__ = (
 
 class PpmdError(Exception):
     "Call to the underlying PPMd library failed."
+
     pass

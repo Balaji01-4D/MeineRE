@@ -36,7 +36,9 @@ class Android(PlatformDirsABC):
         :return: config directory tied to the user, e.g. \
         ``/data/user/<userid>/<packagename>/shared_prefs/<AppName>``
         """
-        return self._append_app_name_and_version(cast(str, _android_folder()), "shared_prefs")
+        return self._append_app_name_and_version(
+            cast(str, _android_folder()), "shared_prefs"
+        )
 
     @property
     def site_config_dir(self) -> str:
@@ -127,7 +129,9 @@ def _android_folder() -> str | None:  # noqa: C901, PLR0912
             # First try to get a path to android app using python4android (if available)...
             from android import mActivity  # noqa: PLC0415
 
-            context = cast("android.content.Context", mActivity.getApplicationContext())  # noqa: F821
+            context = cast(
+                "android.content.Context", mActivity.getApplicationContext()
+            )  # noqa: F821
             result = context.getFilesDir().getParentFile().getAbsolutePath()
         except Exception:  # noqa: BLE001
             result = None
@@ -173,7 +177,9 @@ def _android_documents_folder() -> str:
 
         context = autoclass("android.content.Context")
         environment = autoclass("android.os.Environment")
-        documents_dir: str = context.getExternalFilesDir(environment.DIRECTORY_DOCUMENTS).getAbsolutePath()
+        documents_dir: str = context.getExternalFilesDir(
+            environment.DIRECTORY_DOCUMENTS
+        ).getAbsolutePath()
     except Exception:  # noqa: BLE001
         documents_dir = "/storage/emulated/0/Documents"
 
@@ -189,7 +195,9 @@ def _android_downloads_folder() -> str:
 
         context = autoclass("android.content.Context")
         environment = autoclass("android.os.Environment")
-        downloads_dir: str = context.getExternalFilesDir(environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
+        downloads_dir: str = context.getExternalFilesDir(
+            environment.DIRECTORY_DOWNLOADS
+        ).getAbsolutePath()
     except Exception:  # noqa: BLE001
         downloads_dir = "/storage/emulated/0/Downloads"
 
@@ -205,7 +213,9 @@ def _android_pictures_folder() -> str:
 
         context = autoclass("android.content.Context")
         environment = autoclass("android.os.Environment")
-        pictures_dir: str = context.getExternalFilesDir(environment.DIRECTORY_PICTURES).getAbsolutePath()
+        pictures_dir: str = context.getExternalFilesDir(
+            environment.DIRECTORY_PICTURES
+        ).getAbsolutePath()
     except Exception:  # noqa: BLE001
         pictures_dir = "/storage/emulated/0/Pictures"
 
@@ -221,7 +231,9 @@ def _android_videos_folder() -> str:
 
         context = autoclass("android.content.Context")
         environment = autoclass("android.os.Environment")
-        videos_dir: str = context.getExternalFilesDir(environment.DIRECTORY_DCIM).getAbsolutePath()
+        videos_dir: str = context.getExternalFilesDir(
+            environment.DIRECTORY_DCIM
+        ).getAbsolutePath()
     except Exception:  # noqa: BLE001
         videos_dir = "/storage/emulated/0/DCIM/Camera"
 
@@ -237,7 +249,9 @@ def _android_music_folder() -> str:
 
         context = autoclass("android.content.Context")
         environment = autoclass("android.os.Environment")
-        music_dir: str = context.getExternalFilesDir(environment.DIRECTORY_MUSIC).getAbsolutePath()
+        music_dir: str = context.getExternalFilesDir(
+            environment.DIRECTORY_MUSIC
+        ).getAbsolutePath()
     except Exception:  # noqa: BLE001
         music_dir = "/storage/emulated/0/Music"
 

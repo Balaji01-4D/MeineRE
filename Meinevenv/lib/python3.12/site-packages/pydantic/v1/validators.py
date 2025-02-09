@@ -5,7 +5,14 @@ from collections.abc import Hashable as CollectionsHashable
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal, DecimalException
 from enum import Enum, IntEnum
-from ipaddress import IPv4Address, IPv4Interface, IPv4Network, IPv6Address, IPv6Interface, IPv6Network
+from ipaddress import (
+    IPv4Address,
+    IPv4Interface,
+    IPv4Network,
+    IPv6Address,
+    IPv6Interface,
+    IPv6Network,
+)
 from pathlib import Path
 from typing import (
     TYPE_CHECKING,
@@ -30,7 +37,12 @@ from uuid import UUID
 from warnings import warn
 
 from pydantic.v1 import errors
-from pydantic.v1.datetime_parse import parse_date, parse_datetime, parse_duration, parse_time
+from pydantic.v1.datetime_parse import (
+    parse_date,
+    parse_datetime,
+    parse_duration,
+    parse_time,
+)
 from pydantic.v1.typing import (
     AnyCallable,
     all_literal_values,
@@ -100,8 +112,8 @@ def strict_bytes_validator(v: Any) -> Union[bytes]:
         raise errors.BytesError()
 
 
-BOOL_FALSE = {0, '0', 'off', 'f', 'false', 'n', 'no'}
-BOOL_TRUE = {1, '1', 'on', 't', 'true', 'y', 'yes'}
+BOOL_FALSE = {0, "0", "off", "f", "false", "n", "no"}
+BOOL_TRUE = {1, "1", "on", "t", "true", "y", "yes"}
 
 
 def bool_validator(v: Any) -> bool:
@@ -166,8 +178,10 @@ def strict_float_validator(v: Any) -> float:
     raise errors.FloatError()
 
 
-def float_finite_validator(v: 'Number', field: 'ModelField', config: 'BaseConfig') -> 'Number':
-    allow_inf_nan = getattr(field.type_, 'allow_inf_nan', None)
+def float_finite_validator(
+    v: "Number", field: "ModelField", config: "BaseConfig"
+) -> "Number":
+    allow_inf_nan = getattr(field.type_, "allow_inf_nan", None)
     if allow_inf_nan is None:
         allow_inf_nan = config.allow_inf_nan
 
@@ -176,7 +190,7 @@ def float_finite_validator(v: 'Number', field: 'ModelField', config: 'BaseConfig
     return v
 
 
-def number_multiple_validator(v: 'Number', field: 'ModelField') -> 'Number':
+def number_multiple_validator(v: "Number", field: "ModelField") -> "Number":
     field_type: ConstrainedNumber = field.type_
     if field_type.multiple_of is not None:
         mod = float(v) / float(field_type.multiple_of) % 1
@@ -185,7 +199,7 @@ def number_multiple_validator(v: 'Number', field: 'ModelField') -> 'Number':
     return v
 
 
-def number_size_validator(v: 'Number', field: 'ModelField') -> 'Number':
+def number_size_validator(v: "Number", field: "ModelField") -> "Number":
     field_type: ConstrainedNumber = field.type_
     if field_type.gt is not None and not v > field_type.gt:
         raise errors.NumberNotGtError(limit_value=field_type.gt)
@@ -200,7 +214,7 @@ def number_size_validator(v: 'Number', field: 'ModelField') -> 'Number':
     return v
 
 
-def constant_validator(v: 'Any', field: 'ModelField') -> 'Any':
+def constant_validator(v: "Any", field: "ModelField") -> "Any":
     """Validate ``const`` fields.
 
     The value provided for a ``const`` field must be equal to the default value
@@ -213,7 +227,7 @@ def constant_validator(v: 'Any', field: 'ModelField') -> 'Any':
     return v
 
 
-def anystr_length_validator(v: 'StrBytes', config: 'BaseConfig') -> 'StrBytes':
+def anystr_length_validator(v: "StrBytes", config: "BaseConfig") -> "StrBytes":
     v_len = len(v)
 
     min_length = config.min_anystr_length
@@ -227,19 +241,19 @@ def anystr_length_validator(v: 'StrBytes', config: 'BaseConfig') -> 'StrBytes':
     return v
 
 
-def anystr_strip_whitespace(v: 'StrBytes') -> 'StrBytes':
+def anystr_strip_whitespace(v: "StrBytes") -> "StrBytes":
     return v.strip()
 
 
-def anystr_upper(v: 'StrBytes') -> 'StrBytes':
+def anystr_upper(v: "StrBytes") -> "StrBytes":
     return v.upper()
 
 
-def anystr_lower(v: 'StrBytes') -> 'StrBytes':
+def anystr_lower(v: "StrBytes") -> "StrBytes":
     return v.lower()
 
 
-def ordered_dict_validator(v: Any) -> 'AnyOrderedDict':
+def ordered_dict_validator(v: Any) -> "AnyOrderedDict":
     if isinstance(v, OrderedDict):
         return v
 
@@ -304,7 +318,7 @@ def deque_validator(v: Any) -> Deque[Any]:
         raise errors.DequeError()
 
 
-def enum_member_validator(v: Any, field: 'ModelField', config: 'BaseConfig') -> Enum:
+def enum_member_validator(v: Any, field: "ModelField", config: "BaseConfig") -> Enum:
     try:
         enum_v = field.type_(v)
     except ValueError:
@@ -313,7 +327,7 @@ def enum_member_validator(v: Any, field: 'ModelField', config: 'BaseConfig') -> 
     return enum_v.value if config.use_enum_values else enum_v
 
 
-def uuid_validator(v: Any, field: 'ModelField') -> UUID:
+def uuid_validator(v: Any, field: "ModelField") -> UUID:
     try:
         if isinstance(v, str):
             v = UUID(v)
@@ -330,7 +344,7 @@ def uuid_validator(v: Any, field: 'ModelField') -> UUID:
     if not isinstance(v, UUID):
         raise errors.UUIDError()
 
-    required_version = getattr(field.type_, '_required_version', None)
+    required_version = getattr(field.type_, "_required_version", None)
     if required_version and v.version != required_version:
         raise errors.UUIDVersionError(required_version=required_version)
 
@@ -495,21 +509,33 @@ def make_literal_validator(type_: Any) -> Callable[[Any], Any]:
     return literal_validator
 
 
-def constr_length_validator(v: 'StrBytes', field: 'ModelField', config: 'BaseConfig') -> 'StrBytes':
+def constr_length_validator(
+    v: "StrBytes", field: "ModelField", config: "BaseConfig"
+) -> "StrBytes":
     v_len = len(v)
 
-    min_length = field.type_.min_length if field.type_.min_length is not None else config.min_anystr_length
+    min_length = (
+        field.type_.min_length
+        if field.type_.min_length is not None
+        else config.min_anystr_length
+    )
     if v_len < min_length:
         raise errors.AnyStrMinLengthError(limit_value=min_length)
 
-    max_length = field.type_.max_length if field.type_.max_length is not None else config.max_anystr_length
+    max_length = (
+        field.type_.max_length
+        if field.type_.max_length is not None
+        else config.max_anystr_length
+    )
     if max_length is not None and v_len > max_length:
         raise errors.AnyStrMaxLengthError(limit_value=max_length)
 
     return v
 
 
-def constr_strip_whitespace(v: 'StrBytes', field: 'ModelField', config: 'BaseConfig') -> 'StrBytes':
+def constr_strip_whitespace(
+    v: "StrBytes", field: "ModelField", config: "BaseConfig"
+) -> "StrBytes":
     strip_whitespace = field.type_.strip_whitespace or config.anystr_strip_whitespace
     if strip_whitespace:
         v = v.strip()
@@ -517,7 +543,9 @@ def constr_strip_whitespace(v: 'StrBytes', field: 'ModelField', config: 'BaseCon
     return v
 
 
-def constr_upper(v: 'StrBytes', field: 'ModelField', config: 'BaseConfig') -> 'StrBytes':
+def constr_upper(
+    v: "StrBytes", field: "ModelField", config: "BaseConfig"
+) -> "StrBytes":
     upper = field.type_.to_upper or config.anystr_upper
     if upper:
         v = v.upper()
@@ -525,14 +553,16 @@ def constr_upper(v: 'StrBytes', field: 'ModelField', config: 'BaseConfig') -> 'S
     return v
 
 
-def constr_lower(v: 'StrBytes', field: 'ModelField', config: 'BaseConfig') -> 'StrBytes':
+def constr_lower(
+    v: "StrBytes", field: "ModelField", config: "BaseConfig"
+) -> "StrBytes":
     lower = field.type_.to_lower or config.anystr_lower
     if lower:
         v = v.lower()
     return v
 
 
-def validate_json(v: Any, config: 'BaseConfig') -> Any:
+def validate_json(v: Any, config: "BaseConfig") -> Any:
     if v is None:
         # pass None through to other validators
         return v
@@ -544,7 +574,7 @@ def validate_json(v: Any, config: 'BaseConfig') -> Any:
         raise errors.JsonTypeError()
 
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 def make_arbitrary_type_validator(type_: Type[T]) -> Callable[[T], T]:
@@ -571,7 +601,7 @@ def any_class_validator(v: Any) -> Type[T]:
     raise errors.ClassError()
 
 
-def none_validator(v: Any) -> 'Literal[None]':
+def none_validator(v: Any) -> "Literal[None]":
     if v is None:
         return v
     raise errors.NotNoneError()
@@ -589,11 +619,11 @@ def pattern_validator(v: Any) -> Pattern[str]:
         raise errors.PatternError()
 
 
-NamedTupleT = TypeVar('NamedTupleT', bound=NamedTuple)
+NamedTupleT = TypeVar("NamedTupleT", bound=NamedTuple)
 
 
 def make_namedtuple_validator(
-    namedtuple_cls: Type[NamedTupleT], config: Type['BaseConfig']
+    namedtuple_cls: Type[NamedTupleT], config: Type["BaseConfig"]
 ) -> Callable[[Tuple[Any, ...]], NamedTupleT]:
     from pydantic.v1.annotated_types import create_model_from_namedtuple
 
@@ -618,7 +648,7 @@ def make_namedtuple_validator(
 
 
 def make_typeddict_validator(
-    typeddict_cls: Type['TypedDict'], config: Type['BaseConfig']  # type: ignore[valid-type]
+    typeddict_cls: Type["TypedDict"], config: Type["BaseConfig"]  # type: ignore[valid-type]
 ) -> Callable[[Any], Dict[str, Any]]:
     from pydantic.v1.annotated_types import create_model_from_typeddict
 
@@ -629,20 +659,28 @@ def make_typeddict_validator(
     )
     typeddict_cls.__pydantic_model__ = TypedDictModel  # type: ignore[attr-defined]
 
-    def typeddict_validator(values: 'TypedDict') -> Dict[str, Any]:  # type: ignore[valid-type]
+    def typeddict_validator(values: "TypedDict") -> Dict[str, Any]:  # type: ignore[valid-type]
         return TypedDictModel.parse_obj(values).dict(exclude_unset=True)
 
     return typeddict_validator
 
 
 class IfConfig:
-    def __init__(self, validator: AnyCallable, *config_attr_names: str, ignored_value: Any = False) -> None:
+    def __init__(
+        self,
+        validator: AnyCallable,
+        *config_attr_names: str,
+        ignored_value: Any = False,
+    ) -> None:
         self.validator = validator
         self.config_attr_names = config_attr_names
         self.ignored_value = ignored_value
 
-    def check(self, config: Type['BaseConfig']) -> bool:
-        return any(getattr(config, name) not in {None, self.ignored_value} for name in self.config_attr_names)
+    def check(self, config: Type["BaseConfig"]) -> bool:
+        return any(
+            getattr(config, name) not in {None, self.ignored_value}
+            for name in self.config_attr_names
+        )
 
 
 # order is important here, for example: bool is a subclass of int so has to come first, datetime before date same,
@@ -654,25 +692,31 @@ _VALIDATORS: List[Tuple[Type[Any], List[Any]]] = [
         str,
         [
             str_validator,
-            IfConfig(anystr_strip_whitespace, 'anystr_strip_whitespace'),
-            IfConfig(anystr_upper, 'anystr_upper'),
-            IfConfig(anystr_lower, 'anystr_lower'),
-            IfConfig(anystr_length_validator, 'min_anystr_length', 'max_anystr_length'),
+            IfConfig(anystr_strip_whitespace, "anystr_strip_whitespace"),
+            IfConfig(anystr_upper, "anystr_upper"),
+            IfConfig(anystr_lower, "anystr_lower"),
+            IfConfig(anystr_length_validator, "min_anystr_length", "max_anystr_length"),
         ],
     ),
     (
         bytes,
         [
             bytes_validator,
-            IfConfig(anystr_strip_whitespace, 'anystr_strip_whitespace'),
-            IfConfig(anystr_upper, 'anystr_upper'),
-            IfConfig(anystr_lower, 'anystr_lower'),
-            IfConfig(anystr_length_validator, 'min_anystr_length', 'max_anystr_length'),
+            IfConfig(anystr_strip_whitespace, "anystr_strip_whitespace"),
+            IfConfig(anystr_upper, "anystr_upper"),
+            IfConfig(anystr_lower, "anystr_lower"),
+            IfConfig(anystr_length_validator, "min_anystr_length", "max_anystr_length"),
         ],
     ),
     (bool, [bool_validator]),
     (int, [int_validator]),
-    (float, [float_validator, IfConfig(float_finite_validator, 'allow_inf_nan', ignored_value=True)]),
+    (
+        float,
+        [
+            float_validator,
+            IfConfig(float_finite_validator, "allow_inf_nan", ignored_value=True),
+        ],
+    ),
     (Path, [path_validator]),
     (datetime, [parse_datetime]),
     (date, [parse_date]),
@@ -697,7 +741,7 @@ _VALIDATORS: List[Tuple[Type[Any], List[Any]]] = [
 
 
 def find_validators(  # noqa: C901 (ignore complexity)
-    type_: Type[Any], config: Type['BaseConfig']
+    type_: Type[Any], config: Type["BaseConfig"]
 ) -> Generator[AnyCallable, None, None]:
     from pydantic.v1.dataclasses import is_builtin_dataclass, make_dataclass_validator
 
@@ -758,11 +802,18 @@ def find_validators(  # noqa: C901 (ignore complexity)
                         yield v
                 return
         except TypeError:
-            raise RuntimeError(f'error checking inheritance of {type_!r} (type: {display_as_type(type_)})')
+            raise RuntimeError(
+                f"error checking inheritance of {type_!r} (type: {display_as_type(type_)})"
+            )
 
     if config.arbitrary_types_allowed:
         yield make_arbitrary_type_validator(type_)
     else:
-        if hasattr(type_, '__pydantic_core_schema__'):
-            warn(f'Mixing V1 and V2 models is not supported. `{type_.__name__}` is a V2 model.', UserWarning)
-        raise RuntimeError(f'no validator found for {type_}, see `arbitrary_types_allowed` in Config')
+        if hasattr(type_, "__pydantic_core_schema__"):
+            warn(
+                f"Mixing V1 and V2 models is not supported. `{type_.__name__}` is a V2 model.",
+                UserWarning,
+            )
+        raise RuntimeError(
+            f"no validator found for {type_}, see `arbitrary_types_allowed` in Config"
+        )

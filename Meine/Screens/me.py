@@ -1,10 +1,10 @@
 from textual.screen import ModalScreen
-from textual.containers import Container,Vertical
+from textual.containers import Container, Vertical
 from textual.widgets import Markdown
 from pathlib import Path
 from textual.events import Click
 
-data = '''\
+data = """\
 # **About Me**
 
 Hi! I’m **Balaji**, the developer behind this project. I’m a second-year **Computer Science Engineering** student, passionate about building innovative and impactful applications. At 19 years old, I’m always on the lookout for opportunities to grow and create solutions to real-world problems.
@@ -56,19 +56,15 @@ If you’d like to collaborate on projects or have any questions, feel free to c
 Together, we can create something amazing!
 
 ---
-'''
+"""
+
 
 class Myself(ModalScreen):
-    CSS_PATH = Path(__file__).parent.parent / 'tcss/me.css'
+    CSS_PATH = Path(__file__).parent.parent / "tcss/me.css"
 
     def compose(self):
-        yield Container (
-            Vertical(
-                Markdown(markdown=data) 
-            )
-        )
+        yield Container(Vertical(Markdown(markdown=data)))
 
-    def on_click(self, event:Click):
-        if (str(event.widget) == str(Myself())):
+    def on_click(self, event: Click):
+        if str(event.widget) == str(Myself()):
             self.dismiss()
-

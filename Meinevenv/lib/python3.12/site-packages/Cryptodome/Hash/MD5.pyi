@@ -15,5 +15,6 @@ class MD5Hash(object):
     def new(self, data: Buffer = ...) -> MD5Hash: ...
 
 def new(data: Buffer = ...) -> MD5Hash: ...
+
 digest_size: int
 block_size: int

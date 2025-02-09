@@ -26,7 +26,13 @@ from pydantic.v1.class_validators import gather_all_validators
 from pydantic.v1.fields import DeferredType
 from pydantic.v1.main import BaseModel, create_model
 from pydantic.v1.types import JsonWrapper
-from pydantic.v1.typing import display_as_type, get_all_type_hints, get_args, get_origin, typing_base
+from pydantic.v1.typing import (
+    display_as_type,
+    get_all_type_hints,
+    get_args,
+    get_origin,
+    typing_base,
+)
 from pydantic.v1.utils import all_identical, lenient_issubclass
 
 if sys.version_info >= (3, 10):
@@ -34,7 +40,7 @@ if sys.version_info >= (3, 10):
 if sys.version_info >= (3, 8):
     from typing import Literal
 
-GenericModelT = TypeVar('GenericModelT', bound='GenericModel')
+GenericModelT = TypeVar("GenericModelT", bound="GenericModel")
 TypeVarType = Any  # since mypy doesn't allow the use of TypeVar as a type
 
 CacheKey = Tuple[Type[Any], Any, Tuple[Any, ...]]
@@ -72,7 +78,9 @@ class GenericModel(BaseModel):
         __parameters__: ClassVar[Tuple[TypeVarType, ...]]
 
     # Setting the return type as Type[Any] instead of Type[BaseModel] prevents PyCharm warnings
-    def __class_getitem__(cls: Type[GenericModelT], params: Union[Type[Any], Tuple[Type[Any], ...]]) -> Type[Any]:
+    def __class_getitem__(
+        cls: Type[GenericModelT], params: Union[Type[Any], Tuple[Type[Any], ...]]
+    ) -> Type[Any]:
         """Instantiates a new class from a generic class `cls` and type variables `params`.
 
         :param params: Tuple of types the class . Given a generic class
@@ -95,17 +103,25 @@ class GenericModel(BaseModel):
         if cached is not None:
             return cached
         if cls.__concrete__ and Generic not in cls.__bases__:
-            raise TypeError('Cannot parameterize a concrete instantiation of a generic model')
+            raise TypeError(
+                "Cannot parameterize a concrete instantiation of a generic model"
+            )
         if not isinstance(params, tuple):
             params = (params,)
         if cls is GenericModel and any(isinstance(param, TypeVar) for param in params):
-            raise TypeError('Type parameters should be placed on typing.Generic, not GenericModel')
-        if not hasattr(cls, '__parameters__'):
-            raise TypeError(f'Type {cls.__name__} must inherit from typing.Generic before being parameterized')
+            raise TypeError(
+                "Type parameters should be placed on typing.Generic, not GenericModel"
+            )
+        if not hasattr(cls, "__parameters__"):
+            raise TypeError(
+                f"Type {cls.__name__} must inherit from typing.Generic before being parameterized"
+            )
 
         check_parameters_count(cls, params)
         # Build map from generic typevars to passed params
-        typevars_map: Dict[TypeVarType, Type[Any]] = dict(zip(cls.__parameters__, params))
+        typevars_map: Dict[TypeVarType, Type[Any]] = dict(
+            zip(cls.__parameters__, params)
+        )
         if all_identical(typevars_map.keys(), typevars_map.values()) and typevars_map:
             return cls  # if arguments are equal to parameters it's the same object
 
@@ -114,13 +130,21 @@ class GenericModel(BaseModel):
         validators = gather_all_validators(cls)
 
         type_hints = get_all_type_hints(cls).items()
-        instance_type_hints = {k: v for k, v in type_hints if get_origin(v) is not ClassVar}
+        instance_type_hints = {
+            k: v for k, v in type_hints if get_origin(v) is not ClassVar
+        }
 
-        fields = {k: (DeferredType(), cls.__fields__[k].field_info) for k in instance_type_hints if k in cls.__fields__}
+        fields = {
+            k: (DeferredType(), cls.__fields__[k].field_info)
+            for k in instance_type_hints
+            if k in cls.__fields__
+        }
 
         model_module, called_globally = get_caller_frame_info()
         created_model = cast(
-            Type[GenericModel],  # casting ensures mypy is aware of the __concrete__ and __parameters__ attributes
+            Type[
+                GenericModel
+            ],  # casting ensures mypy is aware of the __concrete__ and __parameters__ attributes
             create_model(
                 model_name,
                 __module__=model_module or cls.__module__,
@@ -139,8 +163,10 @@ class GenericModel(BaseModel):
             reference_name = model_name
             reference_module_globals = sys.modules[created_model.__module__].__dict__
             while object_by_reference is not created_model:
-                object_by_reference = reference_module_globals.setdefault(reference_name, created_model)
-                reference_name += '_'
+                object_by_reference = reference_module_globals.setdefault(
+                    reference_name, created_model
+                )
+                reference_name += "_"
 
         created_model.Config = cls.Config
 
@@ -180,11 +206,13 @@ class GenericModel(BaseModel):
         This method can be overridden to achieve a custom naming scheme for GenericModels.
         """
         param_names = [display_as_type(param) for param in params]
-        params_component = ', '.join(param_names)
-        return f'{cls.__name__}[{params_component}]'
+        params_component = ", ".join(param_names)
+        return f"{cls.__name__}[{params_component}]"
 
     @classmethod
-    def __parameterized_bases__(cls, typevars_map: Parametrization) -> Iterator[Type[Any]]:
+    def __parameterized_bases__(
+        cls, typevars_map: Parametrization
+    ) -> Iterator[Type[Any]]:
         """
         Returns unbound bases of cls parameterised to given type variables
 
@@ -210,7 +238,9 @@ class GenericModel(BaseModel):
         def build_base_model(
             base_model: Type[GenericModel], mapped_types: Parametrization
         ) -> Iterator[Type[GenericModel]]:
-            base_parameters = tuple(mapped_types[param] for param in base_model.__parameters__)
+            base_parameters = tuple(
+                mapped_types[param] for param in base_model.__parameters__
+            )
             parameterized_base = base_model.__class_getitem__(base_parameters)
             if parameterized_base is base_model or parameterized_base is cls:
                 # Avoid duplication in MRO
@@ -221,7 +251,7 @@ class GenericModel(BaseModel):
             if not issubclass(base_model, GenericModel):
                 # not a class that can be meaningfully parameterized
                 continue
-            elif not getattr(base_model, '__parameters__', None):
+            elif not getattr(base_model, "__parameters__", None):
                 # base_model is "GenericModel"  (and has no __parameters__)
                 # or
                 # base_model is already concrete, and will be included transitively via cls.
@@ -239,7 +269,8 @@ class GenericModel(BaseModel):
                     # e.g.  cls = B[str, T], base_model = B[S, T]
                     # Need to determine the mapping for the base_model parameters
                     mapped_types: Parametrization = {
-                        key: typevars_map.get(value, value) for key, value in _assigned_parameters[cls].items()
+                        key: typevars_map.get(value, value)
+                        for key, value in _assigned_parameters[cls].items()
                     }
                     yield from build_base_model(base_model, mapped_types)
             else:
@@ -270,7 +301,9 @@ def replace_types(type_: Any, type_map: Mapping[Any, Any]) -> Any:
         annotated_type, *annotations = type_args
         return Annotated[replace_types(annotated_type, type_map), tuple(annotations)]
 
-    if (origin_type is ExtLiteral) or (sys.version_info >= (3, 8) and origin_type is Literal):
+    if (origin_type is ExtLiteral) or (
+        sys.version_info >= (3, 8) and origin_type is Literal
+    ):
         return type_map.get(type_, type_)
     # Having type args is a good indicator that this is a typing module
     # class instantiation or a generic alias of some sort.
@@ -284,7 +317,7 @@ def replace_types(type_: Any, type_map: Mapping[Any, Any]) -> Any:
             origin_type is not None
             and isinstance(type_, typing_base)
             and not isinstance(origin_type, typing_base)
-            and getattr(type_, '_name', None) is not None
+            and getattr(type_, "_name", None) is not None
         ):
             # In python < 3.9 generic aliases don't exist so any of these like `list`,
             # `type` or `collections.abc.Callable` need to be translated.
@@ -299,7 +332,11 @@ def replace_types(type_: Any, type_map: Mapping[Any, Any]) -> Any:
 
     # We handle pydantic generic models separately as they don't have the same
     # semantics as "typing" classes or generic aliases
-    if not origin_type and lenient_issubclass(type_, GenericModel) and not type_.__concrete__:
+    if (
+        not origin_type
+        and lenient_issubclass(type_, GenericModel)
+        and not type_.__concrete__
+    ):
         type_args = type_.__parameters__
         resolved_type_args = tuple(replace_types(t, type_map) for t in type_args)
         if all_identical(type_args, resolved_type_args):
@@ -330,12 +367,16 @@ def replace_types(type_: Any, type_map: Mapping[Any, Any]) -> Any:
         return new_type
 
 
-def check_parameters_count(cls: Type[GenericModel], parameters: Tuple[Any, ...]) -> None:
+def check_parameters_count(
+    cls: Type[GenericModel], parameters: Tuple[Any, ...]
+) -> None:
     actual = len(parameters)
     expected = len(cls.__parameters__)
     if actual != expected:
-        description = 'many' if actual > expected else 'few'
-        raise TypeError(f'Too {description} parameters for {cls.__name__}; actual {actual}, expected {expected}')
+        description = "many" if actual > expected else "few"
+        raise TypeError(
+            f"Too {description} parameters for {cls.__name__}; actual {actual}, expected {expected}"
+        )
 
 
 DictValues: Type[Any] = {}.values().__class__
@@ -345,7 +386,11 @@ def iter_contained_typevars(v: Any) -> Iterator[TypeVarType]:
     """Recursively iterate through all subtypes and type args of `v` and yield any typevars that are found."""
     if isinstance(v, TypeVar):
         yield v
-    elif hasattr(v, '__parameters__') and not get_origin(v) and lenient_issubclass(v, GenericModel):
+    elif (
+        hasattr(v, "__parameters__")
+        and not get_origin(v)
+        and lenient_issubclass(v, GenericModel)
+    ):
         yield from v.__parameters__
     elif isinstance(v, (DictValues, list)):
         for var in v:
@@ -367,11 +412,16 @@ def get_caller_frame_info() -> Tuple[Optional[str], bool]:
     try:
         previous_caller_frame = sys._getframe(2)
     except ValueError as e:
-        raise RuntimeError('This function must be used inside another function') from e
-    except AttributeError:  # sys module does not have _getframe function, so there's nothing we can do about it
+        raise RuntimeError("This function must be used inside another function") from e
+    except (
+        AttributeError
+    ):  # sys module does not have _getframe function, so there's nothing we can do about it
         return None, False
     frame_globals = previous_caller_frame.f_globals
-    return frame_globals.get('__name__'), previous_caller_frame.f_locals is frame_globals
+    return (
+        frame_globals.get("__name__"),
+        previous_caller_frame.f_locals is frame_globals,
+    )
 
 
 def _prepare_model_fields(

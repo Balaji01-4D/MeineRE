@@ -104,8 +104,8 @@ AF_LINK = cext_posix.AF_LINK
 
 HAS_PER_CPU_TIMES = hasattr(cext, "per_cpu_times")
 HAS_PROC_NUM_THREADS = hasattr(cext, "proc_num_threads")
-HAS_PROC_OPEN_FILES = hasattr(cext, 'proc_open_files')
-HAS_PROC_NUM_FDS = hasattr(cext, 'proc_num_fds')
+HAS_PROC_OPEN_FILES = hasattr(cext, "proc_open_files")
+HAS_PROC_NUM_FDS = hasattr(cext, "proc_num_fds")
 
 kinfo_proc_map = dict(
     ppid=0,
@@ -185,11 +185,11 @@ def virtual_memory():
         total, free, active, inactive, wired, cached = mem
         # On NetBSD buffers and shared mem is determined via /proc.
         # The C ext set them to 0.
-        with open('/proc/meminfo', 'rb') as f:
+        with open("/proc/meminfo", "rb") as f:
             for line in f:
-                if line.startswith(b'Buffers:'):
+                if line.startswith(b"Buffers:"):
                     buffers = int(line.split()[1]) * 1024
-                elif line.startswith(b'MemShared:'):
+                elif line.startswith(b"MemShared:"):
                     shared = int(line.split()[1]) * 1024
         # Before avail was calculated as (inactive + cached + free),
         # same as zabbix, but it turned out it could exceed total (see
@@ -305,7 +305,7 @@ else:
                 s = s[: index + 9]
                 root = ElementTree.fromstring(s)
                 try:
-                    ret = len(root.findall('group/children/group/cpu')) or None
+                    ret = len(root.findall("group/children/group/cpu")) or None
                 finally:
                     # needed otherwise it will memleak
                     root.clear()
@@ -332,19 +332,15 @@ def cpu_stats():
         #
         # Note: the C ext is returning some metrics we are not exposing:
         # traps, faults and forks.
-        ctxsw, intrs, soft_intrs, syscalls, _traps, _faults, _forks = (
-            cext.cpu_stats()
-        )
-        with open('/proc/stat', 'rb') as f:
+        ctxsw, intrs, soft_intrs, syscalls, _traps, _faults, _forks = cext.cpu_stats()
+        with open("/proc/stat", "rb") as f:
             for line in f:
-                if line.startswith(b'intr'):
+                if line.startswith(b"intr"):
                     intrs = int(line.split()[1])
     elif OPENBSD:
         # Note: the C ext is returning some metrics we are not exposing:
         # traps, faults and forks.
-        ctxsw, intrs, soft_intrs, syscalls, _traps, _faults, _forks = (
-            cext.cpu_stats()
-        )
+        ctxsw, intrs, soft_intrs, syscalls, _traps, _faults, _forks = cext.cpu_stats()
     return _common.scpustats(ctxsw, intrs, soft_intrs, syscalls)
 
 
@@ -427,13 +423,11 @@ def net_if_stats():
             if err.errno != errno.ENODEV:
                 raise
         else:
-            if hasattr(_common, 'NicDuplex'):
+            if hasattr(_common, "NicDuplex"):
                 duplex = _common.NicDuplex(duplex)
-            output_flags = ','.join(flags)
-            isup = 'running' in flags
-            ret[name] = _common.snicstats(
-                isup, duplex, speed, mtu, output_flags
-            )
+            output_flags = ",".join(flags)
+            isup = "running" in flags
+            ret[name] = _common.snicstats(isup, duplex, speed, mtu, output_flags)
     return ret
 
 
@@ -442,7 +436,7 @@ def net_connections(kind):
     if kind not in _common.conn_tmap:
         raise ValueError(
             "invalid %r kind argument; choose between %s"
-            % (kind, ', '.join([repr(x) for x in conn_tmap]))
+            % (kind, ", ".join([repr(x) for x in conn_tmap]))
         )
     families, types = conn_tmap[kind]
     ret = set()
@@ -456,9 +450,7 @@ def net_connections(kind):
 
     for item in rawlist:
         fd, fam, type, laddr, raddr, status, pid = item
-        nt = conn_to_ntuple(
-            fd, fam, type, laddr, raddr, status, TCP_STATUSES, pid
-        )
+        nt = conn_to_ntuple(fd, fam, type, laddr, raddr, status, TCP_STATUSES, pid)
         ret.add(nt)
     return list(ret)
 
@@ -496,9 +488,7 @@ if FREEBSD:
                 if high <= 0:
                     high = None
                 name = "Core %s" % cpu
-                ret["coretemp"].append(
-                    _common.shwtemp(name, current, high, high)
-                )
+                ret["coretemp"].append(_common.shwtemp(name, current, high, high))
             except NotImplementedError:
                 pass
 
@@ -524,7 +514,7 @@ def users():
         if pid == -1:
             assert OPENBSD
             pid = None
-        if tty == '~':
+        if tty == "~":
             continue  # reboot or shutdown
         nt = _common.suser(user, tty or None, hostname, tstamp, pid)
         retlist.append(nt)
@@ -587,7 +577,7 @@ else:  # FreeBSD
 
 def is_zombie(pid):
     try:
-        st = cext.proc_oneshot_info(pid)[kinfo_proc_map['status']]
+        st = cext.proc_oneshot_info(pid)[kinfo_proc_map["status"]]
         return PROC_STATUSES.get(st) == _common.STATUS_ZOMBIE
     except OSError:
         return False
@@ -669,14 +659,14 @@ class Process:
 
     @wrap_exceptions
     def name(self):
-        name = self.oneshot()[kinfo_proc_map['name']]
+        name = self.oneshot()[kinfo_proc_map["name"]]
         return name if name is not None else cext.proc_name(self.pid)
 
     @wrap_exceptions
     def exe(self):
         if FREEBSD:
             if self.pid == 0:
-                return ''  # else NSP
+                return ""  # else NSP
             return cext.proc_exe(self.pid)
         elif NETBSD:
             if self.pid == 0:
@@ -729,7 +719,7 @@ class Process:
 
     @wrap_exceptions
     def terminal(self):
-        tty_nr = self.oneshot()[kinfo_proc_map['ttynr']]
+        tty_nr = self.oneshot()[kinfo_proc_map["ttynr"]]
         tmap = _psposix.get_terminal_map()
         try:
             return tmap[tty_nr]
@@ -738,59 +728,59 @@ class Process:
 
     @wrap_exceptions
     def ppid(self):
-        self._ppid = self.oneshot()[kinfo_proc_map['ppid']]
+        self._ppid = self.oneshot()[kinfo_proc_map["ppid"]]
         return self._ppid
 
     @wrap_exceptions
     def uids(self):
         rawtuple = self.oneshot()
         return _common.puids(
-            rawtuple[kinfo_proc_map['real_uid']],
-            rawtuple[kinfo_proc_map['effective_uid']],
-            rawtuple[kinfo_proc_map['saved_uid']],
+            rawtuple[kinfo_proc_map["real_uid"]],
+            rawtuple[kinfo_proc_map["effective_uid"]],
+            rawtuple[kinfo_proc_map["saved_uid"]],
         )
 
     @wrap_exceptions
     def gids(self):
         rawtuple = self.oneshot()
         return _common.pgids(
-            rawtuple[kinfo_proc_map['real_gid']],
-            rawtuple[kinfo_proc_map['effective_gid']],
-            rawtuple[kinfo_proc_map['saved_gid']],
+            rawtuple[kinfo_proc_map["real_gid"]],
+            rawtuple[kinfo_proc_map["effective_gid"]],
+            rawtuple[kinfo_proc_map["saved_gid"]],
         )
 
     @wrap_exceptions
     def cpu_times(self):
         rawtuple = self.oneshot()
         return _common.pcputimes(
-            rawtuple[kinfo_proc_map['user_time']],
-            rawtuple[kinfo_proc_map['sys_time']],
-            rawtuple[kinfo_proc_map['ch_user_time']],
-            rawtuple[kinfo_proc_map['ch_sys_time']],
+            rawtuple[kinfo_proc_map["user_time"]],
+            rawtuple[kinfo_proc_map["sys_time"]],
+            rawtuple[kinfo_proc_map["ch_user_time"]],
+            rawtuple[kinfo_proc_map["ch_sys_time"]],
         )
 
     if FREEBSD:
 
         @wrap_exceptions
         def cpu_num(self):
-            return self.oneshot()[kinfo_proc_map['cpunum']]
+            return self.oneshot()[kinfo_proc_map["cpunum"]]
 
     @wrap_exceptions
     def memory_info(self):
         rawtuple = self.oneshot()
         return pmem(
-            rawtuple[kinfo_proc_map['rss']],
-            rawtuple[kinfo_proc_map['vms']],
-            rawtuple[kinfo_proc_map['memtext']],
-            rawtuple[kinfo_proc_map['memdata']],
-            rawtuple[kinfo_proc_map['memstack']],
+            rawtuple[kinfo_proc_map["rss"]],
+            rawtuple[kinfo_proc_map["vms"]],
+            rawtuple[kinfo_proc_map["memtext"]],
+            rawtuple[kinfo_proc_map["memdata"]],
+            rawtuple[kinfo_proc_map["memstack"]],
         )
 
     memory_full_info = memory_info
 
     @wrap_exceptions
     def create_time(self):
-        return self.oneshot()[kinfo_proc_map['create_time']]
+        return self.oneshot()[kinfo_proc_map["create_time"]]
 
     @wrap_exceptions
     def num_threads(self):
@@ -804,8 +794,8 @@ class Process:
     def num_ctx_switches(self):
         rawtuple = self.oneshot()
         return _common.pctxsw(
-            rawtuple[kinfo_proc_map['ctx_switches_vol']],
-            rawtuple[kinfo_proc_map['ctx_switches_unvol']],
+            rawtuple[kinfo_proc_map["ctx_switches_vol"]],
+            rawtuple[kinfo_proc_map["ctx_switches_unvol"]],
         )
 
     @wrap_exceptions
@@ -821,11 +811,11 @@ class Process:
         return retlist
 
     @wrap_exceptions
-    def net_connections(self, kind='inet'):
+    def net_connections(self, kind="inet"):
         if kind not in conn_tmap:
             raise ValueError(
                 "invalid %r kind argument; choose between %s"
-                % (kind, ', '.join([repr(x) for x in conn_tmap]))
+                % (kind, ", ".join([repr(x) for x in conn_tmap]))
             )
         families, types = conn_tmap[kind]
         ret = []
@@ -842,9 +832,7 @@ class Process:
             if FREEBSD:
                 if (fam not in families) or (type not in types):
                     continue
-            nt = conn_to_ntuple(
-                fd, fam, type, laddr, raddr, status, TCP_STATUSES
-            )
+            nt = conn_to_ntuple(fd, fam, type, laddr, raddr, status, TCP_STATUSES)
             ret.append(nt)
 
         self._assert_alive()
@@ -864,16 +852,16 @@ class Process:
 
     @wrap_exceptions
     def status(self):
-        code = self.oneshot()[kinfo_proc_map['status']]
+        code = self.oneshot()[kinfo_proc_map["status"]]
         # XXX is '?' legit? (we're not supposed to return it anyway)
-        return PROC_STATUSES.get(code, '?')
+        return PROC_STATUSES.get(code, "?")
 
     @wrap_exceptions
     def io_counters(self):
         rawtuple = self.oneshot()
         return _common.pio(
-            rawtuple[kinfo_proc_map['read_io_count']],
-            rawtuple[kinfo_proc_map['write_io_count']],
+            rawtuple[kinfo_proc_map["read_io_count"]],
+            rawtuple[kinfo_proc_map["write_io_count"]],
             -1,
             -1,
         )
@@ -894,11 +882,9 @@ class Process:
                 "supported only starting from FreeBSD 8" if FREEBSD else ""
             )
 
-    nt_mmap_grouped = namedtuple(
-        'mmap', 'path rss, private, ref_count, shadow_count'
-    )
+    nt_mmap_grouped = namedtuple("mmap", "path rss, private, ref_count, shadow_count")
     nt_mmap_ext = namedtuple(
-        'mmap', 'addr, perms path rss, private, ref_count, shadow_count'
+        "mmap", "addr, perms path rss, private, ref_count, shadow_count"
     )
 
     def _not_implemented(self):
@@ -962,8 +948,7 @@ class Process:
                     for cpu in cpus:
                         if cpu not in allcpus:
                             raise ValueError(
-                                "invalid CPU #%i (choose between %s)"
-                                % (cpu, allcpus)
+                                "invalid CPU #%i (choose between %s)" % (cpu, allcpus)
                             )
                 raise
 

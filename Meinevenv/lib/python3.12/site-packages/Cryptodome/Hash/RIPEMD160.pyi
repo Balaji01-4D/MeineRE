@@ -15,5 +15,6 @@ class RIPEMD160Hash(object):
     def new(self, data: Buffer = ...) -> RIPEMD160Hash: ...
 
 def new(data: Buffer = ...) -> RIPEMD160Hash: ...
+
 digest_size: int
 block_size: int

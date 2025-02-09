@@ -51,4 +51,3 @@ def pycryptodome_filename(dir_comps, filename):
     root_lib = os.path.join(util_lib, "..")
 
     return os.path.join(root_lib, *dir_comps)
-

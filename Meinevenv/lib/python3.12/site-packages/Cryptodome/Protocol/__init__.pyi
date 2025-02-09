@@ -1,1 +1,1 @@
-__all__ = ['KDF.pyi', 'SecretSharing.pyi']
+__all__ = ["KDF.pyi", "SecretSharing.pyi"]

@@ -1,8 +1,8 @@
 from textual.screen import ModalScreen
-from textual.widgets import Markdown,Static,TabbedContent,TabPane
+from textual.widgets import Markdown, Static, TabbedContent, TabPane
 from pathlib import Path
 
-directory_tree_manual = '''\
+directory_tree_manual = """\
 # Directory Tree
 
 ## Key Bindings
@@ -23,9 +23,9 @@ directory_tree_manual = '''\
 
 ---
 
- '''
+ """
 
-Input_manual ='''\
+Input_manual = """\
 # Input Console Help
 
 ## Command Reference
@@ -92,18 +92,18 @@ Input_manual ='''\
 | `net`   | Display network details                  |
 | `env`   | Display environmental variables          |
 
- '''
+ """
+
 
 class HelpScreen(ModalScreen[None]):
 
-    CSS_PATH = Path(__file__).parent.parent / 'tcss/help.css'
+    CSS_PATH = Path(__file__).parent.parent / "tcss/help.css"
 
     def compose(self):
-        
-        yield Static('Help Screen',id='header')
-        with TabbedContent():
-            with TabPane("Input console",id='Input'):
-                yield Markdown(Input_manual)
-            with TabPane("Directory Tree",id='tab_Dtree'):
-                yield Markdown(directory_tree_manual)
 
+        yield Static("Help Screen", id="header")
+        with TabbedContent():
+            with TabPane("Input console", id="Input"):
+                yield Markdown(Input_manual)
+            with TabPane("Directory Tree", id="tab_Dtree"):
+                yield Markdown(directory_tree_manual)

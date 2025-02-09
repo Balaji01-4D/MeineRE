@@ -13,7 +13,9 @@ from .._internal import _decorators, _decorators_v1
 from ..errors import PydanticUserError
 from ..warnings import PydanticDeprecatedSince20
 
-_ALLOW_REUSE_WARNING_MESSAGE = '`allow_reuse` is deprecated and will be ignored; it should no longer be necessary'
+_ALLOW_REUSE_WARNING_MESSAGE = (
+    "`allow_reuse` is deprecated and will be ignored; it should no longer be necessary"
+)
 
 
 if TYPE_CHECKING:
@@ -25,13 +27,17 @@ if TYPE_CHECKING:
         def __call__(self, __cls: Any, __value: Any, values: dict[str, Any]) -> Any: ...
 
     class _V1ValidatorWithValuesKwOnlyClsMethod(Protocol):
-        def __call__(self, __cls: Any, __value: Any, *, values: dict[str, Any]) -> Any: ...
+        def __call__(
+            self, __cls: Any, __value: Any, *, values: dict[str, Any]
+        ) -> Any: ...
 
     class _V1ValidatorWithKwargsClsMethod(Protocol):
         def __call__(self, __cls: Any, **kwargs: Any) -> Any: ...
 
     class _V1ValidatorWithValuesAndKwargsClsMethod(Protocol):
-        def __call__(self, __cls: Any, values: dict[str, Any], **kwargs: Any) -> Any: ...
+        def __call__(
+            self, __cls: Any, values: dict[str, Any], **kwargs: Any
+        ) -> Any: ...
 
     class _V1RootValidatorClsMethod(Protocol):
         def __call__(
@@ -55,14 +61,18 @@ if TYPE_CHECKING:
         _decorators_v1.V1RootValidatorFunction,
     ]
 
-    _PartialClsOrStaticMethod: TypeAlias = Union[classmethod[Any, Any, Any], staticmethod[Any, Any], partialmethod[Any]]
+    _PartialClsOrStaticMethod: TypeAlias = Union[
+        classmethod[Any, Any, Any], staticmethod[Any, Any], partialmethod[Any]
+    ]
 
     # Allow both a V1 (assumed pre=False) or V2 (assumed mode='after') validator
     # We lie to type checkers and say we return the same thing we get
     # but in reality we return a proxy object that _mostly_ behaves like the wrapped thing
-    _V1ValidatorType = TypeVar('_V1ValidatorType', V1Validator, _PartialClsOrStaticMethod)
+    _V1ValidatorType = TypeVar(
+        "_V1ValidatorType", V1Validator, _PartialClsOrStaticMethod
+    )
     _V1RootValidatorFunctionType = TypeVar(
-        '_V1RootValidatorFunctionType',
+        "_V1RootValidatorFunctionType",
         _decorators_v1.V1RootValidatorFunction,
         _V1RootValidatorClsMethod,
         _PartialClsOrStaticMethod,
@@ -74,9 +84,9 @@ else:
 
 
 @deprecated(
-    'Pydantic V1 style `@validator` validators are deprecated.'
-    ' You should migrate to Pydantic V2 style `@field_validator` validators,'
-    ' see the migration guide for more details',
+    "Pydantic V1 style `@validator` validators are deprecated."
+    " You should migrate to Pydantic V2 style `@field_validator` validators,"
+    " see the migration guide for more details",
     category=None,
 )
 def validator(
@@ -110,9 +120,9 @@ def validator(
             function to be used as a validator.
     """
     warn(
-        'Pydantic V1 style `@validator` validators are deprecated.'
-        ' You should migrate to Pydantic V2 style `@field_validator` validators,'
-        ' see the migration guide for more details',
+        "Pydantic V1 style `@validator` validators are deprecated."
+        " You should migrate to Pydantic V2 style `@field_validator` validators,"
+        " see the migration guide for more details",
         DeprecationWarning,
         stacklevel=2,
     )
@@ -122,23 +132,24 @@ def validator(
     fields = __field, *fields
     if isinstance(fields[0], FunctionType):
         raise PydanticUserError(
-            '`@validator` should be used with fields and keyword arguments, not bare. '
+            "`@validator` should be used with fields and keyword arguments, not bare. "
             "E.g. usage should be `@validator('<field_name>', ...)`",
-            code='validator-no-fields',
+            code="validator-no-fields",
         )
     elif not all(isinstance(field, str) for field in fields):
         raise PydanticUserError(
-            '`@validator` fields should be passed as separate string args. '
+            "`@validator` fields should be passed as separate string args. "
             "E.g. usage should be `@validator('<field_name_1>', '<field_name_2>', ...)`",
-            code='validator-invalid-fields',
+            code="validator-invalid-fields",
         )
 
-    mode: Literal['before', 'after'] = 'before' if pre is True else 'after'
+    mode: Literal["before", "after"] = "before" if pre is True else "after"
 
     def dec(f: Any) -> _decorators.PydanticDescriptorProxy[Any]:
         if _decorators.is_instance_method_from_sig(f):
             raise PydanticUserError(
-                '`@validator` cannot be applied to instance methods', code='validator-instance-method'
+                "`@validator` cannot be applied to instance methods",
+                code="validator-instance-method",
             )
         # auto apply the @classmethod decorator
         f = _decorators.ensure_classmethod_based_on_signature(f)
@@ -196,9 +207,9 @@ def root_validator(
 
 
 @deprecated(
-    'Pydantic V1 style `@root_validator` validators are deprecated.'
-    ' You should migrate to Pydantic V2 style `@model_validator` validators,'
-    ' see the migration guide for more details',
+    "Pydantic V1 style `@root_validator` validators are deprecated."
+    " You should migrate to Pydantic V2 style `@model_validator` validators,"
+    " see the migration guide for more details",
     category=None,
 )
 def root_validator(
@@ -222,9 +233,9 @@ def root_validator(
         Any: A decorator that can be used to decorate a function to be used as a root_validator.
     """
     warn(
-        'Pydantic V1 style `@root_validator` validators are deprecated.'
-        ' You should migrate to Pydantic V2 style `@model_validator` validators,'
-        ' see the migration guide for more details',
+        "Pydantic V1 style `@root_validator` validators are deprecated."
+        " You should migrate to Pydantic V2 style `@model_validator` validators,"
+        " see the migration guide for more details",
         DeprecationWarning,
         stacklevel=2,
     )
@@ -235,19 +246,21 @@ def root_validator(
 
     if allow_reuse is True:  # pragma: no cover
         warn(_ALLOW_REUSE_WARNING_MESSAGE, DeprecationWarning)
-    mode: Literal['before', 'after'] = 'before' if pre is True else 'after'
+    mode: Literal["before", "after"] = "before" if pre is True else "after"
     if pre is False and skip_on_failure is not True:
         raise PydanticUserError(
-            'If you use `@root_validator` with pre=False (the default) you MUST specify `skip_on_failure=True`.'
-            ' Note that `@root_validator` is deprecated and should be replaced with `@model_validator`.',
-            code='root-validator-pre-skip',
+            "If you use `@root_validator` with pre=False (the default) you MUST specify `skip_on_failure=True`."
+            " Note that `@root_validator` is deprecated and should be replaced with `@model_validator`.",
+            code="root-validator-pre-skip",
         )
 
     wrap = partial(_decorators_v1.make_v1_generic_root_validator, pre=pre)
 
-    def dec(f: Callable[..., Any] | classmethod[Any, Any, Any] | staticmethod[Any, Any]) -> Any:
+    def dec(
+        f: Callable[..., Any] | classmethod[Any, Any, Any] | staticmethod[Any, Any],
+    ) -> Any:
         if _decorators.is_instance_method_from_sig(f):
-            raise TypeError('`@root_validator` cannot be applied to instance methods')
+            raise TypeError("`@root_validator` cannot be applied to instance methods")
         # auto apply the @classmethod decorator
         res = _decorators.ensure_classmethod_based_on_signature(f)
         dec_info = _decorators.RootValidatorDecoratorInfo(mode=mode)

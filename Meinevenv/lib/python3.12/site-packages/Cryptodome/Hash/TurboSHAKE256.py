@@ -1,5 +1,6 @@
 from .TurboSHAKE128 import TurboSHAKE
 
+
 def new(**kwargs):
     """Create a new TurboSHAKE256 object.
 
@@ -14,9 +15,8 @@ def new(**kwargs):
     :Return: A :class:`TurboSHAKE` object
     """
 
-    domain_separation = kwargs.get('domain', 0x1F)
+    domain_separation = kwargs.get("domain", 0x1F)
     if not (0x01 <= domain_separation <= 0x7F):
-        raise ValueError("Incorrect domain separation value (%d)" %
-                         domain_separation)
-    data = kwargs.get('data')
+        raise ValueError("Incorrect domain separation value (%d)" % domain_separation)
+    data = kwargs.get("data")
     return TurboSHAKE(64, domain_separation, data=data)

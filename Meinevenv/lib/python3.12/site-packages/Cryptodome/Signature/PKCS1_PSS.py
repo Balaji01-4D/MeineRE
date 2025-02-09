@@ -48,8 +48,7 @@ def _pycrypto_verify(self, hash_object, signature):
 
 
 def new(rsa_key, mgfunc=None, saltLen=None, randfunc=None):
-    pkcs1 = pss.new(rsa_key, mask_func=mgfunc,
-                    salt_bytes=saltLen, rand_func=randfunc)
+    pkcs1 = pss.new(rsa_key, mask_func=mgfunc, salt_bytes=saltLen, rand_func=randfunc)
     pkcs1._verify = pkcs1.verify
     pkcs1.verify = types.MethodType(_pycrypto_verify, pkcs1)
     return pkcs1

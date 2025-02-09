@@ -1,6 +1,10 @@
 from typing import Optional
 
-__all__ = [ 'pad', 'unpad' ]
+__all__ = ["pad", "unpad"]
 
-def pad(data_to_pad: bytes, block_size: int, style: Optional[str]='pkcs7') -> bytes: ...
-def unpad(padded_data: bytes, block_size: int, style: Optional[str]='pkcs7') -> bytes: ...
+def pad(
+    data_to_pad: bytes, block_size: int, style: Optional[str] = "pkcs7"
+) -> bytes: ...
+def unpad(
+    padded_data: bytes, block_size: int, style: Optional[str] = "pkcs7"
+) -> bytes: ...

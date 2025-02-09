@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from . import PydanticPluginProtocol
 
 
-PYDANTIC_ENTRY_POINT_GROUP: Final[str] = 'pydantic'
+PYDANTIC_ENTRY_POINT_GROUP: Final[str] = "pydantic"
 
 # cache of plugins
 _plugins: dict[str, PydanticPluginProtocol] | None = None
@@ -23,12 +23,12 @@ def get_plugins() -> Iterable[PydanticPluginProtocol]:
 
     Inspired by: https://github.com/pytest-dev/pluggy/blob/1.3.0/src/pluggy/_manager.py#L376-L402
     """
-    disabled_plugins = os.getenv('PYDANTIC_DISABLE_PLUGINS')
+    disabled_plugins = os.getenv("PYDANTIC_DISABLE_PLUGINS")
     global _plugins, _loading_plugins
     if _loading_plugins:
         # this happens when plugins themselves use pydantic, we return no plugins
         return ()
-    elif disabled_plugins in ('__all__', '1', 'true'):
+    elif disabled_plugins in ("__all__", "1", "true"):
         return ()
     elif _plugins is None:
         _plugins = {}
@@ -41,14 +41,17 @@ def get_plugins() -> Iterable[PydanticPluginProtocol]:
                         continue
                     if entry_point.value in _plugins:
                         continue
-                    if disabled_plugins is not None and entry_point.name in disabled_plugins.split(','):
+                    if (
+                        disabled_plugins is not None
+                        and entry_point.name in disabled_plugins.split(",")
+                    ):
                         continue
                     try:
                         _plugins[entry_point.value] = entry_point.load()
                     except (ImportError, AttributeError) as e:
                         warnings.warn(
-                            f'{e.__class__.__name__} while loading the `{entry_point.name}` Pydantic plugin, '
-                            f'this plugin will not be installed.\n\n{e!r}'
+                            f"{e.__class__.__name__} while loading the `{entry_point.name}` Pydantic plugin, "
+                            f"this plugin will not be installed.\n\n{e!r}"
                         )
         finally:
             _loading_plugins = False

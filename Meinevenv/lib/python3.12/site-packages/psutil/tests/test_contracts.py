@@ -137,14 +137,7 @@ class TestAvailSystemAPIs(PsutilTestCase):
 class TestAvailProcessAPIs(PsutilTestCase):
     def test_environ(self):
         assert hasattr(psutil.Process, "environ") == (
-            LINUX
-            or MACOS
-            or WINDOWS
-            or AIX
-            or SUNOS
-            or FREEBSD
-            or OPENBSD
-            or NETBSD
+            LINUX or MACOS or WINDOWS or AIX or SUNOS or FREEBSD or OPENBSD or NETBSD
         )
 
     def test_uids(self):
@@ -177,14 +170,10 @@ class TestAvailProcessAPIs(PsutilTestCase):
         assert hasattr(psutil.Process, "num_handles") == WINDOWS
 
     def test_cpu_affinity(self):
-        assert hasattr(psutil.Process, "cpu_affinity") == (
-            LINUX or WINDOWS or FREEBSD
-        )
+        assert hasattr(psutil.Process, "cpu_affinity") == (LINUX or WINDOWS or FREEBSD)
 
     def test_cpu_num(self):
-        assert hasattr(psutil.Process, "cpu_num") == (
-            LINUX or FREEBSD or SUNOS
-        )
+        assert hasattr(psutil.Process, "cpu_num") == (LINUX or FREEBSD or SUNOS)
 
     def test_memory_maps(self):
         hasit = hasattr(psutil.Process, "memory_maps")
@@ -231,7 +220,7 @@ class TestSystemAPITypes(PsutilTestCase):
 
     # TODO: remove this once 1892 is fixed
     @pytest.mark.skipif(
-        MACOS and platform.machine() == 'arm64', reason="skipped due to #1892"
+        MACOS and platform.machine() == "arm64", reason="skipped due to #1892"
     )
     @pytest.mark.skipif(not HAS_CPU_FREQ, reason="not supported")
     def test_cpu_freq(self):
@@ -256,7 +245,7 @@ class TestSystemAPITypes(PsutilTestCase):
     @pytest.mark.skipif(SKIP_SYSCONS, reason="requires root")
     def test_net_connections(self):
         with create_sockets():
-            ret = psutil.net_connections('all')
+            ret = psutil.net_connections("all")
             assert len(ret) == len(set(ret))
             for conn in ret:
                 assert is_namedtuple(conn)

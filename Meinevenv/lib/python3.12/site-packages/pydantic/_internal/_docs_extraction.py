@@ -39,12 +39,12 @@ class DocstringVisitor(ast.NodeVisitor):
 
 def _dedent_source_lines(source: list[str]) -> str:
     # Required for nested class definitions, e.g. in a function block
-    dedent_source = textwrap.dedent(''.join(source))
-    if dedent_source.startswith((' ', '\t')):
+    dedent_source = textwrap.dedent("".join(source))
+    if dedent_source.startswith((" ", "\t")):
         # We are in the case where there's a dedented (usually multiline) string
         # at a lower indentation level than the class itself. We wrap our class
         # in a function as a workaround.
-        dedent_source = f'def dedent_workaround():\n{dedent_source}'
+        dedent_source = f"def dedent_workaround():\n{dedent_source}"
     return dedent_source
 
 
@@ -69,7 +69,10 @@ def _extract_source_from_frame(cls: type[Any]) -> list[str] | None:
                     pass
                 else:
                     stmt = block_tree.body[0]
-                    if isinstance(stmt, ast.FunctionDef) and stmt.name == 'dedent_workaround':
+                    if (
+                        isinstance(stmt, ast.FunctionDef)
+                        and stmt.name == "dedent_workaround"
+                    ):
                         # `_dedent_source_lines` wrapped the class around the workaround function
                         stmt = stmt.body[0]
                     if isinstance(stmt, ast.ClassDef) and stmt.name == cls.__name__:
@@ -78,7 +81,9 @@ def _extract_source_from_frame(cls: type[Any]) -> list[str] | None:
         frame = frame.f_back
 
 
-def extract_docstrings_from_cls(cls: type[Any], use_inspect: bool = False) -> dict[str, str]:
+def extract_docstrings_from_cls(
+    cls: type[Any], use_inspect: bool = False
+) -> dict[str, str]:
     """Map model attributes and their corresponding docstring.
 
     Args:

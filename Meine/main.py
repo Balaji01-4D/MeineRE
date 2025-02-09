@@ -1,39 +1,49 @@
 import re
-from re import Pattern,Match
+from re import Pattern, Match
 from rich.table import Table
 from pathlib import Path
-from Meine.Actions import File,Zip,System
-from Meine.exceptions import ErrorNotify,InfoNotify
+from Meine.Actions import File, Zip, System
+from Meine.exceptions import ErrorNotify, InfoNotify
 from Meine.logger_config import logger
 
 
 d: dict[Pattern[str]] = {
-    'twopath':re.compile(r'''(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)'''),
-    'onepath':re.compile(r'''(d|rm|r|del|mk|mkdir|mkd|create|clr|show)\s+(.+)'''),
-    'rename':re.compile(r'(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)'),
-    'system':re.compile(r'(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process|shutdown|restart|reboot)\s?(\s[^\s]+)?'),
-    'search_text':re.compile(r'''(find|where|search)\s+["'](.+)["']\s+(.+)'''),
-    'notepad':re.compile(r'(write|notepad|wr)\s+(.+)'),
-    'compress':re.compile(r'''(z|uz|zip|tar|gz|7z|unzip)\s+(.+)'''),
-    'backup':re.compile(r'''(backup|bk)\s+(.+)''')
-
-    }
+    "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
+    "onepath": re.compile(r"""(d|rm|r|del|mk|mkdir|mkd|create|clr|show)\s+(.+)"""),
+    "rename": re.compile(r"(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)"),
+    "system": re.compile(
+        r"(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process|shutdown|restart|reboot)\s?(\s[^\s]+)?"
+    ),
+    "search_text": re.compile(r"""(find|where|search)\s+["'](.+)["']\s+(.+)"""),
+    "notepad": re.compile(r"(write|notepad|wr)\s+(.+)"),
+    "compress": re.compile(r"""(z|uz|zip|tar|gz|7z|unzip)\s+(.+)"""),
+    "backup": re.compile(r"""(backup|bk)\s+(.+)"""),
+}
 
 files = File()
 systems = System()
 zips = Zip()
 
+
 async def CLI(Command):
 
     async def handle_rename(RegexMatch: Match):
-        source_unknown_type:str = RegexMatch.group(2)
-        newname_unknown_type:str = RegexMatch.group(3)
-        source:str|list = source_unknown_type.split(',') if ',' in source_unknown_type else source_unknown_type
-        newname:str|list = newname_unknown_type.split(',') if ',' in newname_unknown_type else newname_unknown_type
+        source_unknown_type: str = RegexMatch.group(2)
+        newname_unknown_type: str = RegexMatch.group(3)
+        source: str | list = (
+            source_unknown_type.split(",")
+            if "," in source_unknown_type
+            else source_unknown_type
+        )
+        newname: str | list = (
+            newname_unknown_type.split(",")
+            if "," in newname_unknown_type
+            else newname_unknown_type
+        )
 
         if isinstance(source, list) and isinstance(newname, list):
-            results = [await Rename(s,n) for s,n in zip(source,newname)]
-            return '\n'.join(results)
+            results = [await Rename(s, n) for s, n in zip(source, newname)]
+            return "\n".join(results)
         elif not isinstance(source, list) and isinstance(newname, list):
             raise ErrorNotify("[#E06C75]Multiple Source Need to Rename Multiple")
         elif isinstance(source, list) and not isinstance(newname, list):
@@ -42,57 +52,62 @@ async def CLI(Command):
             return await Rename(source, newname)
 
     async def handle_two_path(RegexMatch: Match):
-        act:str = RegexMatch.group(1)
-        source_unknown_type = RegexMatch.group(2) 
-        source: str|list = source_unknown_type.split(",") if "," in source_unknown_type else source_unknown_type
+        act: str = RegexMatch.group(1)
+        source_unknown_type = RegexMatch.group(2)
+        source: str | list = (
+            source_unknown_type.split(",")
+            if "," in source_unknown_type
+            else source_unknown_type
+        )
         destination: str = RegexMatch.group(3)
         if act in {"cp", "copy", "c"}:
             if isinstance(source, list):
-                results = [await Copy(s,destination) for s in source]
-                return '\n'.join(results)
-            return await Copy(source,destination)
+                results = [await Copy(s, destination) for s in source]
+                return "\n".join(results)
+            return await Copy(source, destination)
         else:  # Handle move
             if isinstance(source, list):
-                results = [await Move(s,destination) for s in source]
-                return '\n'.join(results)
-            return await Move(source,destination)
+                results = [await Move(s, destination) for s in source]
+                return "\n".join(results)
+            return await Move(source, destination)
 
     async def handle_one_path(RegexMatch: Match):
         act = RegexMatch.group(1)
-        source_unknown_type = RegexMatch.group(2) 
-        source: str|list = source_unknown_type.split(",") if "," in source_unknown_type else source_unknown_type
-
+        source_unknown_type = RegexMatch.group(2)
+        source: str | list = (
+            source_unknown_type.split(",")
+            if "," in source_unknown_type
+            else source_unknown_type
+        )
 
         if act in {"delete", "del", "d"}:
             if isinstance(source, list):
                 results = [await Delete(s) for s in source]
-                return '\n'.join(results)
+                return "\n".join(results)
             return await Delete(source)
-        
-        elif act in {"mk", "create", "make","mkd"}:
+
+        elif act in {"mk", "create", "make", "mkd"}:
             if isinstance(source, list):
-                results = [await Create(s,'file') for s in source]
-                return '\n'.join(results)
+                results = [await Create(s, "file") for s in source]
+                return "\n".join(results)
             return await Create(source, "file")
-        
+
         elif act == "mkdir":
             if isinstance(source, list):
                 results = [await Create(s) for s in source]
-                return '\n'.join(results)
-            return await Create(source) 
-        
+                return "\n".join(results)
+            return await Create(source)
+
         elif act == "show":
-            if isinstance(source,list):
-                raise ErrorNotify('show file content accepts a single file')
+            if isinstance(source, list):
+                raise ErrorNotify("show file content accepts a single file")
             return await files.ShowContent_File(Path(source))
-        
-        elif act == 'clr':
+
+        elif act == "clr":
             if isinstance(source, list):
                 results = [await files.ClearContent_File(Path(s)) for s in source]
-                return '\n'.join(results)
+                return "\n".join(results)
             return await files.ClearContent_File(Path(source))
-
-
 
     async def handle_system(RegexMatch: Match):
         act = RegexMatch.group(1)
@@ -122,42 +137,42 @@ async def CLI(Command):
             "process": systems.Processes,
             "background": systems.Processes,
             "kill": lambda: systems.ProcessKill(extra),
-            "shutdown":lambda:systems.shutdown(extra)
+            "shutdown": lambda: systems.shutdown(extra),
         }
 
         if act in system_actions:
             return await system_actions[act]()
         raise (f"[#E06C75]Unknown system action: {act}")
 
-    async def handle_compress(RegexMatch: Match) -> str :
+    async def handle_compress(RegexMatch: Match) -> str:
         act: str = RegexMatch.group(1)
         source_unknown: str = RegexMatch.group(2)
-        srcs:list|str = source_unknown.split(",") if "," in source_unknown else source_unknown
+        srcs: list | str = (
+            source_unknown.split(",") if "," in source_unknown else source_unknown
+        )
 
-        if (act in {'unzip','uz'}):
-            if (isinstance(srcs,list)):
+        if act in {"unzip", "uz"}:
+            if isinstance(srcs, list):
                 results = [await zips.Extract(Path(s)) for s in srcs]
-                return '\n'.join(results)
+                return "\n".join(results)
             return await zips.Extract(Path(srcs))
-        
-        else :
-            if (isinstance(srcs,list)):
-                results = [await zips.Compress(Path(s),format=act) for s in srcs]
-                return '\n'.join(results)
 
-            return await zips.Compress(Path(srcs),format=act)
-        
-    async def handle_text_find(RegexMatch: Match) -> str|Table:
+        else:
+            if isinstance(srcs, list):
+                results = [await zips.Compress(Path(s), format=act) for s in srcs]
+                return "\n".join(results)
+
+            return await zips.Compress(Path(srcs), format=act)
+
+    async def handle_text_find(RegexMatch: Match) -> str | Table:
         text = RegexMatch.group(2)
         source = Path(RegexMatch.group(3))
-        if (source.is_dir()):
-            return await files.Text_Finder_Directory(text,source)
-        elif (source.is_file()):
-            return await files.Text_Finder_File(text,source)
+        if source.is_dir():
+            return await files.Text_Finder_Directory(text, source)
+        elif source.is_file():
+            return await files.Text_Finder_File(text, source)
         else:
             raise ErrorNotify("Source Not Found")
-        
-
 
     # Command-to-handler mapping
     handlers = {
@@ -165,8 +180,8 @@ async def CLI(Command):
         "twopath": handle_two_path,
         "onepath": handle_one_path,
         "system": handle_system,
-        "compress":handle_compress,
-        "search_text":handle_text_find
+        "compress": handle_compress,
+        "search_text": handle_text_find,
     }
 
     for key, pattern in d.items():
@@ -178,74 +193,72 @@ async def CLI(Command):
     raise ErrorNotify("[#E06C75]Command not recognized.")
 
 
-async def Copy(Source:str,Destination:str) -> str:
-        sourcePath = Path(Source.strip("'"))
-        destinationPath = Path(Destination.strip("'"))
-        if (destinationPath.is_dir()):
-            if (sourcePath.is_file()):
-                result = await files.Copy_File(sourcePath,destinationPath)
-                return result
-            elif (sourcePath.is_dir()):
-                result = await files.Copy_Folder(sourcePath,destinationPath)
-                return result
-            else :
-                raise ErrorNotify(f'{Source} Not Found')
-        elif (destinationPath.is_file()):
-            raise ErrorNotify(f'{destinationPath} is a File')
-        else :
-            raise ErrorNotify(f'{destinationPath.name} Not Found')
-
-
-async def Move(Source:str ,Destination:str) -> str:
-        sourcePath = Path(Source.strip("'"))
-        destinationPath = Path(Destination.strip("'"))
-        if (destinationPath.is_dir()):
-            if (sourcePath.is_file()):
-                result = await files.Move_File(sourcePath,destinationPath)
-                return result
-            elif (sourcePath.is_dir()):
-                result = await files.Move_Folder(sourcePath,destinationPath)
-                return result
-            else :
-                raise ErrorNotify(f'{Source} Not Found')
-        elif (destinationPath.is_file()):
-            raise ErrorNotify(f'{destinationPath.name} is a File')
-        else :
-            raise ErrorNotify(f'{destinationPath.name} Not Found')
-    
-async def Rename(Source:str,Newname:str) -> str:
-        sourcePath = Path(Source.strip("'"))
-        NewnamePath = Path(Newname.strip("'"))
-        if (sourcePath.is_file()):
-            result = await files.Rename_file(sourcePath,NewnamePath)
+async def Copy(Source: str, Destination: str) -> str:
+    sourcePath = Path(Source.strip("'"))
+    destinationPath = Path(Destination.strip("'"))
+    if destinationPath.is_dir():
+        if sourcePath.is_file():
+            result = await files.Copy_File(sourcePath, destinationPath)
             return result
-        elif (sourcePath.is_dir()):
-            result = await files.Rename_file(sourcePath,NewnamePath)
+        elif sourcePath.is_dir():
+            result = await files.Copy_Folder(sourcePath, destinationPath)
             return result
         else:
             raise ErrorNotify(f"{Source} Not Found")
+    elif destinationPath.is_file():
+        raise ErrorNotify(f"{destinationPath} is a File")
+    else:
+        raise ErrorNotify(f"{destinationPath.name} Not Found")
 
-    
-async def Delete(Source:str) -> str:
+
+async def Move(Source: str, Destination: str) -> str:
+    sourcePath = Path(Source.strip("'"))
+    destinationPath = Path(Destination.strip("'"))
+    if destinationPath.is_dir():
+        if sourcePath.is_file():
+            result = await files.Move_File(sourcePath, destinationPath)
+            return result
+        elif sourcePath.is_dir():
+            result = await files.Move_Folder(sourcePath, destinationPath)
+            return result
+        else:
+            raise ErrorNotify(f"{Source} Not Found")
+    elif destinationPath.is_file():
+        raise ErrorNotify(f"{destinationPath.name} is a File")
+    else:
+        raise ErrorNotify(f"{destinationPath.name} Not Found")
+
+
+async def Rename(Source: str, Newname: str) -> str:
+    sourcePath = Path(Source.strip("'"))
+    NewnamePath = Path(Newname.strip("'"))
+    if sourcePath.is_file():
+        result = await files.Rename_file(sourcePath, NewnamePath)
+        return result
+    elif sourcePath.is_dir():
+        result = await files.Rename_file(sourcePath, NewnamePath)
+        return result
+    else:
+        raise ErrorNotify(f"{Source} Not Found")
+
+
+async def Delete(Source: str) -> str:
     sourcePath: Path = Path(Source.strip("'"))
-    if (sourcePath.is_file()):
+    if sourcePath.is_file():
         result = await files.Delete_File(sourcePath)
         return result
-    elif (sourcePath.is_dir()):
+    elif sourcePath.is_dir():
         result = await files.Delete_Folder(sourcePath)
         return result
     else:
         raise ErrorNotify(f"{Source} Not Found")
 
-    
-async def Create(source:str,hint='folder') -> str:
+
+async def Create(source: str, hint="folder") -> str:
     source = source.strip("'")
-    if (hint != 'folder'):
+    if hint != "folder":
         result = await files.Create_File(Path(source))
         return result
     else:
         result = await files.Create_Folder(Path(source))
         return result
-
-
-    

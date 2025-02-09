@@ -35,9 +35,9 @@ if wycheproof_warnings:
     print("Printing Wycheproof warnings")
 
 if "-v" in sys.argv:
-    verbosity=2
+    verbosity = 2
 else:
-    verbosity=1
+    verbosity = 1
 
-config = {'slow_tests': slow_tests, 'wycheproof_warnings': wycheproof_warnings}
+config = {"slow_tests": slow_tests, "wycheproof_warnings": wycheproof_warnings}
 SelfTest.run(stream=sys.stdout, verbosity=verbosity, config=config)

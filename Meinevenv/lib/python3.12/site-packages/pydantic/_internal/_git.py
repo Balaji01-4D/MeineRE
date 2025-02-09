@@ -8,13 +8,13 @@ import subprocess
 
 def is_git_repo(dir: str) -> bool:
     """Is the given directory version-controlled with git?"""
-    return os.path.exists(os.path.join(dir, '.git'))
+    return os.path.exists(os.path.join(dir, ".git"))
 
 
 def have_git() -> bool:
     """Can we run the git executable?"""
     try:
-        subprocess.check_output(['git', '--help'])
+        subprocess.check_output(["git", "--help"])
         return True
     except subprocess.CalledProcessError:
         return False
@@ -24,4 +24,8 @@ def have_git() -> bool:
 
 def git_revision(dir: str) -> str:
     """Get the SHA-1 of the HEAD of a git repository."""
-    return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=dir).decode('utf-8').strip()
+    return (
+        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=dir)
+        .decode("utf-8")
+        .strip()
+    )

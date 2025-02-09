@@ -43,7 +43,10 @@ class V1ValidatorWithValuesAndKwargs(Protocol):
 
 
 V1Validator = Union[
-    V1ValidatorWithValues, V1ValidatorWithValuesKwOnly, V1ValidatorWithKwargs, V1ValidatorWithValuesAndKwargs
+    V1ValidatorWithValues,
+    V1ValidatorWithValuesKwOnly,
+    V1ValidatorWithKwargs,
+    V1ValidatorWithValuesAndKwargs,
 ]
 
 
@@ -51,7 +54,9 @@ def can_be_keyword(param: Parameter) -> bool:
     return param.kind in (Parameter.POSITIONAL_OR_KEYWORD, Parameter.KEYWORD_ONLY)
 
 
-def make_generic_v1_field_validator(validator: V1Validator) -> core_schema.WithInfoValidatorFunction:
+def make_generic_v1_field_validator(
+    validator: V1Validator,
+) -> core_schema.WithInfoValidatorFunction:
     """Wrap a V1 style field validator for V2 compatibility.
 
     Args:
@@ -69,23 +74,25 @@ def make_generic_v1_field_validator(validator: V1Validator) -> core_schema.WithI
     needs_values_kw = False
 
     for param_num, (param_name, parameter) in enumerate(sig.parameters.items()):
-        if can_be_keyword(parameter) and param_name in ('field', 'config'):
+        if can_be_keyword(parameter) and param_name in ("field", "config"):
             raise PydanticUserError(
-                'The `field` and `config` parameters are not available in Pydantic V2, '
-                'please use the `info` parameter instead.',
-                code='validator-field-config-info',
+                "The `field` and `config` parameters are not available in Pydantic V2, "
+                "please use the `info` parameter instead.",
+                code="validator-field-config-info",
             )
         if parameter.kind is Parameter.VAR_KEYWORD:
             needs_values_kw = True
-        elif can_be_keyword(parameter) and param_name == 'values':
+        elif can_be_keyword(parameter) and param_name == "values":
             needs_values_kw = True
         elif can_be_positional(parameter) and param_num == 0:
             # value
             continue
-        elif parameter.default is Parameter.empty:  # ignore params with defaults e.g. bound by functools.partial
+        elif (
+            parameter.default is Parameter.empty
+        ):  # ignore params with defaults e.g. bound by functools.partial
             raise PydanticUserError(
-                f'Unsupported signature for V1 style validator {validator}: {sig} is not supported.',
-                code='validator-v1-signature',
+                f"Unsupported signature for V1 style validator {validator}: {sig} is not supported.",
+                code="validator-v1-signature",
             )
 
     if needs_values_kw:
@@ -119,14 +126,18 @@ class V1RootValidatorFunction(Protocol):
 class V2CoreBeforeRootValidator(Protocol):
     """V2 validator with mode='before'."""
 
-    def __call__(self, __values: RootValidatorValues, __info: core_schema.ValidationInfo) -> RootValidatorValues: ...
+    def __call__(
+        self, __values: RootValidatorValues, __info: core_schema.ValidationInfo
+    ) -> RootValidatorValues: ...
 
 
 class V2CoreAfterRootValidator(Protocol):
     """V2 validator with mode='after'."""
 
     def __call__(
-        self, __fields_tuple: RootValidatorFieldsTuple, __info: core_schema.ValidationInfo
+        self,
+        __fields_tuple: RootValidatorFieldsTuple,
+        __info: core_schema.ValidationInfo,
     ) -> RootValidatorFieldsTuple: ...
 
 
@@ -144,13 +155,17 @@ def make_v1_generic_root_validator(
     """
     if pre is True:
         # mode='before' for pydantic-core
-        def _wrapper1(values: RootValidatorValues, _: core_schema.ValidationInfo) -> RootValidatorValues:
+        def _wrapper1(
+            values: RootValidatorValues, _: core_schema.ValidationInfo
+        ) -> RootValidatorValues:
             return validator(values)
 
         return _wrapper1
 
     # mode='after' for pydantic-core
-    def _wrapper2(fields_tuple: RootValidatorFieldsTuple, _: core_schema.ValidationInfo) -> RootValidatorFieldsTuple:
+    def _wrapper2(
+        fields_tuple: RootValidatorFieldsTuple, _: core_schema.ValidationInfo
+    ) -> RootValidatorFieldsTuple:
         if len(fields_tuple) == 2:
             # dataclass, this is easy
             values, init_vars = fields_tuple

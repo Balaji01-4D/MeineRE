@@ -1,6 +1,6 @@
-from textual.widgets import RichLog,DataTable,Input
-from textual.containers import Container,Vertical
-from os import chdir,listdir
+from textual.widgets import RichLog, DataTable, Input
+from textual.containers import Container, Vertical
+from os import chdir, listdir
 from pathlib import Path
 from ..logger_config import logger
 from rich.console import RenderableType
@@ -12,12 +12,15 @@ from textual.widget import Widget
 
 from .directory_tree import DTree
 
+
 class Directory_tree_container(Container):
 
-    def __init__(self, *children, name = None, id = None, classes = None, disabled = False):
-        self.dtree = DTree(path='/home/balaji/testings',id='dt')
+    def __init__(self, *children, name=None, id=None, classes=None, disabled=False):
+        self.dtree = DTree(path="/home/balaji/testings", id="dt")
 
-        super().__init__(*children, name=name, id=id, classes=classes, disabled=disabled)
+        super().__init__(
+            *children, name=name, id=id, classes=classes, disabled=disabled
+        )
 
     def compose(self):
         yield self.dtree
@@ -30,24 +33,21 @@ class Directory_tree_container(Container):
     #     self.dtree.filter_paths(a)
     #     self.dtree.refresh()
     #     logger.info('hello wrold')
-        
+
 
 class Background_process_container(Container):
     def compose(self):
-        self.dtable = DataTable(id='process_table')
+        self.dtable = DataTable(id="process_table")
         with Vertical():
             yield self.dtable
-    
+
     def on_mount(self):
-        self.dtable.add_columns('PID','Command','Status')
-
-
+        self.dtable.add_columns("PID", "Command", "Status")
 
 
 import getpass
 import os
 import socket
-
 
 
 class HeaderCurrentPath(Widget):
@@ -88,5 +88,4 @@ class Header(Widget):
         yield HeaderCurrentPath(id="header-current-path")
 
 
-class CodeEditor(Container):
-    ...
+class CodeEditor(Container): ...

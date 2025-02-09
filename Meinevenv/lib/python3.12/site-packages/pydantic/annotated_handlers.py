@@ -18,7 +18,7 @@ if TYPE_CHECKING:
         core_schema.ComputedField,
     ]
 
-__all__ = 'GetJsonSchemaHandler', 'GetCoreSchemaHandler'
+__all__ = "GetJsonSchemaHandler", "GetCoreSchemaHandler"
 
 
 class GetJsonSchemaHandler:
@@ -46,7 +46,9 @@ class GetJsonSchemaHandler:
         """
         raise NotImplementedError
 
-    def resolve_ref_schema(self, maybe_ref_json_schema: JsonSchemaValue, /) -> JsonSchemaValue:
+    def resolve_ref_schema(
+        self, maybe_ref_json_schema: JsonSchemaValue, /
+    ) -> JsonSchemaValue:
         """Get the real schema for a `{"$ref": ...}` schema.
         If the schema given is not a `$ref` schema, it will be returned as is.
         This means you don't have to check before calling this function.
@@ -96,7 +98,9 @@ class GetCoreSchemaHandler:
         """
         raise NotImplementedError
 
-    def resolve_ref_schema(self, maybe_ref_schema: core_schema.CoreSchema, /) -> core_schema.CoreSchema:
+    def resolve_ref_schema(
+        self, maybe_ref_schema: core_schema.CoreSchema, /
+    ) -> core_schema.CoreSchema:
         """Get the real schema for a `definition-ref` schema.
         If the schema given is not a `definition-ref` schema, it will be returned as is.
         This means you don't have to check before calling this function.

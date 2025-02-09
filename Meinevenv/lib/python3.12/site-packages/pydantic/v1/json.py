@@ -2,7 +2,14 @@ import datetime
 from collections import deque
 from decimal import Decimal
 from enum import Enum
-from ipaddress import IPv4Address, IPv4Interface, IPv4Network, IPv6Address, IPv6Interface, IPv6Network
+from ipaddress import (
+    IPv4Address,
+    IPv4Interface,
+    IPv4Network,
+    IPv6Address,
+    IPv6Interface,
+    IPv6Network,
+)
 from pathlib import Path
 from re import Pattern
 from types import GeneratorType
@@ -13,7 +20,7 @@ from pydantic.v1.color import Color
 from pydantic.v1.networks import NameEmail
 from pydantic.v1.types import SecretBytes, SecretStr
 
-__all__ = 'pydantic_encoder', 'custom_pydantic_encoder', 'timedelta_isoformat'
+__all__ = "pydantic_encoder", "custom_pydantic_encoder", "timedelta_isoformat"
 
 
 def isoformat(o: Union[datetime.date, datetime.time]) -> str:
@@ -87,10 +94,14 @@ def pydantic_encoder(obj: Any) -> Any:
             continue
         return encoder(obj)
     else:  # We have exited the for loop without finding a suitable encoder
-        raise TypeError(f"Object of type '{obj.__class__.__name__}' is not JSON serializable")
+        raise TypeError(
+            f"Object of type '{obj.__class__.__name__}' is not JSON serializable"
+        )
 
 
-def custom_pydantic_encoder(type_encoders: Dict[Any, Callable[[Type[Any]], Any]], obj: Any) -> Any:
+def custom_pydantic_encoder(
+    type_encoders: Dict[Any, Callable[[Type[Any]], Any]], obj: Any
+) -> Any:
     # Check the class type and its superclasses for a matching encoder
     for base in obj.__class__.__mro__[:-1]:
         try:

@@ -15,5 +15,6 @@ class MD4Hash(object):
     def new(self, data: Buffer = ...) -> MD4Hash: ...
 
 def new(data: Buffer = ...) -> MD4Hash: ...
+
 digest_size: int
 block_size: int

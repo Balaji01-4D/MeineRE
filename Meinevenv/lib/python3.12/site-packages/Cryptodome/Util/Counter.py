@@ -22,7 +22,15 @@
 # SOFTWARE.
 # ===================================================================
 
-def new(nbits, prefix=b"", suffix=b"", initial_value=1, little_endian=False, allow_wraparound=False):
+
+def new(
+    nbits,
+    prefix=b"",
+    suffix=b"",
+    initial_value=1,
+    little_endian=False,
+    allow_wraparound=False,
+):
     """Create a stateful counter block function suitable for CTR encryption modes.
 
     Each call to the function returns the next counter block.
@@ -66,14 +74,16 @@ def new(nbits, prefix=b"", suffix=b"", initial_value=1, little_endian=False, all
 
     iv_bl = initial_value.bit_length()
     if iv_bl > nbits:
-        raise ValueError("Initial value takes %d bits but it is longer than "
-                         "the counter (%d bits)" %
-                         (iv_bl, nbits))
+        raise ValueError(
+            "Initial value takes %d bits but it is longer than "
+            "the counter (%d bits)" % (iv_bl, nbits)
+        )
 
     # Ignore wraparound
-    return {"counter_len": nbits // 8,
-            "prefix": prefix,
-            "suffix": suffix,
-            "initial_value": initial_value,
-            "little_endian": little_endian
-            }
+    return {
+        "counter_len": nbits // 8,
+        "prefix": prefix,
+        "suffix": suffix,
+        "initial_value": initial_value,
+        "little_endian": little_endian,
+    }
