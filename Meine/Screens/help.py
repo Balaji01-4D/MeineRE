@@ -1,6 +1,7 @@
+from pathlib import Path
+
 from textual.screen import ModalScreen
 from textual.widgets import Markdown, Static, TabbedContent, TabPane
-from pathlib import Path
 
 directory_tree_manual = """\
 # Directory Tree

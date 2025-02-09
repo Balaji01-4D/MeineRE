@@ -1,13 +1,14 @@
-from rich.table import Table
-from rich.panel import Panel
 import asyncio
-import zipfile
-import tarfile
 import gzip
-import py7zr
-import shutil
-from pathlib import Path
 import os
+import shutil
+import tarfile
+import zipfile
+from pathlib import Path
+
+import py7zr
+from rich.panel import Panel
+from rich.table import Table
 
 
 class Zip:

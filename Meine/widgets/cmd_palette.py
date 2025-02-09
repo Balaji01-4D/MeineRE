@@ -1,6 +1,8 @@
-from Meine.utils.file_editor import add_custom_path_expansion
-from textual.command import Provider, Hits, Hit
 from functools import partial
+
+from textual.command import Hit, Hits, Provider
+
+from Meine.utils.file_editor import add_custom_path_expansion
 
 
 class CustomCommand(Provider):

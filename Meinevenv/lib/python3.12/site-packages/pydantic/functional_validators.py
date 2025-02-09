@@ -8,7 +8,8 @@ from functools import partialmethod
 from types import FunctionType
 from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union, cast, overload
 
-from pydantic_core import PydanticUndefined, core_schema
+from pydantic_core import PydanticUndefined
+from pydantic_core import core_schema
 from pydantic_core import core_schema as _core_schema
 from typing_extensions import Annotated, Literal, Self, TypeAlias
 

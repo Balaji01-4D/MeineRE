@@ -24,8 +24,8 @@ def CMDMapper(labels: list[str], text: list[str]) -> dict[str]:
     return cdict
 
 
-from rich.progress import BarColumn, Progress
 from rich.console import Console
+from rich.progress import BarColumn, Progress
 
 console = Console()
 

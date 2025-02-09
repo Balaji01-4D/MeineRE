@@ -1,8 +1,9 @@
-from textual.screen import ModalScreen
-from textual.containers import Container, Vertical
-from textual.widgets import Markdown
 from pathlib import Path
+
+from textual.containers import Container, Vertical
 from textual.events import Click
+from textual.screen import ModalScreen
+from textual.widgets import Markdown
 
 data = """\
 # **About Me**

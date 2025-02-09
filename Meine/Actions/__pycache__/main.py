@@ -1,11 +1,11 @@
 import time
 
 a = time.time()
-from rich.console import Console
-import re
 import os
-import prime
+import re
 
+import prime
+from rich.console import Console
 
 CONSOLE = Console()
 

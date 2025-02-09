@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Optional, Union
 
 Buffer = Union[bytes, bytearray, memoryview]
 

@@ -1,5 +1,5 @@
-from pathlib import Path
 import json
+from pathlib import Path
 
 history_loc = Path(__file__).parent.parent / "resources/history.json"
 settings_loc = Path(__file__).parent.parent / "resources/settings.json"

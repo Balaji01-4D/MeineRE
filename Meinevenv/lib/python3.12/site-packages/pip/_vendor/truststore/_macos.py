@@ -3,17 +3,8 @@ import ctypes
 import platform
 import ssl
 import typing
-from ctypes import (
-    CDLL,
-    POINTER,
-    c_bool,
-    c_char_p,
-    c_int32,
-    c_long,
-    c_uint32,
-    c_ulong,
-    c_void_p,
-)
+from ctypes import (CDLL, POINTER, c_bool, c_char_p, c_int32, c_long, c_uint32,
+                    c_ulong, c_void_p)
 from ctypes.util import find_library
 
 from ._ssl_constants import _set_ssl_context_verify_mode

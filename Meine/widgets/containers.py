@@ -1,15 +1,15 @@
-from textual.widgets import RichLog, DataTable, Input
-from textual.containers import Container, Vertical
 from os import chdir, listdir
 from pathlib import Path
-from ..logger_config import logger
+
 from rich.console import RenderableType
 from rich.text import Text
 from textual.app import ComposeResult
+from textual.containers import Container, Vertical
 from textual.reactive import reactive
 from textual.widget import Widget
+from textual.widgets import DataTable, Input, RichLog
 
-
+from ..logger_config import logger
 from .directory_tree import DTree
 
 

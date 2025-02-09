@@ -1,8 +1,8 @@
-from Meine.main import CLI
-import unittest
 import asyncio
-
 import os
+import unittest
+
+from Meine.main import CLI
 
 
 class main_test(unittest.IsolatedAsyncioTestCase):

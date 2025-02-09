@@ -10,9 +10,7 @@ import os
 
 import psutil
 from psutil import SUNOS
-from psutil.tests import PsutilTestCase
-from psutil.tests import pytest
-from psutil.tests import sh
+from psutil.tests import PsutilTestCase, pytest, sh
 
 
 @pytest.mark.skipif(not SUNOS, reason="SUNOS only")

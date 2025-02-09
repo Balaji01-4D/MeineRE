@@ -1,14 +1,12 @@
-from re import search
 from pathlib import Path
-import platformdirs.macos
-import platformdirs.windows
-from textual.widgets import Input
-from textual.binding import Binding
+from re import search
+
 import platformdirs
+from textual.binding import Binding
+from textual.widgets import Input
 
-from Meine.utils.file_loaders import load_Path_expansion
 from Meine.logger_config import logger
-
+from Meine.utils.file_loaders import load_Path_expansion
 
 actions = [
     "uz",
@@ -104,10 +102,9 @@ class MeineInput(Input):
             "parent": current_dir.parent,
             "parent+": current_dir.parent.parent,
             "parent++": current_dir.parent.parent.parent,
-            "downloads":platformdirs.user_downloads_dir(),
-            "documents":platformdirs.user_documents_dir(),
-            "desktop":platformdirs.user_desktop_dir()
-
+            "downloads": platformdirs.user_downloads_dir(),
+            "documents": platformdirs.user_documents_dir(),
+            "desktop": platformdirs.user_desktop_dir(),
         }
 
         DEFAULT_PATH_EXPANSION |= load_Path_expansion()["path_expansions"]

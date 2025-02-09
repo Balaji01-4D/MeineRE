@@ -1,5 +1,6 @@
 from typing import Union
-from typing_extensions import TypedDict, Unpack, NotRequired
+
+from typing_extensions import NotRequired, TypedDict, Unpack
 
 from .TurboSHAKE128 import TurboSHAKE
 

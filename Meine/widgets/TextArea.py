@@ -1,12 +1,14 @@
-from textual.widgets import TextArea
-from textual import work
+import csv
+import json
 from pathlib import Path
-import json, csv
-from textual.worker import Worker
-from textual.events import Key
-from textual.binding import Binding
-from Meine.logger_config import logger
 
+from textual import work
+from textual.binding import Binding
+from textual.events import Key
+from textual.widgets import TextArea
+from textual.worker import Worker
+
+from Meine.logger_config import logger
 
 SYNTAX_HIGHLIGHTING_SUPPORTED_FILES = {
     ".py": "python",
@@ -101,7 +103,6 @@ class TextEditor(TextArea):
             file.writelines(self.text)
         self.notify(f"{self.filepath.name} saved successfully")
         event.stop()
-
 
     async def read_file(self) -> None:
         try:

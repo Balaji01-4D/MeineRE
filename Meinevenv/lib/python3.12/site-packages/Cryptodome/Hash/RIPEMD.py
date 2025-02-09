@@ -23,4 +23,4 @@
 
 """Deprecated alias for `Cryptodome.Hash.RIPEMD160`"""
 
-from Cryptodome.Hash.RIPEMD160 import new, block_size, digest_size
+from Cryptodome.Hash.RIPEMD160 import block_size, digest_size, new

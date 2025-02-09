@@ -1,7 +1,7 @@
 import webbrowser
 
-from Meine.utils.file_loaders import load_custom_urls
 from Meine.exceptions import InfoNotify
+from Meine.utils.file_loaders import load_custom_urls
 
 
 class web:

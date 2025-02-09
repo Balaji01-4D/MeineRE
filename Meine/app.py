@@ -1,18 +1,17 @@
-from textual.app import App, SystemCommand
-from pathlib import Path
-from textual.command import Provider, Hits, Hit
 from functools import partial
+from pathlib import Path
 
-from Meine.logger_config import logger
+from textual.app import App, SystemCommand
+from textual.command import Hit, Hits, Provider
+
+from Meine.Actions.system import System
 from Meine.exceptions import InfoNotify
-from Meine.Screens.settings import Settings, NameGetterScreen
+from Meine.logger_config import logger
 from Meine.Screens.help import HelpScreen
 from Meine.Screens.home import HomeScreen
-from Meine.Actions.system import System
-
+from Meine.Screens.settings import NameGetterScreen, Settings
 from Meine.utils.file_editor import add_custom_path_expansion
 from Meine.utils.file_loaders import load_settings
-
 
 HOME_SCREEN_ID = "home-screen"
 HELP_SCREEN_ID = "help-screen"
@@ -76,9 +75,9 @@ class MeineAI(App[None]):
 
         try:
             focused = self.focused
-            if (focused and focused.id == 'text_editor'):
+            if focused and focused.id == "text_editor":
                 return
-            if (self.screen_stack[-1].id != SETTINGS_SCREEN_ID ):
+            if self.screen_stack[-1].id != SETTINGS_SCREEN_ID:
                 self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
             else:
                 self.pop_screen()

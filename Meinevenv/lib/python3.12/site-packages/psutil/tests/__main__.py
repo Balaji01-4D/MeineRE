@@ -8,5 +8,4 @@ $ python -m psutil.tests.
 
 from psutil.tests import pytest
 
-
 pytest.main(["-v", "-s", "--tb=short"])

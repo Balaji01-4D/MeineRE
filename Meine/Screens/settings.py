@@ -1,13 +1,13 @@
 from pathlib import Path
 
-from textual.widgets import Static, Switch, Button, Input, Select
 from textual.containers import Container, Horizontal
 from textual.events import Click
 from textual.screen import ModalScreen
+from textual.widgets import Button, Input, Select, Static, Switch
 
-from Meine.utils.file_loaders import load_settings
-from Meine.utils.file_editor import save_settings, clear_history
 from Meine.Screens.me import Myself
+from Meine.utils.file_editor import clear_history, save_settings
+from Meine.utils.file_loaders import load_settings
 
 
 class Settings(ModalScreen):

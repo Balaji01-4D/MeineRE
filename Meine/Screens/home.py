@@ -1,25 +1,26 @@
-import os
 import asyncio
+import os
 from pathlib import Path
+
 from rich.panel import Panel
-from textual.screen import Screen
-from textual.widgets import RichLog
+from textual import work
 from textual.binding import Binding
 from textual.events import Click
-from textual.widgets import Input, DataTable, DirectoryTree
+from textual.screen import Screen
+from textual.widgets import DataTable, DirectoryTree, Input, RichLog
 
-
-from Meine.exceptions import InfoNotify, ErrorNotify, WarningNotify
-from Meine.widgets.containers import Directory_tree_container, Container
-from Meine.widgets.containers import Background_process_container
+from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
+from Meine.logger_config import logger
+from Meine.main import CLI
+from Meine.utils.file_editor import save_history
+from Meine.utils.file_loaders import load_history, load_settings
+from Meine.widgets.containers import (
+    Background_process_container,
+    Container,
+    Directory_tree_container,
+)
 from Meine.widgets.input import MeineInput
 from Meine.widgets.TextArea import TextEditor
-from Meine.logger_config import logger
-from Meine.utils.file_loaders import load_history, load_settings
-from Meine.utils.file_editor import save_history
-from Meine.main import CLI
-
-from textual import work
 
 
 class HomeScreen(Screen[None]):

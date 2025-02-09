@@ -7,11 +7,7 @@ from typing import Any, Tuple
 
 import typing_extensions
 
-from .._internal import (
-    _model_construction,
-    _typing_extra,
-    _utils,
-)
+from .._internal import _model_construction, _typing_extra, _utils
 
 if typing.TYPE_CHECKING:
     from .. import BaseModel

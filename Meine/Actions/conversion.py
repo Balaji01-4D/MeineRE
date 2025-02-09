@@ -1,5 +1,4 @@
 from PyPDF2 import PdfReader, PdfWriter
-from PyPDF2 import PdfReader, PdfWriter
 from PyPDF2.errors import PdfReadError
 
 

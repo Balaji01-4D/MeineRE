@@ -8,8 +8,8 @@ rules if you create plugin and adds new token types.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
 import inspect
+from collections.abc import Sequence
 from typing import Any, ClassVar, Protocol
 
 from .common.utils import escapeHtml, unescapeAll

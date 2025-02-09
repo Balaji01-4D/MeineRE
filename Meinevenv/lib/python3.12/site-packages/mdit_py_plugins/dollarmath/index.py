@@ -7,7 +7,6 @@ from markdown_it import MarkdownIt
 from markdown_it.common.utils import escapeHtml, isWhiteSpace
 from markdown_it.rules_block import StateBlock
 from markdown_it.rules_inline import StateInline
-
 from mdit_py_plugins.utils import is_code_block
 
 if TYPE_CHECKING:

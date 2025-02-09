@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from textual.binding import Binding
 from textual.widgets import DirectoryTree
 

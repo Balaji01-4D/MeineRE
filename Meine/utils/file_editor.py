@@ -1,9 +1,11 @@
+import json
 from json import dump
 from pathlib import Path
+
 import xdialog
-import json
 
 from Meine.exceptions import InfoNotify
+
 from .file_loaders import load_Path_expansion
 
 history_loc = Path(__file__).parent.parent / "resources/history.json"

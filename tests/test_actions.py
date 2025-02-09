@@ -1,9 +1,10 @@
-import unittest
-from pathlib import Path
-from Meine.Actions import File
 import asyncio
 import os
 import shutil
+import unittest
+from pathlib import Path
+
+from Meine.Actions import File
 
 
 class TestFile(unittest.IsolatedAsyncioTestCase):

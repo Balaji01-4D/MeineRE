@@ -1,18 +1,19 @@
-import os
+import asyncio
 import datetime as dt
+import os
+import platform
 import shutil as sl
 from pathlib import Path
 from time import ctime
+
 import psutil
 from rich.console import Group
-import platform
-from rich.progress import Progress, BarColumn
 from rich.panel import Panel
+from rich.progress import BarColumn, Progress
 from rich.table import Table
-import asyncio
 
-from .other import SizeHelper
 from ..exceptions import InfoNotify
+from .other import SizeHelper
 
 
 class System:

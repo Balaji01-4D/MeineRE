@@ -1,11 +1,12 @@
 import re
-from re import Pattern, Match
-from rich.table import Table
 from pathlib import Path
-from Meine.Actions import File, Zip, System
+from re import Match, Pattern
+
+from rich.table import Table
+
+from Meine.Actions import File, System, Zip
 from Meine.exceptions import ErrorNotify, InfoNotify
 from Meine.logger_config import logger
-
 
 d: dict[Pattern[str]] = {
     "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
