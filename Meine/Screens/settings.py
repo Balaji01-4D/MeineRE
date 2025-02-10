@@ -18,7 +18,6 @@ class Settings(ModalScreen):
         self.app_settings = self.app.SETTINGS
         super().__init__(name, id, classes)
 
-
     CSS_PATH = Path(__file__).parent.parent / "tcss/setting.css"
 
     AVAILABLE_THEMES = {"dracula", "github_light", "monokai", "vscode_dark", "css"}
@@ -43,7 +42,7 @@ class Settings(ModalScreen):
 
     def compose(self):
 
-        text_editor_mode_startup = self.app_settings['text_editor_mode_read_only']
+        text_editor_mode_startup = self.app_settings["text_editor_mode_read_only"]
 
         self.select_text_editor_theme = Select(
             [(themes, themes) for themes in self.AVAILABLE_THEMES],
@@ -65,9 +64,8 @@ class Settings(ModalScreen):
             id="select-text-editor-language",
         )
         self.select_text_editor_mode = Select(
-            options = [('read',True),('read and write',False)],
-            value = text_editor_mode_startup,
-
+            options=[("read", True), ("read and write", False)],
+            value=text_editor_mode_startup,
             prompt="choose a text editor mode",
             allow_blank=False,
             id="select-text-editor-mode",
@@ -134,10 +132,10 @@ class Settings(ModalScreen):
         elif event.select.id == "select-app-theme":
             self.app.theme = event.value
             self.app.SETTINGS["app_theme"] = event.value
-        elif event.select.id == 'select-text-editor-mode':
+        elif event.select.id == "select-text-editor-mode":
             self.text_area.read_only = event.value
             self.app.SETTINGS["text_editor_mode_read_only"] = event.value
-            
+
         save_settings(self.app.SETTINGS)
 
 

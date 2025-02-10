@@ -9,7 +9,7 @@ from textual.widgets import TextArea
 from textual.worker import Worker
 
 
-SYNTAX_HIGHLIGHTING_SUPPORTED_FILES:  dict[str, str] = {
+SYNTAX_HIGHLIGHTING_SUPPORTED_FILES: dict[str, str] = {
     ".py": "python",
     ".java": "java",
     ".css": "css",
@@ -44,14 +44,27 @@ PROGRAMMING_AND_SCRIPTING_LANGUAGES: set[str] = {
     ".ps1",
 }
 
-CONFIG_AND_DATA_FILES: set[str] = {".csv", ".tsv", ".ini", ".env", ".conf", ".gitconfig"}
+CONFIG_AND_DATA_FILES: set[str] = {
+    ".csv",
+    ".tsv",
+    ".ini",
+    ".env",
+    ".conf",
+    ".gitconfig",
+}
 
-DOCUMENTATION_AND_MIXED_CONTENT_FILES: set[str] = {".rst", ".tex", ".adoc", ".log", ".txt"}
+DOCUMENTATION_AND_MIXED_CONTENT_FILES: set[str] = {
+    ".rst",
+    ".tex",
+    ".adoc",
+    ".log",
+    ".txt",
+}
 
 
 class TextEditor(TextArea):
 
-    BRACKET_PAIRS:  dict[str, str] = {"{": "}", "[": "]", "(": ")", '"': '"', "'": "'"}
+    BRACKET_PAIRS: dict[str, str] = {"{": "}", "[": "]", "(": ")", '"': '"', "'": "'"}
 
     BINDINGS = [
         Binding("ctrl+shift+up", "open_settings", "open settings", priority=True)
@@ -102,6 +115,7 @@ class TextEditor(TextArea):
             file.writelines(self.text)
         self.notify(f"{self.filepath.name} saved successfully")
         event.stop()
+
     async def read_file(self) -> None:
         try:
             self.loading = True

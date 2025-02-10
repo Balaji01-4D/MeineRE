@@ -37,7 +37,7 @@ class DTree(DirectoryTree):
     async def on_directory_tree_file_selected(self, event: DirectoryTree.FileSelected):
         try:
             self.selected_file_path = event.path
-            if (not self.is_text_file(self.selected_file_path)):
+            if not self.is_text_file(self.selected_file_path):
                 raise ErrorNotify("unsupported file format")
 
             self.text_area = self.screen.text_area
@@ -82,21 +82,21 @@ class DTree(DirectoryTree):
         os.chdir(self.path)
         self.refresh()
 
-    def is_text_file(self, file_path: str|Path|os.PathLike, block_size=512) -> bool:
-        '''detects the file is text based or not '''
+    def is_text_file(self, file_path: str | Path | os.PathLike, block_size=512) -> bool:
+        """detects the file is text based or not"""
         try:
-            with open(file_path,"rb") as file:
+            with open(file_path, "rb") as file:
                 chunk = file.read(block_size)
 
-                if (b"\x00" in chunk):
+                if b"\x00" in chunk:
                     print("in chunk")
                     return False
 
                 try:
-                    chunk.decode('utf-8')
-                except UnicodeDecodeError :
+                    chunk.decode("utf-8")
+                except UnicodeDecodeError:
                     return False
 
                 return True
-        except Exception :
+        except Exception:
             return False
