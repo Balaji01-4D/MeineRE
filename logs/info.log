@@ -269,3 +269,6 @@ TextArea {
     }
 }
 
+2025-02-10 15:42:29,752 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-10 15:42:29,795 - file.py - Delete_File executing
+2025-02-10 15:42:29,834 - home.py - <textual.widgets._data_table.RowKey object at 0x7b92c49828a0>

@@ -1,9 +1,11 @@
 import os
 from pathlib import Path
+import magic
 
 from textual.binding import Binding
 from textual.widgets import DirectoryTree
 
+from Meine.exceptions import ErrorNotify
 from Meine.utils.file_loaders import load_settings
 
 
@@ -35,11 +37,14 @@ class DTree(DirectoryTree):
 
     async def on_directory_tree_file_selected(self, event: DirectoryTree.FileSelected):
         try:
+            self.selected_file_path = event.path
+            if (not self.is_text_file(self.selected_file_path)):
+                raise ErrorNotify("unsupported file format")
+
             self.text_area = self.screen.text_area
-            self.file_path = event.path
             if self.previous_file is None or self.previous_file != event.path:
                 self.screen.show_textarea()
-                self.text_area.filepath = self.file_path
+                self.text_area.filepath = self.selected_file_path
 
                 self.previous_file = event.path
                 self.run_worker(self.text_area.read_file(), exclusive=True)
@@ -77,3 +82,7 @@ class DTree(DirectoryTree):
         self.path = current_path.resolve().parent
         os.chdir(self.path)
         self.refresh()
+
+    def is_text_file(self,file_path: Path):
+        mime = magic.Magic(mime=True)
+        return mime.from_file(file_path).startswith("text/")

@@ -1,12 +1,17 @@
 aiofiles==24.1.0
 annotated-types==0.7.0
+black==25.1.0
 Brotli==1.1.0
+click==8.1.8
 inflate64==1.0.1
 linkify-it-py==2.0.3
 markdown-it-py==3.0.0
 mdit-py-plugins==0.4.2
 mdurl==0.1.2
 multivolumefile==0.2.3
+mypy-extensions==1.0.0
+packaging==24.2
+pathspec==0.12.1
 platformdirs==4.3.6
 psutil==6.1.1
 py7zr==0.22.0
@@ -16,6 +21,7 @@ pydantic==2.10.6
 pydantic_core==2.27.2
 Pygments==2.19.1
 pyppmd==1.1.1
+python-magic==0.4.27
 pywifi==1.1.12
 pyzstd==0.16.2
 rich==13.9.4

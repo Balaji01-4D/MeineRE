@@ -1,3 +1,10 @@
 [
-    "cwd"
+    "cwd",
+    "cd /home/balaji/Desktop",
+    "cd /home/balaji/Documents",
+    "ls",
+    "cwd",
+    "del python.py",
+    "cwd",
+    "cd /home/balaji/Documents"
 ]
