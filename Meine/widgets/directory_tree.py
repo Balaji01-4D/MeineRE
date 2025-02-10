@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import magic
 
 from textual.binding import Binding
 from textual.widgets import DirectoryTree
@@ -83,6 +82,21 @@ class DTree(DirectoryTree):
         os.chdir(self.path)
         self.refresh()
 
-    def is_text_file(self,file_path: Path):
-        mime = magic.Magic(mime=True)
-        return mime.from_file(file_path).startswith("text/")
+    def is_text_file(self, file_path: str|Path|os.PathLike, block_size=512) -> bool:
+        '''detects the file is text based or not '''
+        try:
+            with open(file_path,"rb") as file:
+                chunk = file.read(block_size)
+
+                if (b"\x00" in chunk):
+                    print("in chunk")
+                    return False
+
+                try:
+                    chunk.decode('utf-8')
+                except UnicodeDecodeError :
+                    return False
+
+                return True
+        except Exception :
+            return False

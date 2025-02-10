@@ -5,6 +5,7 @@ from textual.events import Click
 from textual.screen import ModalScreen
 from textual.widgets import Button, Input, Select, Static, Switch
 
+
 from Meine.Screens.me import Myself
 from Meine.utils.file_editor import clear_history, save_settings
 from Meine.utils.file_loaders import load_settings
@@ -14,7 +15,9 @@ class Settings(ModalScreen):
 
     def __init__(self, name=None, id=None, classes=None):
         self.text_area = self.app.query_one("#text_editor")
+        self.app_settings = self.app.SETTINGS
         super().__init__(name, id, classes)
+
 
     CSS_PATH = Path(__file__).parent.parent / "tcss/setting.css"
 
@@ -39,7 +42,8 @@ class Settings(ModalScreen):
     }
 
     def compose(self):
-        self.setting_json = load_settings()
+
+        text_editor_mode_startup = self.app_settings['text_editor_mode_read_only']
 
         self.select_text_editor_theme = Select(
             [(themes, themes) for themes in self.AVAILABLE_THEMES],
@@ -60,13 +64,21 @@ class Settings(ModalScreen):
             allow_blank=False,
             id="select-text-editor-language",
         )
+        self.select_text_editor_mode = Select(
+            options = [('read',True),('read and write',False)],
+            value = text_editor_mode_startup,
+
+            prompt="choose a text editor mode",
+            allow_blank=False,
+            id="select-text-editor-mode",
+        )
 
         yield Container(
             Static("settings", id="settings-title"),
             Horizontal(
                 Static("show hidden files", classes="caption"),
                 Switch(
-                    id="hidden_files_sw", value=self.setting_json["show_hidden_files"]
+                    id="hidden_files_sw", value=self.app_settings["show_hidden_files"]
                 ),
             ),
             Horizontal(
@@ -83,6 +95,10 @@ class Settings(ModalScreen):
             Horizontal(
                 Static("text editor language", classes="caption"),
                 self.select_text_editor_language,
+            ),
+            Horizontal(
+                Static("text editor mode", classes="caption"),
+                self.select_text_editor_mode,
             ),
             Button(label="About me", variant="success", id="about_me_bt"),
         )
@@ -101,8 +117,8 @@ class Settings(ModalScreen):
 
     def on_switch_changed(self, event: Switch.Changed):
         if event.switch.id == "hidden_files_sw":
-            self.setting_json["show_hidden_files"] = event.value
-        save_settings(self.setting_json)
+            self.app_settings["show_hidden_files"] = event.value
+        save_settings(self.app_settings)
 
     def _on_mount(self):
         self.select_text_editor_language.value = self.text_area.language
@@ -118,6 +134,10 @@ class Settings(ModalScreen):
         elif event.select.id == "select-app-theme":
             self.app.theme = event.value
             self.app.SETTINGS["app_theme"] = event.value
+        elif event.select.id == 'select-text-editor-mode':
+            self.text_area.read_only = event.value
+            self.app.SETTINGS["text_editor_mode_read_only"] = event.value
+            
         save_settings(self.app.SETTINGS)
 
 

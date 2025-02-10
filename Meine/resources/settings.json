@@ -1,5 +1,6 @@
 {
     "show_hidden_files": false,
-    "app_theme": "textual-ansi",
-    "text_editor_theme": "dracula"
+    "text_editor_theme": "github_light",
+    "text_editor_mode_read_only": true,
+    "app_theme": "gruvbox"
 }

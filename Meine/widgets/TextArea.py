@@ -8,9 +8,8 @@ from textual.events import Key
 from textual.widgets import TextArea
 from textual.worker import Worker
 
-from Meine.logger_config import logger
 
-SYNTAX_HIGHLIGHTING_SUPPORTED_FILES = {
+SYNTAX_HIGHLIGHTING_SUPPORTED_FILES:  dict[str, str] = {
     ".py": "python",
     ".java": "java",
     ".css": "css",
@@ -29,7 +28,7 @@ SYNTAX_HIGHLIGHTING_SUPPORTED_FILES = {
     ".yml": "yaml",
 }
 
-PROGRAMMING_AND_SCRIPTING_LANGUAGES = {
+PROGRAMMING_AND_SCRIPTING_LANGUAGES: set[str] = {
     ".c",
     ".cpp",
     ".cs",
@@ -45,14 +44,14 @@ PROGRAMMING_AND_SCRIPTING_LANGUAGES = {
     ".ps1",
 }
 
-CONFIG_AND_DATA_FILES = {".csv", ".tsv", ".ini", ".env", ".conf", ".gitconfig"}
+CONFIG_AND_DATA_FILES: set[str] = {".csv", ".tsv", ".ini", ".env", ".conf", ".gitconfig"}
 
-DOCUMENTATION_AND_MIXED_CONTENT_FILES = {".rst", ".tex", ".adoc", ".log", ".txt"}
+DOCUMENTATION_AND_MIXED_CONTENT_FILES: set[str] = {".rst", ".tex", ".adoc", ".log", ".txt"}
 
 
 class TextEditor(TextArea):
 
-    BRACKET_PAIRS = {"{": "}", "[": "]", "(": ")", '"': '"', "'": "'"}
+    BRACKET_PAIRS:  dict[str, str] = {"{": "}", "[": "]", "(": ")", '"': '"', "'": "'"}
 
     BINDINGS = [
         Binding("ctrl+shift+up", "open_settings", "open settings", priority=True)
@@ -103,7 +102,6 @@ class TextEditor(TextArea):
             file.writelines(self.text)
         self.notify(f"{self.filepath.name} saved successfully")
         event.stop()
-
     async def read_file(self) -> None:
         try:
             self.loading = True
@@ -119,13 +117,12 @@ class TextEditor(TextArea):
         except Exception as e:
             self.notify(f"{e}")
 
-    def _on_key(self, event: Key):
+    def _on_key(self, event: Key) -> None:
         if event.character in self.BRACKET_PAIRS:
             self.insert(f"{event.character}{self.BRACKET_PAIRS[event.character]}")
             self.move_cursor_relative(columns=-1)
             event.prevent_default()
 
-    @work(thread=True)
     def get_syntax_highlighting(self, extension: str) -> None:
         """sets a syntax highlighting based on the file extension & category"""
         if extension in SYNTAX_HIGHLIGHTING_SUPPORTED_FILES:
@@ -146,7 +143,7 @@ class TextEditor(TextArea):
             self.text = ""
             self.notify("unsupported file format")
 
-    async def read_txt_files(self, filepath: str) -> str:
+    async def read_txt_files(self, filepath: str) -> None:
         try:
             with open(filepath, "r") as file:
                 self.text = file.read()
@@ -154,7 +151,7 @@ class TextEditor(TextArea):
             self.text = ""
             self.notify("unsupported file format")
 
-    async def read_json_files(self, filepath: Path) -> str:
+    async def read_json_files(self, filepath: Path) -> None:
         try:
             with open(filepath, "r") as file:
                 data = json.load(file)
@@ -163,6 +160,6 @@ class TextEditor(TextArea):
             self.text = ""
             self.notify("unsupported file format")
 
-    def on_worker_state_changed(self, event: Worker.StateChanged):
+    def on_worker_state_changed(self, event: Worker.StateChanged) -> None:
         if event.worker.is_finished:
             self.loading = False
