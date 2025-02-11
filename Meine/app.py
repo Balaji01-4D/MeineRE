@@ -12,6 +12,7 @@ from Meine.Screens.home import HomeScreen
 from Meine.Screens.settings import NameGetterScreen, Settings
 from Meine.utils.file_editor import add_custom_path_expansion
 from Meine.utils.file_loaders import load_settings
+from Meine.themes import BUILTIN_THEMES
 
 HOME_SCREEN_ID = "home-screen"
 HELP_SCREEN_ID = "help-screen"
@@ -46,8 +47,15 @@ class MeineAI(App[None]):
 
     COMMANDS = App.COMMANDS | {CustomCommand}
 
+    def __init__(self, driver_class = None, css_path = None, watch_css = False, ansi_color = False):
+        super().__init__(driver_class, css_path, watch_css, ansi_color)
+        self.themes = BUILTIN_THEMES
+
     async def on_mount(self):
+
         await self.push_screen(HomeScreen(id=HOME_SCREEN_ID))
+        for theme in BUILTIN_THEMES.values():
+            self.register_theme(theme)
         self.theme = self.SETTINGS["app_theme"]
 
     def get_system_commands(self, screen):
@@ -120,6 +128,29 @@ class MeineAI(App[None]):
 
     def push_NameGetter_screen(self, title, callback):
         self.push_screen(NameGetterScreen(title, callback))
+
+    # def get_css_variables(self) -> dict[str, str]:
+    #     if self.theme:
+    #         theme = self.themes.get(self.theme)
+    #         if theme:
+    #             color_system = theme.to_color_system().generate()
+    #         else:
+    #             color_system = {}
+    #     else:
+    #         color_system = {}
+
+    #     return {**super().get_css_variables(), **color_system}
+
+    # def watch_theme(self, theme: str | None) -> None:
+    #     self.refresh_css(animate=False)
+    #     self.screen._update_styles()
+
+    # @property
+    # def theme_object(self) -> None:
+    #     try:
+    #         return self.themes[self.theme]
+    #     except KeyError:
+    #         return None
 
 
 def run():
