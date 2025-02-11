@@ -1,6 +1,6 @@
 {
     "show_hidden_files": false,
-    "text_editor_theme": "github_light",
+    "text_editor_theme": "css",
     "text_editor_mode_read_only": true,
-    "app_theme": "gruvbox"
+    "app_theme": "dracula"
 }

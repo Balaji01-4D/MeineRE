@@ -7,11 +7,12 @@ Settings > Container{
     width: 60%;
     height: auto;
     padding: 0 1;
-    border: $primary;
+    border: $primary-lighten-2;
 
     #settings-title{
         content-align: center middle;
         padding: 1;
+        color: $primary-darken-1;
     }
     /* Button{
         border: none;
@@ -30,6 +31,7 @@ Settings > Container{
     padding: 1 0;
     width: 30;
     content-align: center middle;
+    color: $primary-lighten-2;
 }
 
 
@@ -47,7 +49,7 @@ NameGetterScreen > Container{
     #title{
         padding: 1 1;
         text-align:center;
-        
+
     }
 
 }

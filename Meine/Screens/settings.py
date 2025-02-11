@@ -8,7 +8,6 @@ from textual.widgets import Button, Input, Select, Static, Switch
 
 from Meine.Screens.me import Myself
 from Meine.utils.file_editor import clear_history, save_settings
-from Meine.utils.file_loaders import load_settings
 
 
 class Settings(ModalScreen):
@@ -42,6 +41,7 @@ class Settings(ModalScreen):
 
     def compose(self):
 
+
         text_editor_mode_startup = self.app_settings["text_editor_mode_read_only"]
 
         self.select_text_editor_theme = Select(
@@ -72,7 +72,7 @@ class Settings(ModalScreen):
         )
 
         yield Container(
-            Static("settings", id="settings-title"),
+            Static("SETTINGS", id="settings-title"),
             Horizontal(
                 Static("show hidden files", classes="caption"),
                 Switch(
@@ -98,14 +98,16 @@ class Settings(ModalScreen):
                 Static("text editor mode", classes="caption"),
                 self.select_text_editor_mode,
             ),
-            Button(label="About me", variant="success", id="about_me_bt"),
+            Button(label="About me", variant="success", id="about_me_bt",tooltip='about the developer'),
         )
 
-    def on_click(self, event: Click):
+    def on_click(self, event: Click) -> None:
+        '''close the screen if the click received from outside of settings screen'''
         if str(event.widget.id) == "settings-screen":
             self.dismiss()
 
-    def on_button_pressed(self, event: Button.Pressed):
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        '''clear the history or push the screen of developer page'''
         if event.button.id == "about_me_bt":
             self.dismiss()
             self.app.push_screen(Myself())
@@ -113,17 +115,17 @@ class Settings(ModalScreen):
             clear_history()
             self.notify(f"Command history is cleared ,restart required (optional)!")
 
-    def on_switch_changed(self, event: Switch.Changed):
+    def on_switch_changed(self, event: Switch.Changed) -> None:
         if event.switch.id == "hidden_files_sw":
             self.app_settings["show_hidden_files"] = event.value
         save_settings(self.app_settings)
 
-    def _on_mount(self):
+    def _on_mount(self) -> None:
         self.select_text_editor_language.value = self.text_area.language
         self.select_text_editor_theme.value = self.text_area.theme
         self.select_app_theme.value = self.app.theme
 
-    def on_select_changed(self, event: Select.Changed):
+    def on_select_changed(self, event: Select.Changed) -> None:
         if event.select.id == "select-text-editor-theme":
             self.text_area.theme = event.value
             self.app.SETTINGS["text_editor_theme"] = event.value

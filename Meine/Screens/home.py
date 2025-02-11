@@ -1,5 +1,5 @@
-import asyncio
 import os
+import asyncio
 from pathlib import Path
 
 from rich.panel import Panel
@@ -13,7 +13,7 @@ from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
 from Meine.logger_config import logger
 from Meine.main import CLI
 from Meine.utils.file_editor import save_history
-from Meine.utils.file_loaders import load_history, load_settings
+from Meine.utils.file_loaders import load_history
 from Meine.widgets.containers import (
     Background_process_container,
     Container,

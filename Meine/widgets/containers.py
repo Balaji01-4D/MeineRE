@@ -7,7 +7,7 @@ from textual.app import ComposeResult
 from textual.containers import Container, Vertical
 from textual.reactive import reactive
 from textual.widget import Widget
-from textual.widgets import DataTable, Input, RichLog
+from textual.widgets import DataTable
 
 from ..logger_config import logger
 from .directory_tree import DTree
