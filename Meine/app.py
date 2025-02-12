@@ -25,6 +25,7 @@ class CustomCommand(Provider):
 
     async def search(self, query: str) -> Hits:
 
+
         C = "add custom path expansions"
         matcher = self.matcher(query)
 

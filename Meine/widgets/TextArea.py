@@ -64,6 +64,7 @@ DOCUMENTATION_AND_MIXED_CONTENT_FILES: set[str] = {
 
 class TextEditor(TextArea):
 
+
     BRACKET_PAIRS: dict[str, str] = {"{": "}", "[": "]", "(": ")", '"': '"', "'": "'"}
 
     BINDINGS = [
@@ -177,3 +178,7 @@ class TextEditor(TextArea):
     def on_worker_state_changed(self, event: Worker.StateChanged) -> None:
         if event.worker.is_finished:
             self.loading = False
+
+
+    def key_ctrl_e(self, event: Key):
+        self.remove_class('-hide')

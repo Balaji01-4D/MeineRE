@@ -6,3 +6,43 @@
 2025-02-11 23:18:38,002 - home.py - <textual.widgets._data_table.RowKey object at 0x7f32580101a0>
 2025-02-11 23:19:12,671 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
 2025-02-11 23:19:13,008 - home.py - <textual.widgets._data_table.RowKey object at 0x7f3252a5bc50>
+2025-02-12 21:45:46,583 - home.py - 
+        anchored = False,
+        attached = True,
+        disabled = False,
+        visible = True,
+
+2025-02-12 21:46:07,884 - home.py - 
+        anchored = False,
+        attached = True,
+        disabled = False,
+        visible = True,
+
+2025-02-12 21:46:15,564 - home.py - 
+        anchored = False,
+        attached = True,
+        disabled = False,
+        visible = True,
+
+2025-02-12 21:46:30,542 - home.py - 
+        anchored = False,
+        attached = True,
+        disabled = False,
+        visible = True,
+
+2025-02-12 21:49:30,001 - home.py - 
+        anchored = False,
+        attached = True,
+        disabled = False,
+        visible = True,
+        display = True,
+        is on home screen = True
+
+2025-02-12 21:49:46,158 - home.py - 
+        anchored = False,
+        attached = True,
+        disabled = False,
+        visible = True,
+        display = True,
+        is on home screen = True
+

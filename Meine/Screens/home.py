@@ -65,6 +65,8 @@ class HomeScreen(Screen[None]):
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
 
+
+
     @work()
     async def show_textarea(self) -> None:
         self.IO_container.add_class("-hidden")

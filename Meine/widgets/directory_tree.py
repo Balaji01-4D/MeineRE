@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from textual.binding import Binding
-from textual.widgets import DirectoryTree
+from textual.widgets import DirectoryTree, TextArea
 
 from Meine.exceptions import ErrorNotify
 from Meine.utils.file_loaders import load_settings
@@ -40,8 +40,8 @@ class DTree(DirectoryTree):
             if not self.is_text_file(self.selected_file_path):
                 raise ErrorNotify("unsupported file format")
 
-            self.text_area = self.screen.text_area
-            if self.previous_file is None or self.previous_file != event.path:
+            self.text_area: TextArea = self.screen.text_area
+            if self.previous_file is None or self.previous_file != event.path :
                 self.screen.show_textarea()
                 self.text_area.filepath = self.selected_file_path
 
