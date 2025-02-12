@@ -1,3 +1,20 @@
 [
+    "cwd",
+    "cwd",
+    "cd /home/balaji",
+    "cd backupsmeine",
+    "ls",
+    "cd MeineAI",
+    "cd ..",
+    "del backupsmeine",
+    "del django",
+    "cd new",
+    "cd ..",
+    "del new",
+    "cd snap",
+    "cd ..",
+    "cd ..",
+    "cd textualprojects",
+    "del textualprojects",
     "cwd"
 ]
