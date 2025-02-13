@@ -16,5 +16,18 @@
     "cd ..",
     "cd textualprojects",
     "del textualprojects",
-    "cwd"
+    "cwd",
+    "cwd",
+    "ls",
+    "cwd",
+    "cd sample2.csv",
+    "cd ..",
+    "cd ..",
+    "cd ..",
+    "cd balaji",
+    "del reverse.py",
+    "del odd.py",
+    "del 'odd or even.py'",
+    "dek soehadjlsjjl.py",
+    "del soehadjlsjjl.py"
 ]

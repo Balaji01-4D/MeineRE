@@ -46,3 +46,16 @@
         display = True,
         is on home screen = True
 
+2025-02-13 21:59:50,329 - home.py - False
+2025-02-13 22:00:18,694 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-13 22:00:18,694 - file.py - Delete_File executing
+2025-02-13 22:00:18,735 - home.py - <textual.widgets._data_table.RowKey object at 0x7e51fdf01a90>
+2025-02-13 22:00:23,548 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-13 22:00:23,548 - file.py - Delete_File executing
+2025-02-13 22:00:23,586 - home.py - <textual.widgets._data_table.RowKey object at 0x7e51fcba79b0>
+2025-02-13 22:00:39,933 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-13 22:00:39,934 - file.py - Delete_File executing
+2025-02-13 22:00:39,969 - home.py - <textual.widgets._data_table.RowKey object at 0x7e51fd5eb9b0>
+2025-02-13 22:00:54,561 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-13 22:00:54,561 - file.py - Delete_File executing
+2025-02-13 22:00:54,597 - home.py - <textual.widgets._data_table.RowKey object at 0x7e51fe09dca0>
