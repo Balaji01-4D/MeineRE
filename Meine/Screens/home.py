@@ -21,7 +21,6 @@ from Meine.widgets.containers import (
     Directory_tree_container,
 )
 from Meine.widgets.input import MeineInput
-from Meine.widgets.TextArea import TextEditor
 
 
 class HomeScreen(Screen[None]):
@@ -53,31 +52,13 @@ class HomeScreen(Screen[None]):
         self.sidebar = Directory_tree_container(classes="-hidden")
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
-        self.text_area = TextEditor.code_editor(
-            id="text_editor",
-            language="bash",
-            theme=self.app.SETTINGS["text_editor_theme"],
-        )
         self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
 
-        yield Container(
-            self.IO_container, self.text_area, self.sidebar, self.bgprocess, id="main"
-        )
 
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
 
 
-
-    @work()
-    async def show_textarea(self) -> None:
-        self.IO_container.add_class("-hidden")
-        self.text_area.add_class("-show")
-
-    @work()
-    async def hide_textarea(self) -> None:
-        self.IO_container.remove_class("-hidden")
-        self.text_area.remove_class("-show")
 
     def handle_files_click_input(self, widget):
 
@@ -258,28 +239,6 @@ class HomeScreen(Screen[None]):
         """Handle worker failures."""
         self.rich_log.write(f"[error] Worker failed: {event}")
 
-    async def open_text_editor(self, path: Path):
-        try:
-            self.selected_file_path = path
-            if not self.is_text_file(self.selected_file_path):
-                raise ErrorNotify("unsupported file format")
-
-
-            if self.previous_file is None  or self.previous_file != path :
-                self.show_textarea()
-                self.text_area.filepath = self.selected_file_path
-                self.previous_file = path
-                self.run_worker(self.text_area.read_file(), exclusive=True)
-            elif self.previous_file == path:
-                self.hide_textarea()
-                self.previous_file = None
-            else :
-                self.notify(f"""
-                    selected file = {self.selected_file_path}
-
-""")
-        except Exception as e:
-            self.notify(f"Unsupported file format {e}")
 
     def is_text_file(self, file_path: str | Path | os.PathLike, block_size=512) -> bool:
         """detects the file is text based or not"""

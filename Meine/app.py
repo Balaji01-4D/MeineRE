@@ -134,29 +134,6 @@ class MeineAI(App[None]):
     def push_NameGetter_screen(self, title, callback):
         self.push_screen(NameGetterScreen(title, callback))
 
-    # def get_css_variables(self) -> dict[str, str]:
-    #     if self.theme:
-    #         theme = self.themes.get(self.theme)
-    #         if theme:
-    #             color_system = theme.to_color_system().generate()
-    #         else:
-    #             color_system = {}
-    #     else:
-    #         color_system = {}
-
-    #     return {**super().get_css_variables(), **color_system}
-
-    # def watch_theme(self, theme: str | None) -> None:
-    #     self.refresh_css(animate=False)
-    #     self.screen._update_styles()
-
-    # @property
-    # def theme_object(self) -> None:
-    #     try:
-    #         return self.themes[self.theme]
-    #     except KeyError:
-    #         return None
-
 
 def run():
     MeineAI().run()

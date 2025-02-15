@@ -2,12 +2,9 @@ import os
 from pathlib import Path
 
 from textual.binding import Binding
-from textual.widgets import DirectoryTree, TextArea
-from textual.events import Key
+from textual.widgets import DirectoryTree
 from textual.events import MouseDown
 
-
-from Meine.exceptions import ErrorNotify
 from Meine.utils.file_loaders import load_settings
 
 
@@ -41,25 +38,6 @@ class DTree(DirectoryTree):
         if event.node.is_root:
             self.path = event.path.parent
 
-    async def on_directory_tree_file_selected(self, event: DirectoryTree.FileSelected):
-        try:
-            self.selected_file_path = event.path
-            if not self.is_text_file(self.selected_file_path):
-                raise ErrorNotify("unsupported file format")
-            self.text_area: TextArea = self.screen.text_area
-            if self.previous_file is None or self.previous_file != event.path :
-                self.screen.show_textarea()
-                self.text_area.filepath = self.selected_file_path
-
-                self.previous_file = event.path
-                self.run_worker(self.text_area.read_file(), exclusive=True)
-            elif self.previous_file == event.path:
-                self.screen.hide_textarea()
-                self.previous_file = None
-        except Exception as e:
-            self.notify(f"Unsupported file format {e}")
-
-
 
 
     def action_cd_home_directory(self):
@@ -90,6 +68,7 @@ class DTree(DirectoryTree):
         self.path = current_path.resolve().parent
         os.chdir(self.path)
         self.refresh()
+
 
     def is_text_file(self, file_path: str | Path | os.PathLike, block_size=512) -> bool:
         """detects the file is text based or not"""
