@@ -216,10 +216,10 @@ class HomeScreen(Screen[None]):
 
     def on_click(self, event: Click):
         try:
-            if event.widget.id == "dt" and event.ctrl:
+            if event.widget.id == "directory-tree" and event.ctrl:
                 self.handle_files_click_input(event.widget)
-            elif event.widget.id == "dt":
-                tree = self.query_one("#dt", DirectoryTree)
+            elif event.widget.id == "directory-tree":
+                tree = self.query_one("#directory-tree", DirectoryTree)
                 selected_node = tree.cursor_node.data.path
                 if selected_node.is_dir():
                     tree.path = selected_node
