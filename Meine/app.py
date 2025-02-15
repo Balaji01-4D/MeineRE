@@ -85,20 +85,18 @@ class MeineAI(App[None]):
             None
 
     def key_ctrl_s(self):
+        # try:
+        #     if self.screen_stack[-1].id != SETTINGS_SCREEN_ID:
+        #         self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
+        #     else:
+        #         self.pop_screen()
+        # except Exception as e:
+        #     logger.error(
+        #         f"{e} Function: {self.key_ctrl_s.__name__} in {Path(__file__).name}"
+        #     )
+        #     None
+        self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
 
-        try:
-            focused = self.focused
-            if focused and focused.id == "text_editor":
-                return
-            if self.screen_stack[-1].id != SETTINGS_SCREEN_ID:
-                self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
-            else:
-                self.pop_screen()
-        except Exception as e:
-            logger.error(
-                f"{e} Function: {self.key_ctrl_s.__name__} in {Path(__file__).name}"
-            )
-            None
 
     def key_escape(self):
         try:

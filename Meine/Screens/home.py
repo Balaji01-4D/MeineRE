@@ -54,6 +54,9 @@ class HomeScreen(Screen[None]):
         self.bgprocess = Background_process_container(classes="-hidden")
         self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
 
+        yield Container(
+            self.IO_container, self.sidebar, self.bgprocess, id="main"
+        )
 
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
@@ -221,12 +224,6 @@ class HomeScreen(Screen[None]):
                 if selected_node.is_dir():
                     tree.path = selected_node
                     os.chdir(tree.path)
-                elif (selected_node.is_file()):
-                    self.notify(f"selected node = {selected_node} ")
-                    self.run_worker(self.open_text_editor(selected_node),group="file-open",exclusive=True)
-
-
-
                 else:
                     None
 

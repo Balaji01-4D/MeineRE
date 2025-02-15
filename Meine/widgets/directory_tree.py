@@ -3,7 +3,6 @@ from pathlib import Path
 
 from textual.binding import Binding
 from textual.widgets import DirectoryTree
-from textual.events import MouseDown
 
 from Meine.utils.file_loaders import load_settings
 
@@ -27,9 +26,6 @@ class DTree(DirectoryTree):
         else:
             return [path for path in paths if not path.name.startswith(".")]
 
-
-    def on_mouse_down(self, event: MouseDown):
-        self.notify(f"""ctrl = {event.ctrl} alt = {event.meta} shift = {event.shift}""")
 
     def on_directory_tree_directory_selected(
         self, event: DirectoryTree.DirectorySelected

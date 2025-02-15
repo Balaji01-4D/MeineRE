@@ -13,7 +13,6 @@ from Meine.utils.file_editor import clear_history, save_settings
 class Settings(ModalScreen):
 
     def __init__(self, name=None, id=None, classes=None):
-        self.text_area = self.app.query_one("#text_editor")
         self.app_settings = self.app.SETTINGS
         super().__init__(name, id, classes)
 
@@ -44,12 +43,7 @@ class Settings(ModalScreen):
 
         text_editor_mode_startup = self.app_settings["text_editor_mode_read_only"]
 
-        self.select_text_editor_theme = Select(
-            [(themes, themes) for themes in self.AVAILABLE_THEMES],
-            prompt="choose a theme",
-            allow_blank=False,
-            id="select-text-editor-theme",
-        )
+
 
         self.select_app_theme = Select(
             [(themes, themes) for themes in self.app._registered_themes.keys()],
@@ -57,19 +51,7 @@ class Settings(ModalScreen):
             allow_blank=False,
             id="select-app-theme",
         )
-        self.select_text_editor_language = Select(
-            [(lang, lang) for lang in self.AVAILABLE_LANGUAGES],
-            prompt="choose a language",
-            allow_blank=False,
-            id="select-text-editor-language",
-        )
-        self.select_text_editor_mode = Select(
-            options=[("read", True), ("read and write", False)],
-            value=text_editor_mode_startup,
-            prompt="choose a text editor mode",
-            allow_blank=False,
-            id="select-text-editor-mode",
-        )
+
 
         yield Container(
             Static("SETTINGS", id="settings-title"),
@@ -86,18 +68,7 @@ class Settings(ModalScreen):
             Horizontal(
                 Static("text app theme", classes="caption"), self.select_app_theme
             ),
-            Horizontal(
-                Static("text editor theme", classes="caption"),
-                self.select_text_editor_theme,
-            ),
-            Horizontal(
-                Static("text editor language", classes="caption"),
-                self.select_text_editor_language,
-            ),
-            Horizontal(
-                Static("text editor mode", classes="caption"),
-                self.select_text_editor_mode,
-            ),
+
             Button(label="About me", variant="success", id="about_me_bt",tooltip='about the developer'),
         )
 
@@ -121,22 +92,17 @@ class Settings(ModalScreen):
         save_settings(self.app_settings)
 
     def _on_mount(self) -> None:
-        self.select_text_editor_language.value = self.text_area.language
-        self.select_text_editor_theme.value = self.text_area.theme
         self.select_app_theme.value = self.app.theme
 
     def on_select_changed(self, event: Select.Changed) -> None:
         if event.select.id == "select-text-editor-theme":
             self.text_area.theme = event.value
             self.app.SETTINGS["text_editor_theme"] = event.value
-        elif event.select.id == "select-text-editor-language":
-            self.text_area.language = event.value
+
         elif event.select.id == "select-app-theme":
             self.app.theme = event.value
             self.app.SETTINGS["app_theme"] = event.value
-        elif event.select.id == "select-text-editor-mode":
-            self.text_area.read_only = event.value
-            self.app.SETTINGS["text_editor_mode_read_only"] = event.value
+
 
         save_settings(self.app.SETTINGS)
 
