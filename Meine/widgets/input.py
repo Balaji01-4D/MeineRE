@@ -3,7 +3,7 @@ from re import search
 
 import platformdirs
 from textual.binding import Binding
-from textual.widgets import Input
+from textual.widgets import Input, DirectoryTree
 
 from Meine.logger_config import logger
 from Meine.utils.file_loaders import load_Path_expansion
@@ -80,6 +80,9 @@ class MeineInput(Input):
         self.history = history
         self.history_index = history_index
 
+    def on_mount(self):
+        self.directory_tree = self.screen.query_one("#directory-tree",expect_type=DirectoryTree)
+
     def action_history_up(self):
         if self.history_index > 0:
             self.history_index -= 1
@@ -87,13 +90,32 @@ class MeineInput(Input):
             self.cursor_position = len(self.value)
 
     def on_input_changed(self):
-        keyWordMatch = search(r"f\{(.+)\}", self.value)
-        if keyWordMatch:
-            self.path_expansion(keyWordMatch.group(1))
+        matched_keyword = search(r"(p|d)\{(.+)\}", self.value)
+        if matched_keyword:
+            prefix = matched_keyword.group(1)
+            if (prefix == 'p'):
+                self.replace_with_path_expansion(matched_keyword.group(2))
+            elif (prefix == 'd'):
+                self.replace_with_directory_node_name(matched_keyword.group(2))
         else:
             None
 
-    def path_expansion(self, keyword: str):
+    def replace_with_directory_node_name(self, keyword: str) -> None:
+        try:
+            line = int(keyword)
+        except:
+            self.notify("Need a Integer")
+            return
+        replaced_by = self.directory_tree.get_node_at_line(line)
+        if (replaced_by):
+            self.value = self.value.replace(f"d{{{keyword}}}",replaced_by.data.path.name)
+        else :
+            self.notify("Not Found")
+
+
+
+
+    def replace_with_path_expansion(self, keyword: str):
         current_dir = Path.cwd()
 
         DEFAULT_PATH_EXPANSION: dict[str | Path] = {
@@ -112,7 +134,7 @@ class MeineInput(Input):
         DEFAULT_PATH_EXPANSION |= load_Path_expansion()["path_expansions"]
         if keyword in DEFAULT_PATH_EXPANSION:
             ReplaceBy = str(DEFAULT_PATH_EXPANSION[keyword])
-            self.value = self.value.replace(f"f{{{keyword}}}", ReplaceBy)
+            self.value = self.value.replace(f"p{{{keyword}}}", ReplaceBy)
         else:
             self.notify(
                 f"{keyword} Is Not Found and It Is Removed For Good.",
