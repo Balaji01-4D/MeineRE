@@ -33,6 +33,8 @@ class MeineInput(Input):
         Binding("down", "history_down", "navigate the history down", show=False),
     ]
 
+
+
     def __init__(
         self,
         history,

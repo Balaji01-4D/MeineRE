@@ -52,6 +52,10 @@ class MeineAI(App[None]):
         super().__init__(driver_class, css_path, watch_css, ansi_color)
         self.themes = BUILTIN_THEMES
 
+
+
+
+
     async def on_mount(self):
 
         await self.push_screen(HomeScreen(id=HOME_SCREEN_ID))

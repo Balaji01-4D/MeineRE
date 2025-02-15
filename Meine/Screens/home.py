@@ -9,6 +9,7 @@ from textual.events import Click
 from textual.screen import Screen
 from textual.widgets import DataTable, DirectoryTree, Input, RichLog
 
+
 from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
 from Meine.logger_config import logger
 from Meine.main import CLI
@@ -39,6 +40,7 @@ class HomeScreen(Screen[None]):
     def __init__(self, name=None, id=None, classes=None):
         super().__init__(name, id, classes)
         self.si = {}
+        self.previous_file = None
 
     def compose(self):
         self.inputconsole = MeineInput(
@@ -71,7 +73,6 @@ class HomeScreen(Screen[None]):
     async def show_textarea(self) -> None:
         self.IO_container.add_class("-hidden")
         self.text_area.add_class("-show")
-        return self.text_area
 
     @work()
     async def hide_textarea(self) -> None:
@@ -235,11 +236,16 @@ class HomeScreen(Screen[None]):
                 self.handle_files_click_input(event.widget)
             elif event.widget.id == "dt":
                 tree = self.query_one("#dt", DirectoryTree)
-                selected_node = tree.cursor_node
-                if selected_node.data.path.is_dir():
-                    tree.path = selected_node.data.path
+                selected_node = tree.cursor_node.data.path
+                if selected_node.is_dir():
+                    tree.path = selected_node
                     os.chdir(tree.path)
-                    self.si = {}
+                elif (selected_node.is_file()):
+                    self.notify(f"selected node = {selected_node} ")
+                    self.run_worker(self.open_text_editor(selected_node),group="file-open",exclusive=True)
+
+
+
                 else:
                     None
 
@@ -251,6 +257,48 @@ class HomeScreen(Screen[None]):
     async def on_worker_failed(self, event):
         """Handle worker failures."""
         self.rich_log.write(f"[error] Worker failed: {event}")
+
+    async def open_text_editor(self, path: Path):
+        try:
+            self.selected_file_path = path
+            if not self.is_text_file(self.selected_file_path):
+                raise ErrorNotify("unsupported file format")
+
+
+            if self.previous_file is None  or self.previous_file != path :
+                self.show_textarea()
+                self.text_area.filepath = self.selected_file_path
+                self.previous_file = path
+                self.run_worker(self.text_area.read_file(), exclusive=True)
+            elif self.previous_file == path:
+                self.hide_textarea()
+                self.previous_file = None
+            else :
+                self.notify(f"""
+                    selected file = {self.selected_file_path}
+
+""")
+        except Exception as e:
+            self.notify(f"Unsupported file format {e}")
+
+    def is_text_file(self, file_path: str | Path | os.PathLike, block_size=512) -> bool:
+        """detects the file is text based or not"""
+        try:
+            with open(file_path, "rb") as file:
+                chunk = file.read(block_size)
+
+                if b"\x00" in chunk:
+                    print("in chunk")
+                    return False
+
+                try:
+                    chunk.decode("utf-8")
+                except UnicodeDecodeError:
+                    return False
+
+                return True
+        except Exception:
+            return False
 
     # def handle_files_click_input(self, widget):
     #     def quotes_for_spaced_name(name: str):

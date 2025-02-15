@@ -29,5 +29,9 @@
     "del odd.py",
     "del 'odd or even.py'",
     "dek soehadjlsjjl.py",
-    "del soehadjlsjjl.py"
+    "del soehadjlsjjl.py",
+    "cwd",
+    "ls",
+    "cwd",
+    "cd /home/balaji/Downloads"
 ]
