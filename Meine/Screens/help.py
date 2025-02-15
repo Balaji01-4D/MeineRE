@@ -1,9 +1,11 @@
 from pathlib import Path
 
 from textual.screen import ModalScreen
-from textual.widgets import Markdown, Static, TabbedContent, TabPane
+from textual.widgets import MarkdownViewer
 
-directory_tree_manual = """\
+
+HELP_MANUAL = """\
+
 # Directory Tree
 
 ## Key Bindings
@@ -19,14 +21,11 @@ directory_tree_manual = """\
 
 ## Note
 
-- Changing the directory in the directory tree will also update the **current working directory**. 
+- Changing the directory in the directory tree will also update the **current working directory**.
   - **Example**: Using the directory tree to change a directory is equivalent to executing the `cd` command in the terminal.
 
 ---
 
- """
-
-Input_manual = """\
 # Input Console Help
 
 ## Command Reference
@@ -102,9 +101,4 @@ class HelpScreen(ModalScreen[None]):
 
     def compose(self):
 
-        yield Static("Help Screen", id="header")
-        with TabbedContent():
-            with TabPane("Input console", id="Input"):
-                yield Markdown(Input_manual)
-            with TabPane("Directory Tree", id="tab_Dtree"):
-                yield Markdown(directory_tree_manual)
+        yield MarkdownViewer(HELP_MANUAL)
