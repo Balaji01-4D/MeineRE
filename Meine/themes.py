@@ -115,7 +115,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         surface="#1A1A1A",  # Very Dark Gray
         panel="#2A2A2A",  # Dark Gray
     ),
-        "aurora": Theme(
+    "aurora": Theme(
         name="aurora",
         primary="#76B3F0",  # Glacier Blue
         secondary="#A1D6E2",  # Ice Blue
@@ -245,7 +245,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         surface="#D6EAF8",  # Soft Blue
         panel="#A9CCE3",  # Light Steel Blue
     ),
-        "glass": Theme(
+    "glass": Theme(
         name="glass",
         primary="rgba(255, 255, 255, 0.8)",  # Soft White
         secondary="rgba(200, 200, 200, 0.6)",  # Light Gray
@@ -423,5 +423,4 @@ testing = {
             "border": "ansi_bright_white",
         },
     ),
-
 }

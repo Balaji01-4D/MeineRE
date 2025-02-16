@@ -33,8 +33,6 @@ class MeineInput(Input):
         Binding("down", "history_down", "navigate the history down", show=False),
     ]
 
-
-
     def __init__(
         self,
         history,
@@ -81,7 +79,9 @@ class MeineInput(Input):
         self.history_index = history_index
 
     def on_mount(self):
-        self.directory_tree = self.screen.query_one("#directory-tree",expect_type=DirectoryTree)
+        self.directory_tree = self.screen.query_one(
+            "#directory-tree", expect_type=DirectoryTree
+        )
 
     def action_history_up(self):
         if self.history_index > 0:
@@ -93,9 +93,9 @@ class MeineInput(Input):
         matched_keyword = search(r"(p|d)\{(.+)\}", self.value)
         if matched_keyword:
             prefix = matched_keyword.group(1)
-            if (prefix == 'p'):
+            if prefix == "p":
                 self.replace_with_path_expansion(matched_keyword.group(2))
-            elif (prefix == 'd'):
+            elif prefix == "d":
                 self.replace_with_directory_node_name(matched_keyword.group(2))
         else:
             None
@@ -107,13 +107,12 @@ class MeineInput(Input):
             self.notify("Need a Integer")
             return
         replaced_by = self.directory_tree.get_node_at_line(line)
-        if (replaced_by):
-            self.value = self.value.replace(f"d{{{keyword}}}",replaced_by.data.path.name)
-        else :
+        if replaced_by:
+            self.value = self.value.replace(
+                f"d{{{keyword}}}", replaced_by.data.path.name
+            )
+        else:
             self.notify("Not Found")
-
-
-
 
     def replace_with_path_expansion(self, keyword: str):
         current_dir = Path.cwd()

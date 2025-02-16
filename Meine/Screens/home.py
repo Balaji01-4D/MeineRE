@@ -27,7 +27,6 @@ class HomeScreen(Screen[None]):
 
     AUTO_FOCUS = "#command-input"
 
-
     CSS_PATH = Path(__file__).parent.parent / "tcss/app.css"
 
     HISTORY = load_history()
@@ -59,12 +58,8 @@ class HomeScreen(Screen[None]):
         yield self.sidebar
         yield self.bgprocess
 
-
-
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
-
-
 
     def handle_files_click_input(self, widget):
 
@@ -238,7 +233,6 @@ class HomeScreen(Screen[None]):
     async def on_worker_failed(self, event):
         """Handle worker failures."""
         self.rich_log.write(f"[error] Worker failed: {event}")
-
 
     def is_text_file(self, file_path: str | Path | os.PathLike, block_size=512) -> bool:
         """detects the file is text based or not"""

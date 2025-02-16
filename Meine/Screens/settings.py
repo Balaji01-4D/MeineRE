@@ -40,10 +40,7 @@ class Settings(ModalScreen):
 
     def compose(self):
 
-
         text_editor_mode_startup = self.app_settings["text_editor_mode_read_only"]
-
-
 
         self.select_app_theme = Select(
             [(themes, themes) for themes in self.app._registered_themes.keys()],
@@ -51,7 +48,6 @@ class Settings(ModalScreen):
             allow_blank=False,
             id="select-app-theme",
         )
-
 
         yield Container(
             Static("SETTINGS", id="settings-title"),
@@ -68,17 +64,21 @@ class Settings(ModalScreen):
             Horizontal(
                 Static("text app theme", classes="caption"), self.select_app_theme
             ),
-
-            Button(label="About me", variant="success", id="about_me_bt",tooltip='about the developer'),
+            Button(
+                label="About me",
+                variant="success",
+                id="about_me_bt",
+                tooltip="about the developer",
+            ),
         )
 
     def on_click(self, event: Click) -> None:
-        '''close the screen if the click received from outside of settings screen'''
+        """close the screen if the click received from outside of settings screen"""
         if str(event.widget.id) == "settings-screen":
             self.dismiss()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        '''clear the history or push the screen of developer page'''
+        """clear the history or push the screen of developer page"""
         if event.button.id == "about_me_bt":
             self.dismiss()
             self.app.push_screen(Myself())
@@ -102,7 +102,6 @@ class Settings(ModalScreen):
         elif event.select.id == "select-app-theme":
             self.app.theme = event.value
             self.app.SETTINGS["app_theme"] = event.value
-
 
         save_settings(self.app.SETTINGS)
 

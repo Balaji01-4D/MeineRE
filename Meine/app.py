@@ -25,7 +25,6 @@ class CustomCommand(Provider):
 
     async def search(self, query: str) -> Hits:
 
-
         C = "add custom path expansions"
         matcher = self.matcher(query)
 
@@ -48,13 +47,11 @@ class MeineAI(App[None]):
 
     COMMANDS = App.COMMANDS | {CustomCommand}
 
-    def __init__(self, driver_class = None, css_path = None, watch_css = False, ansi_color = False):
+    def __init__(
+        self, driver_class=None, css_path=None, watch_css=False, ansi_color=False
+    ):
         super().__init__(driver_class, css_path, watch_css, ansi_color)
         self.themes = BUILTIN_THEMES
-
-
-
-
 
     async def on_mount(self):
 
@@ -96,7 +93,6 @@ class MeineAI(App[None]):
         #     )
         #     None
         self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
-
 
     def key_escape(self):
         try:

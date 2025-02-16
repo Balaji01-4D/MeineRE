@@ -26,14 +26,12 @@ class DTree(DirectoryTree):
         else:
             return [path for path in paths if not path.name.startswith(".")]
 
-
     def on_directory_tree_directory_selected(
         self, event: DirectoryTree.DirectorySelected
     ):
         self.auto_expand = False
         if event.node.is_root:
             self.path = event.path.parent
- 
 
     def action_cd_home_directory(self):
         self.path = Path.home()
@@ -63,7 +61,6 @@ class DTree(DirectoryTree):
         self.path = current_path.resolve().parent
         os.chdir(self.path)
         self.refresh()
-
 
     def is_text_file(self, file_path: str | Path | os.PathLike, block_size=512) -> bool:
         """detects the file is text based or not"""
