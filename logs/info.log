@@ -59,3 +59,6 @@
 2025-02-13 22:00:54,561 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
 2025-02-13 22:00:54,561 - file.py - Delete_File executing
 2025-02-13 22:00:54,597 - home.py - <textual.widgets._data_table.RowKey object at 0x7e51fe09dca0>
+2025-02-16 07:23:19,959 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-16 07:23:19,969 - file.py - Delete_File executing
+2025-02-16 07:23:20,102 - home.py - <textual.widgets._data_table.RowKey object at 0x77729e082d20>

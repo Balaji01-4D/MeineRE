@@ -1,1 +1,18 @@
-[]
+[
+    "cd ..",
+    "cd ..",
+    "cd ..",
+    "cd ..",
+    "cd .",
+    "cd ..",
+    "cd ..",
+    "cd ..",
+    "cd /home/balaji/Downloads",
+    "del google-chrome-stable_current_amd64.deb",
+    "cwd",
+    "cd js",
+    "cd ..",
+    "cwd",
+    "cwd",
+    "cwd"
+]

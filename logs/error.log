@@ -14,3 +14,6 @@
 2025-02-15 18:53:05,531 - app.py - ERROR: No nodes match '#text_editor' on MeineAI(title='MeineAI', classes={'-dark-mode'}, pseudo_classes={'dark', 'focus'}) Function: key_ctrl_s in app.py
 2025-02-15 18:53:07,054 - app.py - ERROR: No nodes match '#text_editor' on MeineAI(title='MeineAI', classes={'-dark-mode'}, pseudo_classes={'dark', 'focus'}) Function: key_ctrl_s in app.py
 2025-02-15 18:53:07,363 - app.py - ERROR: No nodes match '#text_editor' on MeineAI(title='MeineAI', classes={'-dark-mode'}, pseudo_classes={'dark', 'focus'}) Function: key_ctrl_s in app.py
+2025-02-16 07:12:59,258 - home.py - ERROR: No nodes match '#dt' on HomeScreen(id='home-screen') Function: change_directory in home.py
+2025-02-16 07:18:13,461 - home.py - ERROR: 'HomeScreen' object has no attribute 'dtree' Function: change_directory in home.py
+2025-02-16 07:21:25,497 - home.py - ERROR: No nodes match '#dt' on HomeScreen(id='home-screen') Function: change_directory in home.py

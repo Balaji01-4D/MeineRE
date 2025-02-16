@@ -1,10 +1,6 @@
 {
     "path_expansions": {
-        "downloads": "/home/balaji/Downloads",
-        "test": "/home/balaji/testings",
-        "hello world": "/home/balaji/testings/txt",
-        "hello world2": "/home/balaji",
-        "newbie": "/home/balaji/testings"
+        "test": "/home/balaji/testings"
     },
     "urls": {
         "youtube": "https://www.youtube.com/",

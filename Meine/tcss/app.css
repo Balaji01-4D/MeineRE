@@ -2,13 +2,8 @@ Input{
     color: $text-primary;
     background: $surface;
 }
-#_default{
-    background:$background;
-}
 
-#output{
-    background:  $surface;
-}
+
 
 #main{
     layout:horizontal;
@@ -24,16 +19,8 @@ Directory_tree_container{
     dock: right;
     height: 100%;
 
-    #dt{
-        width: 100%;
-        background: $surface;
-        border: rgb(80, 79, 79);
-    }
-    #query{
-        background: $surface;
-        width: 100%;
-        height:1;
-        border:none;
+    #directory-tree{
+        padding:  1 1;
     }
 
 }
@@ -68,19 +55,14 @@ Background_process_container > Vertical{
 Background_process_container > Vertical > DataTable{
     height: 100%;
     width: 100%;
-    border: $accent;
 }
 Background_process_container.-hidden{
     display: none;
 }
 
-
-
-
 Toast{
     padding: 1;
-    background: black;
-    color: aqua;
+    color: $primary;
 }
 
 

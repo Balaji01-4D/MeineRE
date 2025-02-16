@@ -27,6 +27,7 @@ class HomeScreen(Screen[None]):
 
     AUTO_FOCUS = "#command-input"
 
+
     CSS_PATH = Path(__file__).parent.parent / "tcss/app.css"
 
     HISTORY = load_history()
@@ -54,9 +55,11 @@ class HomeScreen(Screen[None]):
         self.bgprocess = Background_process_container(classes="-hidden")
         self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
 
-        yield Container(
-            self.IO_container, self.sidebar, self.bgprocess, id="main"
-        )
+        yield self.IO_container
+        yield self.sidebar
+        yield self.bgprocess
+
+
 
     def key_ctrl_b(self):
         self.bgprocess.toggle_class("-hidden")
@@ -151,7 +154,7 @@ class HomeScreen(Screen[None]):
                         self.rich_log.write(f"[error] {str(e)}")
             self.HISTORY.append(cmd)
             save_history(self.HISTORY)
-            self.query_one("#dt").refresh()
+            self.query_one("#directory-tree").refresh()
             self.HISTORY_index = len(self.HISTORY)
             event.input.value = ""
 
@@ -199,7 +202,7 @@ class HomeScreen(Screen[None]):
 
     async def change_directory(self, cmdpath: Path):
         try:
-            dtree = self.query_one("#dt", DirectoryTree)
+            dtree = self.query_one("#directory-tree", DirectoryTree)
             dtree.path = cmdpath.resolve()
             os.chdir(cmdpath)
             self.si = {}
