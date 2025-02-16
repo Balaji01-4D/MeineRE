@@ -62,3 +62,22 @@
 2025-02-16 07:23:19,959 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
 2025-02-16 07:23:19,969 - file.py - Delete_File executing
 2025-02-16 07:23:20,102 - home.py - <textual.widgets._data_table.RowKey object at 0x77729e082d20>
+2025-02-16 21:30:25,487 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-16 21:30:25,551 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee3075500b0>
+2025-02-16 21:30:36,919 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-16 21:30:36,952 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee3063a5af0>
+2025-02-16 21:31:08,568 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-16 21:31:08,600 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-16 21:31:08,602 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-16 21:31:08,604 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee306d15790>
+2025-02-16 21:31:53,586 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-02-16 21:31:54,290 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee306d14410>
+2025-02-16 21:32:10,148 - main.py - Function: Copy_File Timetaken: 0.0000 seconds
+2025-02-16 21:32:25,886 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee30637c1a0>
+2025-02-16 21:32:39,644 - main.py - Function: Delete_File Timetaken: 0.0000 seconds
+2025-02-16 21:32:39,644 - file.py - Delete_File executing
+2025-02-16 21:32:39,844 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee30637ddc0>
+2025-02-16 21:33:47,610 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-02-16 21:33:48,103 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee304eb8e30>
+2025-02-16 21:34:09,359 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
+2025-02-16 21:34:09,993 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee3072f6240>

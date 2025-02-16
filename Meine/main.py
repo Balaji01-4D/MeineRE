@@ -12,7 +12,7 @@ d: dict[Pattern[str]] = {
     "onepath": re.compile(r"""(d|rm|r|del|mk|mkdir|mkd|create|clr|show)\s+(.+)"""),
     "rename": re.compile(r"(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)"),
     "system": re.compile(
-        r"(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process|shutdown|restart|reboot)\s?(\s[^\s]+)?"
+        r"(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process)\s?(\s[^\s]+)?"
     ),
     "search_text": re.compile(r"""(find|where|search)\s+["'](.+)["']\s+(.+)"""),
     "notepad": re.compile(r"(write|notepad|wr)\s+(.+)"),

@@ -17,3 +17,4 @@
 2025-02-16 07:12:59,258 - home.py - ERROR: No nodes match '#dt' on HomeScreen(id='home-screen') Function: change_directory in home.py
 2025-02-16 07:18:13,461 - home.py - ERROR: 'HomeScreen' object has no attribute 'dtree' Function: change_directory in home.py
 2025-02-16 07:21:25,497 - home.py - ERROR: No nodes match '#dt' on HomeScreen(id='home-screen') Function: change_directory in home.py
+2025-02-16 21:28:28,456 - home.py - ERROR: 'System' object has no attribute 'shutdown' Function: execute_command in home.py
