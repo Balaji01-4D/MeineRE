@@ -17,5 +17,18 @@
     "cd ,,",
     "cd ..",
     "rn txts as txt",
-    "rn zips as zip"
+    "rn zips as zip",
+    "cwd",
+    "cd ..",
+    "ls",
+    "cwd",
+    "cd Desktop",
+    "cd ..",
+    "cd snap",
+    "cd ..",
+    "cd Templates",
+    "cd ..",
+    "cd testings",
+    "cd js",
+    "cd some.txt"
 ]
