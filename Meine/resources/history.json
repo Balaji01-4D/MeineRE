@@ -10,5 +10,12 @@
     "cp 500MB-CZIPtestfile.org.zip to ..",
     "del  500MB-CZIPtestfile.org.zip",
     "del IdeaProjects",
-    "del NotePad"
+    "del NotePad",
+    "cd ..",
+    "cd ..",
+    "cd ..",
+    "cd ,,",
+    "cd ..",
+    "rn txts as txt",
+    "rn zips as zip"
 ]

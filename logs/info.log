@@ -81,3 +81,8 @@
 2025-02-16 21:33:48,103 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee304eb8e30>
 2025-02-16 21:34:09,359 - main.py - Function: Delete_Folder Timetaken: 0.0000 seconds
 2025-02-16 21:34:09,993 - home.py - <textual.widgets._data_table.RowKey object at 0x7ee3072f6240>
+2025-02-17 18:11:44,156 - home.py - False
+2025-02-17 18:11:56,090 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-17 18:11:56,119 - home.py - <textual.widgets._data_table.RowKey object at 0x74515453b050>
+2025-02-17 18:14:52,904 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
+2025-02-17 18:14:52,942 - home.py - <textual.widgets._data_table.RowKey object at 0x7451562f79b0>
