@@ -30,5 +30,8 @@
     "cd ..",
     "cd testings",
     "cd js",
-    "cd some.txt"
+    "cd some.txt",
+    "cwd",
+    "ls",
+    "cwd"
 ]
