@@ -17,14 +17,14 @@ class File:
 
     async def Delete_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
-    Asynchronously deletes a file or delegates folder deletion.
+        Asynchronously deletes a file or delegates folder deletion.
 
-    Args:
-        FileName (Path): The path of the file or folder to delete.
+        Args:
+            FileName (Path): The path of the file or folder to delete.
 
-    Returns:
-        Coroutine[None, None, str]: A success or error message.
-    """
+        Returns:
+            Coroutine[None, None, str]: A success or error message.
+        """
 
         if FileName.is_dir():
             return self.Delete_Folder(FileName)
@@ -43,7 +43,6 @@ class File:
                 return f"[error] Error In Deleting {FileName.name}: {e}"
         else:
             return f"[error] {FileName.name} Not Found."
-
 
     async def Move_File(
         self, Source: Path, Destination: Path
@@ -76,7 +75,6 @@ class File:
         except Exception as e:
 
             return f"[error] Error Moving File: {e}"
-
 
     async def Rename_file(
         self, OldName: Path, NewName: Path
@@ -116,7 +114,6 @@ class File:
         elif NewName.exists():
             return f"[error]Error {NewName.name} Is Aleady in {NewName.resolve().parent.name} Directory."
 
-
     async def Copy_File(
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
@@ -148,7 +145,6 @@ class File:
         elif not Source.exists():
             return f"[error] {Source.name} Does Not Exist."
 
-
     async def Create_File(self, Name: Path) -> Coroutine[None, None, str]:
         """
         Asynchronously creates a new file if it does not already exist.
@@ -173,7 +169,6 @@ class File:
         except Exception as e:
 
             return f"[error]Error{e}"
-
 
     async def ShowContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
@@ -207,7 +202,6 @@ class File:
 
             return f"[error]Error Reading {FileName.name}: {str(e)}"
 
-
     async def ClearContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
         Asynchronously clears the content of a file.
@@ -236,7 +230,6 @@ class File:
 
             return f"[error]Error Clearing {FileName.name}: {str(e)}"
 
-
     async def Text_Finder_Directory(
         self, Text: str, Path: str = "."
     ) -> Coroutine[None, None, Table | str]:
@@ -262,7 +255,6 @@ class File:
             return match_tables
         else:
             return "Text Not Found"
-
 
     async def Text_Finder_File(
         self, Text: str, file_path: str
@@ -290,7 +282,6 @@ class File:
             return match_lines
         except (UnicodeDecodeError, IOError):
             raise InfoNotify("Cant read at the moment or may be Binary file")
-
 
     async def search_items(
         self, query: str, path: str = ".", search_type: str = "both"
@@ -322,7 +313,6 @@ class File:
         except Exception as e:
             return []
 
-
     async def Create_Folder(self, Source: Path) -> Coroutine[None, None, str]:
         """
         Asynchronously creates a new folder if it does not already exist.
@@ -351,9 +341,7 @@ class File:
 
         except Exception as e:
 
-
             return f"[error]Error Creating Folder {Source.name}: {str(e)}"
-
 
     async def Move_Folder(
         self, Source: Path, Destination: Path
@@ -390,7 +378,6 @@ class File:
             return "[error]Permission Denied"
         except Exception as e:
             return f"[error]Error Moving File or Directory: {str(e)}"
-
 
     async def Copy_Folder(
         self, Source: Path, Destination: Path
@@ -436,7 +423,6 @@ class File:
         except Exception as e:
             return f"[error]Error in Copying: {str(e)}"
 
-
     async def Delete_Folder(self, FolderName: Path) -> Coroutine[None, None, str]:
         """
         Asynchronously deletes a folder and its contents.
@@ -449,7 +435,6 @@ class File:
             or an error message if the folder does not exist or cannot be deleted.
 
         """
-
 
         if not FolderName.exists():
             return f"[error]{FolderName.name} Not Found."
@@ -464,7 +449,6 @@ class File:
         except PermissionError:
             return f"[error]Permission Denied for {FolderName.name}"
         except Exception as e:
-
 
             return f"[error]Error Deleting {FolderName.name}: {str(e)}"
 
