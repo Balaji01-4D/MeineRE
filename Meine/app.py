@@ -1,5 +1,4 @@
 from functools import partial
-from pathlib import Path
 
 from textual.app import App, SystemCommand
 from textual.command import Hit, Hits, Provider
