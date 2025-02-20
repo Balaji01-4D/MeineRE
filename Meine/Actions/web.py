@@ -15,5 +15,3 @@ class web:
             raise InfoNotify("Opened from the saved urls")
         else:
             webbrowser.open(url=url)
-
-
