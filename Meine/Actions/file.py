@@ -15,8 +15,16 @@ from .Myrequest import AlreadyExist
 
 class File:
 
-
     async def Delete_File(self, FileName: Path) -> Coroutine[None, None, str]:
+        """
+    Asynchronously deletes a file or delegates folder deletion.
+
+    Args:
+        FileName (Path): The path of the file or folder to delete.
+
+    Returns:
+        Coroutine[None, None, str]: A success or error message.
+    """
 
         if FileName.is_dir():
             return self.Delete_Folder(FileName)
@@ -40,6 +48,17 @@ class File:
     async def Move_File(
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
+        """
+        Asynchronously moves a file to the specified destination.
+
+        Args:
+            Source (Path): The path of the file to move.
+            Destination (Path): The target directory.
+
+        Returns:
+            Coroutine[None, None, str]: A success or error message.
+
+        """
         Final = Destination / Source.name
 
         if Final.exists():
@@ -62,6 +81,17 @@ class File:
     async def Rename_file(
         self, OldName: Path, NewName: Path
     ) -> Coroutine[None, None, str]:
+        """
+        Asynchronously renames a file while preserving its extension(s).
+
+        Args:
+            OldName (Path): The current file path.
+            NewName (Path): The new file name or path.
+
+        Returns:
+            Coroutine[None, None, str]: A success or error message.
+
+        """
         if NewName.suffix == "":
             if OldName.suffixes == 1:
                 NewName = NewName.with_suffix(OldName.suffix)
@@ -90,6 +120,17 @@ class File:
     async def Copy_File(
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
+        """
+        Asynchronously copies a file to the specified destination.
+
+        Args:
+            Source (Path): The path of the file to copy.
+            Destination (Path): The target directory.
+
+        Returns:
+            Coroutine[None, None, str]: A success or error message.
+
+        """
         Final = Destination / Source.name
         if Final.exists():
             return AlreadyExist(Final.name, Final.parent)
@@ -109,6 +150,16 @@ class File:
 
 
     async def Create_File(self, Name: Path) -> Coroutine[None, None, str]:
+        """
+        Asynchronously creates a new file if it does not already exist.
+
+        Args:
+            Name (Path): The path of the file to be created.
+
+        Returns:
+            Coroutine[None, None, str]: A success or error message.
+
+        """
         if Name.exists():
             return AlreadyExist(Name.name, Name.resolve().parent)
         try:
@@ -126,10 +177,15 @@ class File:
 
     async def ShowContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
-        Displays the content of a file or the structure of a directory.
+        Asynchronously displays the content of a file or lists folder contents.
 
-        :param FileName: Path to the file or folder.
-        :return: A string formatted with rich.panel.Panel.
+        Args:
+            FileName (Path): The path of the file or folder.
+
+        Returns:
+            Coroutine[None, None, str]: The file content in a formatted panel or
+            an error message if the file/folder is not accessible.
+
         """
         if not FileName.exists():
             return f"[error]{FileName.name} Not Found"
@@ -154,11 +210,16 @@ class File:
 
     async def ClearContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
-        Clears the content of a file. Handles errors gracefully.
+        Asynchronously clears the content of a file.
 
-        :param FileName: Path to the file to clear.
-        :return: A success or error message.
+        Args:
+            FileName (Path): The path of the file to be cleared.
+
+        Returns:
+            Coroutine[None, None, str]: A success message if cleared,
+            or an error message if the file is not accessible.
         """
+
         if not FileName.exists():
             return f"[error]{FileName.name} Not Found"
 
@@ -179,6 +240,17 @@ class File:
     async def Text_Finder_Directory(
         self, Text: str, Path: str = "."
     ) -> Coroutine[None, None, Table | str]:
+        """
+        Asynchronously searches for a text string in all files within a directory.
+
+        Args:
+            Text (str): The text string to search for.
+            Path (str, optional): The directory path to search in. Defaults to the current directory.
+
+        Returns:
+            Coroutine[None, None, Table | str]: A table with matching file names and line numbers
+            if matches are found, otherwise a "Text Not Found" message.
+        """
         match_tables = Table(show_lines=True)
         match_tables.add_column("Line.no")
         match_tables.add_column("Filenmae")
@@ -195,6 +267,16 @@ class File:
     async def Text_Finder_File(
         self, Text: str, file_path: str
     ) -> Coroutine[None, None, Table]:
+        """
+        Asynchronously searches for a text string in a given file.
+
+        Args:
+            Text (str): The text string to search for.
+            file_path (str): The path of the file to search in.
+
+        Returns:
+            Coroutine[None, None, Table]: A table displaying matching line numbers and text.
+        """
         try:
             match_lines = Table(show_lines=True)
             match_lines.add_column("line no")
@@ -213,14 +295,7 @@ class File:
     async def search_items(
         self, query: str, path: str = ".", search_type: str = "both"
     ) -> Coroutine[None, None, Table | str]:
-        """
-        Search for files or folders matching a query in the given path.
 
-        :param query: The string to search for. Matches items starting with this string.
-        :param path: The directory to search in (default is the current directory).
-        :param search_type: What to search for: 'files', 'folders', or 'both' (default is 'both').
-        :return: A list of matching file or folder paths.
-        """
         matches_table = Table(show_lines=True)
         matches_table.add_column("Found")
         matches_table.add_column("Type")
@@ -245,26 +320,26 @@ class File:
 
             return matches_table
         except Exception as e:
-
-            print(f"Error occurred during search: {str(e)}")
             return []
 
 
     async def Create_Folder(self, Source: Path) -> Coroutine[None, None, str]:
         """
-        Creates a directory at the specified Source path.
+        Asynchronously creates a new folder if it does not already exist.
 
-        :param Source: The path where the directory should be created.
-        :return: A success or error message.
+        Args:
+            Source (Path): The directory path to be created.
+
+        Returns:
+            Coroutine[None, None, str]: A success message if created,
+            or an error message if the folder already exists or cannot be created.
         """
+
         try:
-            # Check if the directory already exists
             if Source.exists():
                 return (
                     f"[error]{Source.name} Already Exists in {Source.resolve().parent}"
                 )
-
-            # Attempt to create the directory
             await asyncio.to_thread(Source.mkdir, parents=True, exist_ok=False)
             return f"[success]{Source.name} Created Successfully at {Source.resolve().parent}"
 
@@ -272,7 +347,7 @@ class File:
             return f"[error]Permission Denied: Cannot Create {Source.name}"
 
         except FileExistsError:
-            return f"[error]{Source.name} Already Exists"  # Additional safeguard
+            return f"[error]{Source.name} Already Exists"
 
         except Exception as e:
 
@@ -284,21 +359,23 @@ class File:
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
         """
-        Moves a file or directory from Source to Destination.
+        Asynchronously moves a folder or file to the specified destination.
 
-        :param Source: The source path to move.
-        :param Destination: The destination directory.
-        :return: A success or error message.
+        Args:
+            Source (Path): The path of the folder or file to move.
+            Destination (Path): The target directory.
+
+        Returns:
+            Coroutine[None, None, str]: A success message if moved,
+            or an error message if the operation fails.
         """
+
         try:
-            # Resolve the final destination
             Final = Destination / Source.name
 
-            # Check if the destination already contains a file/folder with the same name
             if Final.exists():
                 return f"[error]{Final.name} Already Exists in {Final.resolve().parent}"
 
-            # Check for invalid paths
             if not Source.exists():
                 return f"[error]{Source.name} Not Found"
             if not Destination.exists():
@@ -306,15 +383,12 @@ class File:
             if not Destination.is_dir():
                 return f"[error]{Destination.name} Is Not a Directory"
 
-            # Perform the move operation
             await asyncio.to_thread(sl.move, Source, Destination)
             return f"[success]{Source.name} Moved Successfully to {Destination.resolve().name}"
 
         except PermissionError:
             return "[error]Permission Denied"
         except Exception as e:
-
-
             return f"[error]Error Moving File or Directory: {str(e)}"
 
 
@@ -322,12 +396,17 @@ class File:
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
         """
-        Copies a file or directory from Source to Destination.
+        Asynchronously copies a folder or file to the specified destination.
 
-        :param Source: The source path to copy.
-        :param Destination: The destination directory.
-        :return: A success or error message.
+        Args:
+            Source (Path): The path of the folder or file to copy.
+            Destination (Path): The target directory.
+
+        Returns:
+            Coroutine[None, None, str]: A success message if copied,
+            or an error message if the operation fails.
         """
+
         try:
             Final = Destination / Source.name
 
@@ -355,18 +434,23 @@ class File:
         except PermissionError:
             return "[error]Permission Denied"
         except Exception as e:
-
-
             return f"[error]Error in Copying: {str(e)}"
 
 
     async def Delete_Folder(self, FolderName: Path) -> Coroutine[None, None, str]:
         """
-        Deletes a folder or file asynchronously.
+        Asynchronously deletes a folder and its contents.
 
-        :param FolderName: Path to the folder or file to delete.
-        :return: A success or error message.
+        Args:
+            FolderName (Path): The directory path to be deleted.
+
+        Returns:
+            Coroutine[None, None, str]: A success message if deleted,
+            or an error message if the folder does not exist or cannot be deleted.
+
         """
+
+
         if not FolderName.exists():
             return f"[error]{FolderName.name} Not Found."
 
@@ -386,19 +470,45 @@ class File:
 
 
 async def Helper(Text: str, Path: str) -> list[str]:
+    """
+    Asynchronously searches for a text string in all files within a directory.
+
+    Args:
+        Text (str): The text string to search for.
+        Path (str): The directory path to search in.
+
+    Returns:
+        list[str]: A list of matching file paths with line numbers.
+
+    Raises:
+        Exception: If an unexpected error occurs during file traversal or search.
+    """
     matching_files = []
     for root, dirs, files in os.walk(Path):
-        # Create a list of tasks to process files concurrently
         tasks = [
             search_in_file(Text, os.path.join(root, file), matching_files)
             for file in files
         ]
-        # Await the completion of all tasks
         await asyncio.gather(*tasks)
     return matching_files
 
 
-async def search_in_file(Text: str, file_path: str, matching_files: list):
+async def search_in_file(Text: str, file_path: str, matching_files: list) -> None:
+    """
+    Asynchronously searches for a text string in a given file.
+
+    Args:
+        Text (str): The text string to search for.
+        file_path (str): The path of the file to search in.
+        matching_files (list): A list to store tuples of (file path, line number)
+                               where matches are found.
+
+    Returns:
+        None: Updates the matching_files list with search results.
+
+    Raises:
+        UnicodeDecodeError, IOError: If the file cannot be read (e.g., encoding issues or I/O errors).
+    """
     try:
         async with aiofiles.open(file_path, "r", encoding="utf-8") as f:
             line_num = 0
