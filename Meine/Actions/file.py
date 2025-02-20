@@ -10,16 +10,14 @@ from rich.table import Table
 from rich.text import Text
 
 from Meine.exceptions import InfoNotify
-from Meine.logger_config import log_time, logger
-
 from .Myrequest import AlreadyExist
 
 
 class File:
 
-    @log_time
+
     async def Delete_File(self, FileName: Path) -> Coroutine[None, None, str]:
-        logger.info(f"{self.Delete_File.__name__} executing")
+
         if FileName.is_dir():
             return self.Delete_Folder(FileName)
         if FileName.is_file():
@@ -33,12 +31,12 @@ class File:
             except PermissionError:
                 InfoNotify(f"Permission denied")
             except Exception as e:
-                logger.error(f"{e} Function: {self.Delete_File.__name__}")
+
                 return f"[error] Error In Deleting {FileName.name}: {e}"
         else:
             return f"[error] {FileName.name} Not Found."
 
-    @log_time
+
     async def Move_File(
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
@@ -57,10 +55,10 @@ class File:
         except PermissionError:
             return "[error] Permission Denied."
         except Exception as e:
-            logger.error(f"{e} Function: {self.Move_File.__name__}")
+
             return f"[error] Error Moving File: {e}"
 
-    @log_time
+
     async def Rename_file(
         self, OldName: Path, NewName: Path
     ) -> Coroutine[None, None, str]:
@@ -81,14 +79,14 @@ class File:
             except PermissionError:
                 return f"[error]Permission Denied"
             except Exception as e:
-                logger.error(f"{e} Function: {self.Rename_file.__name__}")
+
                 return f"[error]Error In Renaming."
         elif not OldName.exists():
             return f"[error]{OldName.name} Is Not Found."
         elif NewName.exists():
             return f"[error]Error {NewName.name} Is Aleady in {NewName.resolve().parent.name} Directory."
 
-    @log_time
+
     async def Copy_File(
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
@@ -102,14 +100,14 @@ class File:
             except PermissionError:
                 return "[error] Permission Denied."
             except Exception as e:
-                logger.error(f"{e} Function: {self.Copy_File.__name__}")
+
                 return f"[error] Error In Copying: {e}"
         elif Source.is_dir():
             return self.Copy_Folder(Source, Destination)
         elif not Source.exists():
             return f"[error] {Source.name} Does Not Exist."
 
-    @log_time
+
     async def Create_File(self, Name: Path) -> Coroutine[None, None, str]:
         if Name.exists():
             return AlreadyExist(Name.name, Name.resolve().parent)
@@ -122,10 +120,10 @@ class File:
         except PermissionError:
             return f"[error]Permission Denied"
         except Exception as e:
-            logger.error(f"{e} Function: {self.Create_File.__name__}")
+
             return f"[error]Error{e}"
 
-    @log_time
+
     async def ShowContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
         Displays the content of a file or the structure of a directory.
@@ -150,10 +148,10 @@ class File:
         except PermissionError:
             return f"[error]Permission Denied: {FileName.name}"
         except Exception as e:
-            logger.error(f"{e} Function: {self.ShowContent_File.__name__}")
+
             return f"[error]Error Reading {FileName.name}: {str(e)}"
 
-    @log_time
+
     async def ClearContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
         Clears the content of a file. Handles errors gracefully.
@@ -174,10 +172,10 @@ class File:
         except PermissionError:
             return f"[error]Permission Denied for {FileName.name}"
         except Exception as e:
-            logger.error(f"{e} Function: {self.ClearContent_File.__name__}")
+
             return f"[error]Error Clearing {FileName.name}: {str(e)}"
 
-    @log_time
+
     async def Text_Finder_Directory(
         self, Text: str, Path: str = "."
     ) -> Coroutine[None, None, Table | str]:
@@ -193,7 +191,7 @@ class File:
         else:
             return "Text Not Found"
 
-    @log_time
+
     async def Text_Finder_File(
         self, Text: str, file_path: str
     ) -> Coroutine[None, None, Table]:
@@ -211,7 +209,7 @@ class File:
         except (UnicodeDecodeError, IOError):
             raise InfoNotify("Cant read at the moment or may be Binary file")
 
-    @log_time
+
     async def search_items(
         self, query: str, path: str = ".", search_type: str = "both"
     ) -> Coroutine[None, None, Table | str]:
@@ -247,11 +245,11 @@ class File:
 
             return matches_table
         except Exception as e:
-            logger.error(f"{e} Function: {self.search_items.__name__}")
+
             print(f"Error occurred during search: {str(e)}")
             return []
 
-    @log_time
+
     async def Create_Folder(self, Source: Path) -> Coroutine[None, None, str]:
         """
         Creates a directory at the specified Source path.
@@ -277,11 +275,11 @@ class File:
             return f"[error]{Source.name} Already Exists"  # Additional safeguard
 
         except Exception as e:
-            logger.error(f"{e} Function: {self.Create_Folder.__name__}")
+
 
             return f"[error]Error Creating Folder {Source.name}: {str(e)}"
 
-    @log_time
+
     async def Move_Folder(
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
@@ -315,11 +313,11 @@ class File:
         except PermissionError:
             return "[error]Permission Denied"
         except Exception as e:
-            logger.error(f"{e} Function: {self.Move_Folder.__name__}")
+
 
             return f"[error]Error Moving File or Directory: {str(e)}"
 
-    @log_time
+
     async def Copy_Folder(
         self, Source: Path, Destination: Path
     ) -> Coroutine[None, None, str]:
@@ -357,11 +355,11 @@ class File:
         except PermissionError:
             return "[error]Permission Denied"
         except Exception as e:
-            logger.error(f"{e} Function: {self.Copy_Folder.__name__}")
+
 
             return f"[error]Error in Copying: {str(e)}"
 
-    @log_time
+
     async def Delete_Folder(self, FolderName: Path) -> Coroutine[None, None, str]:
         """
         Deletes a folder or file asynchronously.
@@ -382,7 +380,7 @@ class File:
         except PermissionError:
             return f"[error]Permission Denied for {FolderName.name}"
         except Exception as e:
-            logger.error(f"{e} Function: {self.Delete_Folder.__name__}")
+
 
             return f"[error]Error Deleting {FolderName.name}: {str(e)}"
 

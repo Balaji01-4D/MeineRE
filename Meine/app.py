@@ -6,7 +6,6 @@ from textual.command import Hit, Hits, Provider
 
 from Meine.Actions.system import System
 from Meine.exceptions import InfoNotify
-from Meine.logger_config import logger
 from Meine.Screens.help import HelpScreen
 from Meine.Screens.home import HomeScreen
 from Meine.Screens.settings import NameGetterScreen, Settings
@@ -88,9 +87,6 @@ class MeineAI(App[None]):
             else:
                 self.pop_screen()
         except Exception as e:
-            logger.error(
-                f"{e} Function: {self.key_ctrl_s.__name__} in {Path(__file__).name}"
-            )
             None
 
     def key_escape(self):
@@ -98,9 +94,7 @@ class MeineAI(App[None]):
             if self.screen_stack[-1].id != HOME_SCREEN_ID:
                 self.pop_screen()
         except Exception as e:
-            logger.error(
-                f"{e} Function: {self.key_escape.__name__} in {Path(__file__).name}"
-            )
+            None
 
     def safe_shutdown(self):
         try:

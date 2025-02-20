@@ -17,10 +17,3 @@ class web:
             webbrowser.open(url=url)
 
 
-def main():
-    w = web()
-    webbrowser.open("youtube")
-
-
-if __name__ == "__main__":
-    main()
