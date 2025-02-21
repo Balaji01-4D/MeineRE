@@ -5,6 +5,7 @@ from pathlib import Path
 from textual.widgets import TextArea, Static
 from textual.screen import ModalScreen
 from textual.containers import Container
+from textual.worker import Worker
 
 SYNTAX_HIGHLIGHTING_SUPPORTED_FILES: dict[str, str] = {
     ".py": "python",
@@ -82,7 +83,7 @@ class MeineTextAreaScreen(ModalScreen):
             extension = self.filepath.suffix
             self.get_syntax_highlighting(extension)
             if extension == "csv":
-                self.run_worker(self.read_csv_files(self.filepath))
+                self.run_worker(self.read_csv_files(self.filepath),group="reading-file")
             elif extension == "json":
                 self.run_worker(self.read_json_files(self.filepath))
             else:
@@ -106,7 +107,6 @@ class MeineTextAreaScreen(ModalScreen):
             with open(filepath, "r") as file:
                 reader = csv.reader(file)
                 self.textarea.text = "\n".join([",".join(row) for row in reader])
-                self.notify("file read successfulyy")
         except Exception as e:
             self.textarea.text = ""
             self.notify(f"unsupported file format {e}")
@@ -128,6 +128,6 @@ class MeineTextAreaScreen(ModalScreen):
             self.textarea.text = ""
             self.notify(f"unsupported file format {e}")
 
-    def on_worker_state_changed(self, event) -> None:
-        if event.worker.is_finished:
+    def on_worker_state_changed(self, event: Worker.StateChanged) -> None:
+        if event.worker.name == 'read_file' and event.worker.is_finished:
             self.textarea.loading = False

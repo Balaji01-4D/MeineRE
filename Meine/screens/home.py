@@ -3,7 +3,6 @@ import asyncio
 from pathlib import Path
 
 from rich.panel import Panel
-from textual import work
 from textual.binding import Binding
 from textual.events import Click
 from textual.screen import Screen
