@@ -1,0 +1,14 @@
+TextEditorScreen {
+    dock:top;
+    height: 100%;
+    align: center middle;
+}
+TextEditorScreen > Container{
+    width: 90%;
+    height:30;
+
+}
+TextEditorScreen > Container > Static{
+    text-align: center;
+    color: $primary;
+}

@@ -5,9 +5,9 @@ from textual.command import Hit, Hits, Provider
 
 from Meine.Actions.system import System
 from Meine.exceptions import InfoNotify
-from Meine.Screens.help import HelpScreen
-from Meine.Screens.home import HomeScreen
-from Meine.Screens.settings import NameGetterScreen, Settings
+from Meine.screens.help import HelpScreen
+from Meine.screens.home import HomeScreen
+from Meine.screens.settings import NameGetterScreen, Settings
 from Meine.utils.file_editor import add_custom_path_expansion
 from Meine.utils.file_loaders import load_settings
 from Meine.themes import BUILTIN_THEMES

@@ -67,3 +67,17 @@ Toast{
 
 
 
+MeineTextAreaScreen {
+    dock:top;
+    height: 100%;
+    align: center middle;
+}
+MeineTextAreaScreen > Container{
+    width: 90%;
+    height:30;
+
+}
+MeineTextAreaScreen > Container > Static{
+    text-align: center;
+    color: $primary;
+}
