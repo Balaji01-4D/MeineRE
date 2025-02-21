@@ -7,7 +7,7 @@ from rich.table import Table
 from Meine.Actions import File, System, Zip
 from Meine.exceptions import ErrorNotify
 
-d: dict[str,Pattern] = {
+d: dict[str, Pattern] = {
     "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
     "onepath": re.compile(r"""(d|rm|r|del|mk|mkdir|mkd|create|clr|show)\s+(.+)"""),
     "rename": re.compile(r"(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)"),

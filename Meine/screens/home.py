@@ -24,7 +24,6 @@ from Meine.screens.textarea import MeineTextAreaScreen
 from Meine.widgets.input import MeineInput
 
 
-
 class HomeScreen(Screen[None]):
 
     AUTO_FOCUS = "#command-input"
@@ -224,7 +223,12 @@ class HomeScreen(Screen[None]):
                     tree.path = selected_node
                     os.chdir(tree.path)
                 elif selected_node.is_file():
-                    self.app.push_screen(MeineTextAreaScreen(filepath=selected_node,id='textarea-screen'))
+                    if (self.is_text_file(selected_node)):
+                        self.app.push_screen(
+                            MeineTextAreaScreen(
+                                filepath=selected_node, id="textarea-screen"
+                            )
+                        )
                 else:
                     None
 
@@ -295,8 +299,3 @@ class HomeScreen(Screen[None]):
     #     except Exception as e:
     #         self.rich_log.write(f"Error in handle_files_click_input: {e}")
 
-
-class Summascreen(Screen):
-
-    def compose(self):
-        yield Input(placeholder=">>>")

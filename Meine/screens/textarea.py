@@ -2,7 +2,7 @@ import csv
 import json
 from pathlib import Path
 
-from textual.widgets import TextArea,Static
+from textual.widgets import TextArea, Static
 from textual.screen import ModalScreen
 from textual.containers import Container
 
@@ -63,7 +63,7 @@ class MeineTextAreaScreen(ModalScreen):
 
     CSS_PATH = Path(__file__).parent.parent / "tcss/app.css"
 
-    def __init__(self, filepath: Path ,name = None, id = None, classes = None):
+    def __init__(self, filepath: Path, name=None, id=None, classes=None):
         super().__init__(name, id, classes)
         self.filepath = filepath
 
@@ -71,7 +71,7 @@ class MeineTextAreaScreen(ModalScreen):
         self.run_worker(self.read_file())
 
     def compose(self):
-        self.textarea = TextArea(show_line_numbers=True,read_only=True)
+        self.textarea = TextArea(show_line_numbers=True, read_only=True)
         with Container():
             yield Static(str(self.filepath.name))
             yield self.textarea
