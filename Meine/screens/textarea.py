@@ -67,12 +67,14 @@ class MeineTextAreaScreen(ModalScreen):
     def __init__(self, filepath: Path, name=None, id=None, classes=None):
         super().__init__(name, id, classes)
         self.filepath = filepath
+        self.text_area_theme = self.app.SETTINGS["text_editor_theme"]
+
 
     def _on_mount(self):
         self.run_worker(self.read_file(),exclusive=True,group="reading-file")
 
     def compose(self):
-        self.textarea = TextArea(show_line_numbers=True, read_only=True)
+        self.textarea = TextArea(show_line_numbers=True, read_only=True,id='text-area',theme=self.text_area_theme)
         with Container():
             yield Static(str(self.filepath.name))
             yield self.textarea

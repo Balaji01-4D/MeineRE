@@ -1,9 +1,10 @@
 from pathlib import Path
+import select
 
 from textual.containers import Container, Horizontal
 from textual.events import Click
 from textual.screen import ModalScreen
-from textual.widgets import Button, Input, Select, Static, Switch
+from textual.widgets import Button, Input, Select, Static, Switch, TextArea
 
 
 from Meine.screens.me import Myself
@@ -40,13 +41,18 @@ class Settings(ModalScreen):
 
     def compose(self):
 
-        text_editor_mode_startup = self.app_settings["text_editor_mode_read_only"]
-
         self.select_app_theme = Select(
             [(themes, themes) for themes in self.app._registered_themes.keys()],
             prompt="choose a theme",
             allow_blank=False,
             id="select-app-theme",
+        )
+
+        self.select_text_area_theme = Select(
+            [(themes, themes) for themes in self.AVAILABLE_THEMES],
+            prompt="choose a theme",
+            allow_blank=False,
+            id="select-text-area-theme",
         )
 
         yield Container(
@@ -63,6 +69,9 @@ class Settings(ModalScreen):
             ),
             Horizontal(
                 Static("text app theme", classes="caption"), self.select_app_theme
+            ),
+            Horizontal(
+                Static("text text area theme", classes="caption"), self.select_text_area_theme
             ),
             Button(
                 label="About me",
@@ -95,13 +104,14 @@ class Settings(ModalScreen):
         self.select_app_theme.value = self.app.theme
 
     def on_select_changed(self, event: Select.Changed) -> None:
-        if event.select.id == "select-text-editor-theme":
-            self.text_area.theme = event.value
+        select_id = event.select.id
+        if select_id == "select-text-area-theme":
             self.app.SETTINGS["text_editor_theme"] = event.value
 
-        elif event.select.id == "select-app-theme":
+        elif select_id == "select-app-theme":
             self.app.theme = event.value
             self.app.SETTINGS["app_theme"] = event.value
+
 
         save_settings(self.app.SETTINGS)
 
