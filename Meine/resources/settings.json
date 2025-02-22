@@ -1,6 +1,6 @@
 {
     "show_hidden_files": false,
-    "text_editor_theme": "vscode_dark",
-    "app_theme": "dracula",
+    "text_editor_theme": "css",
+    "app_theme": "gruvbox",
     "directory-tree-dock": "right"
 }

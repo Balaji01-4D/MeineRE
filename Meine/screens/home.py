@@ -47,7 +47,9 @@ class HomeScreen(Screen[None]):
             history_index=self.HISTORY_INDEX,
         )
         self.rich_log = RichLog(id="output")
-        self.sidebar = Directory_tree_container(classes="-hidden")
+
+        self.sidebar = Directory_tree_container(classes="-hidden",id='directory-tree-container')
+        self.sidebar.styles.dock = self.app.SETTINGS['directory-tree-dock']
 
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
@@ -192,7 +194,6 @@ class HomeScreen(Screen[None]):
             self.bgrocess_table.remove_row(self.added_process)
 
     def action_toggle_sidebar(self):
-        self.sidebar.styles.dock = self.app.SETTINGS['directory-tree-dock']
         self.sidebar.toggle_class("-hidden")
 
     async def change_directory(self, cmdpath: Path):

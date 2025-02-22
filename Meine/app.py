@@ -117,6 +117,9 @@ class MeineAI(App[None]):
             else:
                 self.notify(e.message)
 
+    def change_directory_tree_dock(self, value):
+        self.query_one("#directory-tree-container").styles.dock = value
+
     def push_NameGetter_screen(self, title, callback):
         self.push_screen(NameGetterScreen(title, callback))
 
