@@ -55,6 +55,13 @@ class Settings(ModalScreen):
             id="select-text-area-theme",
         )
 
+        self.select_directory_tree_dock =  Select([("left","left"),("right","right")]
+                                                  ,id='select-directory-tree-container-dock',
+                                                  prompt='directory tree dock',
+                                                  allow_blank=False,
+                                                  value=self.app.SETTINGS['directory-tree-dock']
+                                                  )
+
         yield Container(
             Static("SETTINGS", id="settings-title"),
             Horizontal(
@@ -68,10 +75,13 @@ class Settings(ModalScreen):
                 Button(label="clear", id="clear_history_bt"),
             ),
             Horizontal(
-                Static("text app theme", classes="caption"), self.select_app_theme
+                Static("App theme", classes="caption"), self.select_app_theme
             ),
             Horizontal(
-                Static("text text area theme", classes="caption"), self.select_text_area_theme
+                Static("text area theme", classes="caption"), self.select_text_area_theme
+            ),
+            Horizontal(
+                Static("directory tree position", classes="caption"),self.select_directory_tree_dock
             ),
             Button(
                 label="About me",
@@ -101,6 +111,7 @@ class Settings(ModalScreen):
         save_settings(self.app_settings)
 
     def _on_mount(self) -> None:
+
         self.select_app_theme.value = self.app.theme
 
     def on_select_changed(self, event: Select.Changed) -> None:
@@ -112,6 +123,9 @@ class Settings(ModalScreen):
             self.app.theme = event.value
             self.app.SETTINGS["app_theme"] = event.value
 
+        elif select_id == 'select-directory-tree-container-dock':
+            self.app.screen_stack[1].query_one("#directory-tree-container").styles.dock = event.value
+            self.app.SETTINGS['directory-tree-dock'] = event.value
 
         save_settings(self.app.SETTINGS)
 

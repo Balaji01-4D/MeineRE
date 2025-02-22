@@ -37,8 +37,7 @@ class HomeScreen(Screen[None]):
 
     def __init__(self, name=None, id=None, classes=None):
         super().__init__(name, id, classes)
-        self.si = {}
-        self.previous_file = None
+
 
     def compose(self):
         self.inputconsole = MeineInput(
@@ -49,6 +48,7 @@ class HomeScreen(Screen[None]):
         )
         self.rich_log = RichLog(id="output")
         self.sidebar = Directory_tree_container(classes="-hidden")
+
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
         self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
@@ -192,7 +192,8 @@ class HomeScreen(Screen[None]):
             self.bgrocess_table.remove_row(self.added_process)
 
     def action_toggle_sidebar(self):
-        self.query_one(Directory_tree_container).toggle_class("-hidden")
+        self.sidebar.styles.dock = self.app.SETTINGS['directory-tree-dock']
+        self.sidebar.toggle_class("-hidden")
 
     async def change_directory(self, cmdpath: Path):
         try:
@@ -229,6 +230,8 @@ class HomeScreen(Screen[None]):
                                 filepath=selected_node, id="textarea-screen"
                             )
                         )
+                    else :
+                        self.notify("unsupported file format")
                 else:
                     None
 
