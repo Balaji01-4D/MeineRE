@@ -31,7 +31,6 @@ class DTree(DirectoryTree):
     ):
         self.auto_expand = False
 
-
     def action_cd_home_directory(self):
         self.path = Path.home()
         os.chdir(self.path)

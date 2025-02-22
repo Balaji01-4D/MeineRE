@@ -55,12 +55,13 @@ class Settings(ModalScreen):
             id="select-text-area-theme",
         )
 
-        self.select_directory_tree_dock =  Select([("left","left"),("right","right")]
-                                                  ,id='select-directory-tree-container-dock',
-                                                  prompt='directory tree dock',
-                                                  allow_blank=False,
-                                                  value=self.app.SETTINGS['directory-tree-dock']
-                                                  )
+        self.select_directory_tree_dock = Select(
+            [("left", "left"), ("right", "right")],
+            id="select-directory-tree-container-dock",
+            prompt="directory tree dock",
+            allow_blank=False,
+            value=self.app.SETTINGS["directory-tree-dock"],
+        )
 
         yield Container(
             Static("SETTINGS", id="settings-title"),
@@ -74,14 +75,14 @@ class Settings(ModalScreen):
                 Static("clear history", classes="caption"),
                 Button(label="clear", id="clear_history_bt"),
             ),
+            Horizontal(Static("App theme", classes="caption"), self.select_app_theme),
             Horizontal(
-                Static("App theme", classes="caption"), self.select_app_theme
+                Static("text area theme", classes="caption"),
+                self.select_text_area_theme,
             ),
             Horizontal(
-                Static("text area theme", classes="caption"), self.select_text_area_theme
-            ),
-            Horizontal(
-                Static("directory tree position", classes="caption"),self.select_directory_tree_dock
+                Static("directory tree position", classes="caption"),
+                self.select_directory_tree_dock,
             ),
             Button(
                 label="About me",
@@ -123,9 +124,11 @@ class Settings(ModalScreen):
             self.app.theme = event.value
             self.app.SETTINGS["app_theme"] = event.value
 
-        elif select_id == 'select-directory-tree-container-dock':
-            self.app.screen_stack[1].query_one("#directory-tree-container").styles.dock = event.value
-            self.app.SETTINGS['directory-tree-dock'] = event.value
+        elif select_id == "select-directory-tree-container-dock":
+            self.app.screen_stack[1].query_one(
+                "#directory-tree-container"
+            ).styles.dock = event.value
+            self.app.SETTINGS["directory-tree-dock"] = event.value
 
         save_settings(self.app.SETTINGS)
 

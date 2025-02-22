@@ -38,7 +38,6 @@ class HomeScreen(Screen[None]):
     def __init__(self, name=None, id=None, classes=None):
         super().__init__(name, id, classes)
 
-
     def compose(self):
         self.inputconsole = MeineInput(
             placeholder="Enter command....",
@@ -48,8 +47,10 @@ class HomeScreen(Screen[None]):
         )
         self.rich_log = RichLog(id="output")
 
-        self.sidebar = Directory_tree_container(classes="-hidden",id='directory-tree-container')
-        self.sidebar.styles.dock = self.app.SETTINGS['directory-tree-dock']
+        self.sidebar = Directory_tree_container(
+            classes="-hidden", id="directory-tree-container"
+        )
+        self.sidebar.styles.dock = self.app.SETTINGS["directory-tree-dock"]
 
         self.Dtree = self.sidebar.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
@@ -225,13 +226,13 @@ class HomeScreen(Screen[None]):
                     tree.path = selected_node
                     os.chdir(tree.path)
                 elif selected_node.is_file():
-                    if (self.is_text_file(selected_node)):
+                    if self.is_text_file(selected_node):
                         self.app.push_screen(
                             MeineTextAreaScreen(
                                 filepath=selected_node, id="textarea-screen"
                             )
                         )
-                    else :
+                    else:
                         self.notify("unsupported file format")
                 else:
                     None
@@ -302,4 +303,3 @@ class HomeScreen(Screen[None]):
 
     #     except Exception as e:
     #         self.rich_log.write(f"Error in handle_files_click_input: {e}")
-

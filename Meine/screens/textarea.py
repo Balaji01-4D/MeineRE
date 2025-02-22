@@ -69,12 +69,16 @@ class MeineTextAreaScreen(ModalScreen):
         self.filepath = filepath
         self.text_area_theme = self.app.SETTINGS["text_editor_theme"]
 
-
     def _on_mount(self):
-        self.run_worker(self.read_file(),exclusive=True,group="reading-file")
+        self.run_worker(self.read_file(), exclusive=True, group="reading-file")
 
     def compose(self):
-        self.textarea = TextArea(show_line_numbers=True, read_only=True,id='text-area',theme=self.text_area_theme)
+        self.textarea = TextArea(
+            show_line_numbers=True,
+            read_only=True,
+            id="text-area",
+            theme=self.text_area_theme,
+        )
         with Container():
             yield Static(str(self.filepath.name))
             yield self.textarea
@@ -131,5 +135,5 @@ class MeineTextAreaScreen(ModalScreen):
             self.notify(f"unsupported file format {e}")
 
     def on_worker_state_changed(self, event: Worker.StateChanged) -> None:
-        if event.worker.name == 'read_file' and event.worker.is_finished:
+        if event.worker.name == "read_file" and event.worker.is_finished:
             self.textarea.loading = False
