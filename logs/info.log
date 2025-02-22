@@ -87,3 +87,19 @@
 2025-02-17 18:14:52,904 - main.py - Function: Rename_file Timetaken: 0.0000 seconds
 2025-02-17 18:14:52,942 - home.py - <textual.widgets._data_table.RowKey object at 0x7451562f79b0>
 2025-02-17 21:38:09,215 - home.py - False
+2025-02-22 22:28:11,664 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d7a7050>
+2025-02-22 22:28:36,594 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d7dfce0>
+2025-02-22 22:28:39,424 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d7dde80>
+2025-02-22 22:28:42,856 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d7ce8a0>
+2025-02-22 22:28:45,253 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d85a2d0>
+2025-02-22 22:28:48,667 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d859c10>
+2025-02-22 22:28:50,179 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08edd1a90>
+2025-02-22 22:28:53,645 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08fbb6660>
+2025-02-22 22:29:00,070 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08fa03e90>
+2025-02-22 22:29:02,405 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d85bb90>
+2025-02-22 22:29:10,681 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d773a40>
+2025-02-22 22:29:57,364 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08edd2ab0>
+2025-02-22 22:30:02,818 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08edd1520>
+2025-02-22 22:31:10,593 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08e303e00>
+2025-02-22 22:31:23,764 - home.py - False
+2025-02-22 22:31:58,653 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d54c8f0>

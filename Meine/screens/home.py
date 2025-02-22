@@ -8,7 +8,6 @@ from textual.events import Click
 from textual.screen import Screen
 from textual.widgets import DataTable, DirectoryTree, Input, RichLog
 
-
 from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
 from Meine.logger_config import logger
 from Meine.main import CLI
@@ -218,7 +217,9 @@ class HomeScreen(Screen[None]):
             elif event.widget.id == "directory-tree":
                 tree = self.query_one("#directory-tree", DirectoryTree)
                 selected_node = tree.cursor_node.data.path
-                if selected_node.is_dir():
+                if selected_node == tree.root.data.path:
+                    tree.path = selected_node.parent
+                elif selected_node.is_dir():
                     tree.path = selected_node
                     os.chdir(tree.path)
                 elif selected_node.is_file():

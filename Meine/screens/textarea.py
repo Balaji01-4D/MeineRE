@@ -69,7 +69,7 @@ class MeineTextAreaScreen(ModalScreen):
         self.filepath = filepath
 
     def _on_mount(self):
-        self.run_worker(self.read_file())
+        self.run_worker(self.read_file(),exclusive=True,group="reading-file")
 
     def compose(self):
         self.textarea = TextArea(show_line_numbers=True, read_only=True)
@@ -83,7 +83,7 @@ class MeineTextAreaScreen(ModalScreen):
             extension = self.filepath.suffix
             self.get_syntax_highlighting(extension)
             if extension == "csv":
-                self.run_worker(self.read_csv_files(self.filepath),group="reading-file")
+                self.run_worker(self.read_csv_files(self.filepath))
             elif extension == "json":
                 self.run_worker(self.read_json_files(self.filepath))
             else:

@@ -30,8 +30,7 @@ class DTree(DirectoryTree):
         self, event: DirectoryTree.DirectorySelected
     ):
         self.auto_expand = False
-        if event.node.is_root:
-            self.path = event.path.parent
+
 
     def action_cd_home_directory(self):
         self.path = Path.home()
