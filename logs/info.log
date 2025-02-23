@@ -103,3 +103,8 @@
 2025-02-22 22:31:10,593 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08e303e00>
 2025-02-22 22:31:23,764 - home.py - False
 2025-02-22 22:31:58,653 - home.py - <textual.widgets._data_table.RowKey object at 0x7bc08d54c8f0>
+2025-02-23 09:11:36,663 - home.py - False
+2025-02-23 20:23:46,973 - home.py - <textual.widgets._data_table.RowKey object at 0x7e89a5936d80>
+2025-02-23 20:26:42,314 - home.py - <textual.widgets._data_table.RowKey object at 0x77473aa783b0>
+2025-02-23 20:26:58,654 - home.py - False
+2025-02-23 20:27:23,907 - home.py - <textual.widgets._data_table.RowKey object at 0x774738b0f410>

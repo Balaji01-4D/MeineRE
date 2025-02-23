@@ -16,18 +16,15 @@ Settings > Container{
     }
     /* Button{
         border: none;
-    }
-    Switch{
-        border: none;
+    } */
+    /* Switch{
+        border: ;
     } */
 
 
 
 }
 .caption{
-    /* padding: 0 2;
-    border: $background;
-    width: 20; */
     padding: 1 0;
     width: 30;
     content-align: center middle;

@@ -36,6 +36,7 @@ class HomeScreen(Screen[None]):
     ]
 
     def __init__(self, name=None, id=None, classes=None):
+        self.si = {}
         super().__init__(name, id, classes)
 
     def compose(self):

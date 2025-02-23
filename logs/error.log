@@ -18,3 +18,11 @@
 2025-02-16 07:18:13,461 - home.py - ERROR: 'HomeScreen' object has no attribute 'dtree' Function: change_directory in home.py
 2025-02-16 07:21:25,497 - home.py - ERROR: No nodes match '#dt' on HomeScreen(id='home-screen') Function: change_directory in home.py
 2025-02-16 21:28:28,456 - home.py - ERROR: 'System' object has no attribute 'shutdown' Function: execute_command in home.py
+2025-02-23 09:10:18,821 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
+2025-02-23 09:10:21,497 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
+2025-02-23 09:10:25,621 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
+2025-02-23 09:10:28,495 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
+2025-02-23 09:10:30,039 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
+2025-02-23 09:38:09,499 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
+2025-02-23 09:38:12,113 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
+2025-02-23 09:38:24,923 - home.py - ERROR: 'HomeScreen' object has no attribute 'si' Function: handle_files_click_input in home.py
