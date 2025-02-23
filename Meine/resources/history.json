@@ -29,5 +29,9 @@
     "rn zip as somethingszipfile",
     "cd zip",
     "del somethingszipfile",
-    "cd .."
+    "cd ..",
+    "del discord-0.0.86.deb",
+    "rn txt as text",
+    "rn text as txt",
+    "cwd"
 ]

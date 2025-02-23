@@ -1,15 +1,9 @@
-from os import chdir, listdir
-from pathlib import Path
+from os import chdir
 
-from rich.console import RenderableType
-from rich.text import Text
-from textual.app import ComposeResult
 from textual.containers import Container, Vertical
-from textual.reactive import reactive
-from textual.widget import Widget
-from textual.widgets import DataTable
+from textual.widgets import DataTable, Static
+from textual.events import Click
 
-from ..logger_config import logger
 from .directory_tree import DTree
 
 
@@ -23,6 +17,7 @@ class Directory_tree_container(Container):
         )
 
     def compose(self):
+        yield Static("Directory tree",id='directory-tree-container-header')
         yield self.dtree
         chdir(self.dtree.path)
 
@@ -34,6 +29,10 @@ class Directory_tree_container(Container):
     #     self.dtree.refresh()
     #     logger.info('hello wrold')
 
+    def _on_click(self, event: Click):
+        if event.widget.id == 'directory-tree-container-header':
+            self.dtree.reload()
+
 
 class Background_process_container(Container):
     def compose(self):
@@ -43,49 +42,3 @@ class Background_process_container(Container):
 
     def on_mount(self):
         self.dtable.add_columns("PID", "Command", "Status")
-
-
-import getpass
-import os
-import socket
-
-
-class HeaderCurrentPath(Widget):
-    path = reactive(None, layout=True)
-
-    def render(self) -> RenderableType:
-        if not self.path:
-            return ""
-
-        path = str(self.path.name)
-        root = str(self.path.parent) + os.path.sep
-        return Text.assemble((root, "dim"), (path, "bold"))
-
-
-class HeaderHost(Widget):
-    def render(self) -> RenderableType:
-        return "[dim]@[/]" + socket.gethostname()
-
-
-class HeaderUser(Widget):
-    def render(self) -> RenderableType:
-        return getpass.getuser()
-
-
-class Header(Widget):
-    def __init__(
-        self,
-        *,
-        name: str | None = None,
-        id: str | None = None,
-        classes: str | None = None,
-    ):
-        super().__init__(name=name, id=id, classes=classes)
-
-    def compose(self) -> ComposeResult:
-        yield HeaderUser(id="header-user")
-        yield HeaderHost(id="header-host")
-        yield HeaderCurrentPath(id="header-current-path")
-
-
-class CodeEditor(Container): ...

@@ -4,8 +4,7 @@ import time
 
 from textual.binding import Binding
 from textual.events import Click
-from textual.widgets import DirectoryTree, RichLog
-from textual.events import MouseDown
+from textual.widgets import DirectoryTree
 
 from Meine.screens.textarea import MeineTextAreaScreen
 from Meine.utils.file_loaders import load_settings
@@ -17,9 +16,9 @@ class DTree(DirectoryTree):
     auto_expand = False
 
     BINDINGS = [
-        Binding("left", "cd_parent_directory"),
+        # Binding("left", "cd_parent_directory"),
         Binding("home", "cd_home_directory", priority=True),
-        Binding("right", "select_focused_directory"),
+        # Binding("right", "select_focused_directory"),
     ]
 
     def __init__(self, path, *, name=None, id=None, classes=None, disabled=False):

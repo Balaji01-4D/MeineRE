@@ -6,7 +6,7 @@ Input{
 
 
 #main{
-    layout:horizontal;
+    layout: horizontal;
 }
 #IO{
     width: 100%;
@@ -14,13 +14,20 @@ Input{
 
 
 Directory_tree_container{
-    background:black;
     width: 30;
     height: 100%;
+    border: $panel;
+    background: $surface;
 
     #directory-tree{
         padding:  1 1;
-        border: $panel;
+        height: 100%;
+        width: 100%;
+    }
+    Static {
+        background: $surface;
+        content-align: center middle;
+
     }
 
 }
