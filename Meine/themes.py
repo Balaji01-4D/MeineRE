@@ -12,7 +12,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         dark=True,
     ),
     "monokai 1": Theme(
-        name="monokai",
+        name="monokai 0.1",
         primary="#F92672",  # Pink
         secondary="#66D9EF",  # Light Blue
         warning="#FD971F",  # Orange

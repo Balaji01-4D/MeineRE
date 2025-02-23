@@ -1,6 +1,6 @@
 {
     "show_hidden_files": false,
-    "text_editor_theme": "dracula",
-    "app_theme": "catppuccin-mocha",
+    "text_editor_theme": "vscode_dark",
+    "app_theme": "monokai",
     "directory-tree-dock": "right"
 }
