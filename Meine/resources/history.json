@@ -34,5 +34,16 @@
     "rn txt as text",
     "rn text as txt",
     "cwd",
-    "rn project as proj"
+    "rn project as proj",
+    "cwd",
+    "pwd",
+    "cwd",
+    "del python3",
+    "cwd",
+    "cwd",
+    "cwd",
+    "cwd",
+    "cwd",
+    "cwd",
+    "del ideaIC-2024.3.3.tar.gz"
 ]

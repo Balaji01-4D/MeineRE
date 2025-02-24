@@ -223,6 +223,7 @@ class HomeScreen(Screen[None]):
                 selected_node = tree.cursor_node.data.path
                 if selected_node == tree.root.data.path:
                     tree.path = selected_node.parent
+                    os.chdir(tree.path)
                 elif selected_node.is_dir():
                     tree.path = selected_node
                     os.chdir(tree.path)
