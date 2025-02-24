@@ -42,20 +42,26 @@ class HomeScreen(Screen[None]):
         )
         self.rich_log = RichLog(id="output")
 
-        self.sidebar = Directory_tree_container(
+        self.directory_tree_container = Directory_tree_container(
             classes="-hidden", id="directory-tree-container"
         )
-        self.sidebar.styles.dock = self.app.SETTINGS["directory-tree-dock"]
+        self.directory_tree_container.styles.dock = self.app.SETTINGS["directory-tree-dock"]
 
-        self.Dtree = self.sidebar.dtree
+        self.Dtree = self.directory_tree_container.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
         self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
 
         yield self.IO_container
-        yield self.sidebar
+        yield self.directory_tree_container
         yield self.bgprocess
 
     def key_ctrl_b(self):
+        """
+        Handles the Ctrl+B key press event.
+
+        Toggles the visibility of the background process by switching the
+        "-hidden" class, which shows or hides the background process element.
+        """
         self.bgprocess.toggle_class("-hidden")
 
     def handle_files_click_input(self, widget):
@@ -84,7 +90,6 @@ class HomeScreen(Screen[None]):
                 self.inputconsole.value = f"{input_text.strip()},{name}"
                 self.si[name] = selected_node
             elif not self.si and name in input_text:
-                """if user typed by his own"""
                 self.inputconsole.value = input_text.replace(name, "")
             else:
                 del self.si[name]
@@ -179,7 +184,13 @@ class HomeScreen(Screen[None]):
             self.bgrocess_table.remove_row(self.added_process)
 
     def key_ctrl_d(self):
-        self.sidebar.toggle_class("-hidden")
+        """
+        Handles the Ctrl+D key press event.
+
+        Toggles the visibility of the directory tree container by switching the
+        "-hidden" class, which shows or hides the directory tree element.
+        """
+        self.directory_tree_container.toggle_class("-hidden")
 
     async def change_directory(self, cmdpath: Path):
         try:

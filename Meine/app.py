@@ -70,18 +70,37 @@ class MeineAI(App[None]):
         )
 
     def key_ctrl_k(self):
+        """
+        Handles the Ctrl+K key press event.
+
+        If the current screen is the help screen, it pops the help screen
+        from the stack. Otherwise, it pushes the help screen onto the stack.
+        """
         if self.screen.id == HELP_SCREEN_ID:
             self.pop_screen()
         else:
             self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
 
     def key_ctrl_s(self):
+        """
+        Handles the Ctrl+S key press event.
+
+        If the current screen is the settings screen, it pops the settings
+        screen from the stack. Otherwise, it pushes the settings screen
+        onto the stack.
+        """
         if self.screen.id == SETTINGS_SCREEN_ID:
             self.pop_screen()
         else:
             self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
 
     def key_escape(self):
+        """
+        Handles the Escape key press event.
+
+        If the current screen is not the home screen, it pops the current
+        screen from the stack.
+        """
         if self.screen.id != HOME_SCREEN_ID:
             self.pop_screen()
         else:
