@@ -45,5 +45,7 @@
     "cwd",
     "cwd",
     "cwd",
-    "del ideaIC-2024.3.3.tar.gz"
+    "del ideaIC-2024.3.3.tar.gz",
+    "cwd",
+    "rn txt as text"
 ]

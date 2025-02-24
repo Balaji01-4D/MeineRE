@@ -3,13 +3,11 @@ import asyncio
 from pathlib import Path
 
 from rich.panel import Panel
-from textual.binding import Binding
 from textual.events import Click
 from textual.screen import Screen
 from textual.widgets import DataTable, DirectoryTree, Input, RichLog
 
 from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
-from Meine.logger_config import logger
 from Meine.main import CLI
 from Meine.utils.file_editor import save_history
 from Meine.utils.file_loaders import load_history
@@ -30,10 +28,6 @@ class HomeScreen(Screen[None]):
 
     HISTORY = load_history()
     HISTORY_INDEX = len(HISTORY)
-
-    BINDINGS = [
-        Binding("ctrl+d", "toggle_sidebar", show=False, priority=True),
-    ]
 
     def __init__(self, name=None, id=None, classes=None):
         self.si = {}
@@ -74,7 +68,7 @@ class HomeScreen(Screen[None]):
             name = qoutes_for_spaced_name(selected_node.name)
             input_text = self.inputconsole.value
 
-            if not self.si and name not in input_text:  # add name
+            if not self.si and name not in input_text:
                 self.inputconsole.value = f"{input_text.strip()} {name}"
                 self.si[name] = selected_node
             elif name in self.si and name not in input_text:
@@ -86,10 +80,10 @@ class HomeScreen(Screen[None]):
                     else:
                         self.inputconsole.value = f"{input_text} {name}"
 
-            elif self.si and name not in input_text:  # add name
+            elif self.si and name not in input_text:
                 self.inputconsole.value = f"{input_text.strip()},{name}"
                 self.si[name] = selected_node
-            elif not self.si and name in input_text:  # remove name
+            elif not self.si and name in input_text:
                 """if user typed by his own"""
                 self.inputconsole.value = input_text.replace(name, "")
             else:
@@ -102,9 +96,6 @@ class HomeScreen(Screen[None]):
         except Exception as e:
             self.rich_log.write(f"error clicks {e}")
 
-            logger.error(
-                f"{e} Function: {self.handle_files_click_input.__name__} in {Path(__file__).name}"
-            )
 
     async def on_input_submitted(self, event: Input.Submitted):
         try:
@@ -134,7 +125,6 @@ class HomeScreen(Screen[None]):
                                     if cmdpath.is_file()
                                     else f"{cmdpath} Not Found"
                                 )
-                                logger.info(f"{cmdpath.is_dir()}")
                                 self.notify(message=message, severity="error")
 
                         elif "cwd" in cmd:
@@ -152,15 +142,12 @@ class HomeScreen(Screen[None]):
                         self.rich_log.write(f"[error] {str(e)}")
             self.HISTORY.append(cmd)
             save_history(self.HISTORY)
-            self.query_one("#directory-tree").refresh()
+            self.Dtree.reload()
             self.HISTORY_index = len(self.HISTORY)
             event.input.value = ""
 
         except PermissionError as e:
-            self.rich_log.write(f"error {str(e)}")
-            logger.error(
-                f"{e} Function: {self.on_input_submitted.__name__} in {Path(__file__).name}"
-            )
+            None
 
     async def execute_command(self, cmd: str):
         self.bgrocess_table = self.query_one(DataTable)
@@ -172,7 +159,6 @@ class HomeScreen(Screen[None]):
             )
 
             result = await self.executable
-            logger.info(str(self.added_process))
             if not isinstance(result, Panel):
                 self.rich_log.write(Panel(result, expand=False))
             else:
@@ -189,13 +175,10 @@ class HomeScreen(Screen[None]):
             self.bgrocess_table.remove_row(self.added_process)
 
         except Exception as e:
-            logger.error(
-                f"{e} Function: {self.execute_command.__name__} in {Path(__file__).name}"
-            )
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
             self.bgrocess_table.remove_row(self.added_process)
 
-    def action_toggle_sidebar(self):
+    def key_ctrl_d(self):
         self.sidebar.toggle_class("-hidden")
 
     async def change_directory(self, cmdpath: Path):
@@ -209,9 +192,6 @@ class HomeScreen(Screen[None]):
         except PermissionError:
             self.rich_log.write("error Permission Denied")
         except Exception as e:
-            logger.error(
-                f"{e} Function: {self.change_directory.__name__} in {Path(__file__).name}"
-            )
             self.rich_log.write(f"error Error changing directory: {e}")
 
     def on_click(self, event: Click):
@@ -255,7 +235,6 @@ class HomeScreen(Screen[None]):
                 chunk = file.read(block_size)
 
                 if b"\x00" in chunk:
-                    print("in chunk")
                     return False
 
                 try:
