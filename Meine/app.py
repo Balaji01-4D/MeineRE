@@ -80,13 +80,11 @@ class MeineAI(App[None]):
             None
 
     def key_ctrl_s(self):
-        try:
-            if self.screen_stack[-1].id != SETTINGS_SCREEN_ID:
-                self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
-            else:
-                self.pop_screen()
-        except Exception as e:
-            None
+        if (self.screen.id == SETTINGS_SCREEN_ID):
+            self.pop_screen()
+        else :
+            self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
+
 
     def key_escape(self):
         try:
