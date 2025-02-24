@@ -24,19 +24,6 @@ BUILTIN_THEMES: dict[str, Theme] = {
         panel="#3E3D32",  # Same as surface for consistency
         dark=True,
     ),
-    "nautilus": Theme(
-        name="nautilus",
-        primary="#0077BE",  # Ocean Blue
-        secondary="#20B2AA",  # Light Sea Green
-        warning="#FFD700",  # Gold (like sunlight on water)
-        error="#FF6347",  # Tomato (like a warning buoy)
-        success="#32CD32",  # Lime Green (like seaweed)
-        accent="#FF8C00",  # Dark Orange (like a sunset over water)
-        dark=True,
-        background="#001F3F",  # Dark Blue (deep ocean)
-        surface="#003366",  # Navy Blue (shallower water)
-        panel="#005A8C",  # Steel Blue (water surface)
-    ),
     "galaxy": Theme(
         name="galaxy",
         primary="#8A2BE2",  # Improved Deep Magenta (Blueviolet)
@@ -153,124 +140,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#2D1E2F",  # Dark Purple
         surface="#3B2E50",  # Muted Dark Blue
         panel="#503571",  # Deep Magenta
-    ),
-    "solarized": Theme(
-        name="solarized",
-        primary="#268BD2",  # Blue
-        secondary="#2AA198",  # Cyan
-        warning="#B58900",  # Yellow-Gold
-        error="#DC322F",  # Red
-        success="#859900",  # Green
-        accent="#D33682",  # Magenta
-        dark=True,
-        background="#002B36",  # Dark Cyan
-        surface="#073642",  # Darker Cyan
-        panel="#586E75",  # Muted Gray
-    ),
-    "vintage": Theme(
-        name="vintage",
-        primary="#8B4513",  # Saddle Brown
-        secondary="#C0A080",  # Muted Beige
-        warning="#E6C200",  # Old Gold
-        error="#A52A2A",  # Brick Red
-        success="#228B22",  # Forest Green
-        accent="#D2691E",  # Chocolate
-        dark=False,
-        background="#F5DEB3",  # Wheat
-        surface="#EED8AE",  # Light Tan
-        panel="#CDAF95",  # Warm Brown
-    ),
-    "steampunk": Theme(
-        name="steampunk",
-        primary="#A67C52",  # Brass
-        secondary="#D4AF37",  # Gold
-        warning="#E4B800",  # Amber
-        error="#8B0000",  # Dark Red
-        success="#556B2F",  # Dark Olive Green
-        accent="#B8860B",  # Bronze
-        dark=True,
-        background="#2B1B17",  # Dark Sepia
-        surface="#3D2B1F",  # Deep Brown
-        panel="#4E3D28",  # Aged Brass
-    ),
-    "forest": Theme(
-        name="forest",
-        primary="#2E8B57",  # Sea Green
-        secondary="#8FBC8F",  # Dark Sea Green
-        warning="#FFD700",  # Gold
-        error="#8B0000",  # Dark Red
-        success="#006400",  # Dark Green
-        accent="#A0522D",  # Sienna
-        dark=True,
-        background="#0B3D02",  # Deep Green
-        surface="#1B5E20",  # Forest Green
-        panel="#2E7D32",  # Vibrant Green
-    ),
-    "midnight": Theme(
-        name="midnight",
-        primary="#191970",  # Midnight Blue
-        secondary="#4682B4",  # Steel Blue
-        warning="#FFD700",  # Gold
-        error="#B22222",  # Firebrick
-        success="#32CD32",  # Lime Green
-        accent="#9370DB",  # Medium Purple
-        dark=True,
-        background="#000814",  # Almost Black
-        surface="#001B33",  # Deep Navy
-        panel="#002B5B",  # Muted Blue
-    ),
-    "desert": Theme(
-        name="desert",
-        primary="#DAA520",  # Goldenrod
-        secondary="#CD853F",  # Peru
-        warning="#FF8C00",  # Dark Orange
-        error="#A52A2A",  # Brown
-        success="#8B4513",  # Saddle Brown
-        accent="#F4A460",  # Sandy Brown
-        dark=False,
-        background="#EED8AE",  # Sand
-        surface="#DEB887",  # Burlywood
-        panel="#CDAA7D",  # Warm Tan
-    ),
-    "iceberg": Theme(
-        name="iceberg",
-        primary="#5DADE2",  # Sky Blue
-        secondary="#AEDFF7",  # Light Blue
-        warning="#FFD700",  # Gold
-        error="#FF4500",  # Orange Red
-        success="#50C878",  # Emerald Green
-        accent="#4682B4",  # Steel Blue
-        dark=False,
-        background="#F0F8FF",  # Alice Blue
-        surface="#D6EAF8",  # Soft Blue
-        panel="#A9CCE3",  # Light Steel Blue
-    ),
-    "glass": Theme(
-        name="glass",
-        primary="rgba(255, 255, 255, 0.8)",  # Soft White
-        secondary="rgba(200, 200, 200, 0.6)",  # Light Gray
-        warning="rgba(255, 200, 0, 0.7)",  # Golden Yellow
-        error="rgba(255, 80, 80, 0.7)",  # Soft Red
-        success="rgba(50, 205, 50, 0.7)",  # Lime Green
-        accent="rgba(173, 216, 230, 0.7)",  # Light Blue
-        dark=False,
-        background="rgba(240, 240, 240, 0.2)",  # Very Light Transparent Gray
-        surface="rgba(220, 220, 220, 0.3)",  # Lighter Transparent Gray
-        panel="rgba(200, 200, 200, 0.4)",  # Slightly Darker Gray
-    ),
-    "frosted": Theme(
-        name="frosted",
-        primary="rgba(180, 220, 255, 0.8)",  # Soft Ice Blue
-        secondary="rgba(120, 180, 255, 0.7)",  # Muted Blue
-        warning="rgba(255, 210, 50, 0.7)",  # Warm Yellow
-        error="rgba(255, 99, 71, 0.7)",  # Tomato Red
-        success="rgba(60, 179, 113, 0.7)",  # Medium Sea Green
-        accent="rgba(255, 160, 122, 0.7)",  # Light Coral
-        dark=True,
-        background="rgba(0, 0, 50, 0.3)",  # Dark Blue Tint
-        surface="rgba(20, 20, 70, 0.4)",  # Slightly Lighter Blue Tint
-        panel="rgba(40, 40, 90, 0.5)",  # More Transparent Blue Tint
-    ),
+    )
 }
 
 
