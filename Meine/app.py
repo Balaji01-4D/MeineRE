@@ -49,7 +49,7 @@ class MeineAI(App[None]):
         self, driver_class=None, css_path=None, watch_css=False, ansi_color=False
     ):
         super().__init__(driver_class, css_path, watch_css, ansi_color)
-        self.themes = BUILTIN_THEMES
+        self.more_themes = BUILTIN_THEMES
 
     async def on_mount(self):
 
@@ -70,28 +70,22 @@ class MeineAI(App[None]):
         )
 
     def key_ctrl_k(self):
-        try:
-            if self.screen_stack[-1] == "help_screen":
-                self.pop_screen()
-            else:
-                self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
-                self.notify("Help Screen")
-        except:
-            None
+        if self.screen.id == HELP_SCREEN_ID:
+            self.pop_screen()
+        else:
+            self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
 
     def key_ctrl_s(self):
-        if (self.screen.id == SETTINGS_SCREEN_ID):
+        if self.screen.id == SETTINGS_SCREEN_ID:
             self.pop_screen()
-        else :
+        else:
             self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
 
-
     def key_escape(self):
-        try:
-            if self.screen_stack[-1].id != HOME_SCREEN_ID:
-                self.pop_screen()
-        except Exception as e:
-            None
+        if self.screen.id != HOME_SCREEN_ID:
+            self.pop_screen()
+        else:
+            self.notify("You are in the home screen")
 
     def safe_shutdown(self):
         try:
@@ -114,9 +108,6 @@ class MeineAI(App[None]):
                 self.set_timer(5, self.exit)
             else:
                 self.notify(e.message)
-
-    def change_directory_tree_dock(self, value):
-        self.query_one("#directory-tree-container").styles.dock = value
 
     def push_NameGetter_screen(self, title, callback):
         self.push_screen(NameGetterScreen(title, callback))

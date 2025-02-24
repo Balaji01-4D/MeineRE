@@ -1,6 +1,6 @@
 {
     "show_hidden_files": false,
-    "text_editor_theme": "vscode_dark",
+    "text_editor_theme": "github_light",
     "app_theme": "monokai",
     "directory-tree-dock": "right"
 }
