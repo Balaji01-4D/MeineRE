@@ -5,7 +5,6 @@ import platformdirs
 from textual.binding import Binding
 from textual.widgets import Input, DirectoryTree
 
-from Meine.logger_config import logger
 from Meine.utils.file_loaders import load_Path_expansion
 
 actions = [
@@ -153,9 +152,7 @@ class MeineInput(Input):
                 self.history_index = len(self.history)
                 self.value = ""
         except Exception as e:
-            logger.error(
-                f"{e} Function: {self.action_history_down.__name__} in {Path(__file__).name}"
-            )
+
             None
 
     def on_input_submitted(self):

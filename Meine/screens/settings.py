@@ -1,10 +1,9 @@
 from pathlib import Path
-import select
 
 from textual.containers import Container, Horizontal
 from textual.events import Click
 from textual.screen import ModalScreen
-from textual.widgets import Button, Input, Select, Static, Switch, TextArea
+from textual.widgets import Button, Input, Select, Static, Switch
 
 
 from Meine.screens.me import Myself
@@ -14,7 +13,6 @@ from Meine.utils.file_editor import clear_history, save_settings
 class Settings(ModalScreen):
 
     def __init__(self, name=None, id=None, classes=None):
-        self.app_settings = self.app.SETTINGS
         super().__init__(name, id, classes)
 
     CSS_PATH = Path(__file__).parent.parent / "tcss/setting.css"
@@ -53,6 +51,7 @@ class Settings(ModalScreen):
             prompt="choose a theme",
             allow_blank=False,
             id="select-text-area-theme",
+            value=self.app.SETTINGS["text_editor_theme"]
         )
 
         self.select_directory_tree_dock = Select(
@@ -68,7 +67,7 @@ class Settings(ModalScreen):
             Horizontal(
                 Static("show hidden files", classes="caption"),
                 Switch(
-                    id="hidden_files_sw", value=self.app_settings["show_hidden_files"]
+                    id="hidden_files_sw", value=self.app.SETTINGS["show_hidden_files"]
                 ),
             ),
             Horizontal(
@@ -108,11 +107,9 @@ class Settings(ModalScreen):
 
     def on_switch_changed(self, event: Switch.Changed) -> None:
         if event.switch.id == "hidden_files_sw":
-            self.app_settings["show_hidden_files"] = event.value
-        save_settings(self.app_settings)
+            self.app.SETTINGS["show_hidden_files"] = event.value
 
     def _on_mount(self) -> None:
-
         self.select_app_theme.value = self.app.theme
 
     def on_select_changed(self, event: Select.Changed) -> None:
@@ -130,7 +127,6 @@ class Settings(ModalScreen):
             ).styles.dock = event.value
             self.app.SETTINGS["directory-tree-dock"] = event.value
 
-        save_settings(self.app.SETTINGS)
 
 
 class NameGetterScreen(ModalScreen):

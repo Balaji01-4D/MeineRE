@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import time
 
 from textual.binding import Binding
 from textual.events import Click

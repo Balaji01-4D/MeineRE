@@ -3,14 +3,16 @@ from functools import partial
 from textual.app import App, SystemCommand
 from textual.command import Hit, Hits, Provider
 
+from Meine.utils.file_editor import save_history
 from Meine.Actions.system import System
 from Meine.exceptions import InfoNotify
 from Meine.screens.help import HelpScreen
 from Meine.screens.home import HomeScreen
 from Meine.screens.settings import NameGetterScreen, Settings
 from Meine.utils.file_editor import add_custom_path_expansion
-from Meine.utils.file_loaders import load_settings
+from Meine.utils.file_loaders import load_settings, load_history
 from Meine.themes import BUILTIN_THEMES
+from Meine.utils.file_editor import clear_history, save_settings
 
 HOME_SCREEN_ID = "home-screen"
 HELP_SCREEN_ID = "help-screen"
@@ -42,6 +44,9 @@ class CustomCommand(Provider):
 class MeineAI(App[None]):
 
     SETTINGS = load_settings()
+
+    HISTORY = load_history()
+
 
     COMMANDS = App.COMMANDS | {CustomCommand}
 
@@ -80,6 +85,12 @@ class MeineAI(App[None]):
             self.pop_screen()
         else:
             self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
+
+    def _on_exit_app(self):
+        """ check here"""
+        save_history(self.HISTORY)
+        save_settings(self.SETTINGS)
+        return super()._on_exit_app()
 
     def key_ctrl_s(self):
         """

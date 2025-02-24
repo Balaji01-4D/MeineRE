@@ -9,8 +9,6 @@ from textual.widgets import DataTable, DirectoryTree, Input, RichLog
 
 from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
 from Meine.main import CLI
-from Meine.utils.file_editor import save_history
-from Meine.utils.file_loaders import load_history
 from Meine.widgets.containers import (
     Background_process_container,
     Container,
@@ -26,10 +24,9 @@ class HomeScreen(Screen[None]):
 
     CSS_PATH = Path(__file__).parent.parent / "tcss/app.css"
 
-    HISTORY = load_history()
-    HISTORY_INDEX = len(HISTORY)
 
     def __init__(self, name=None, id=None, classes=None):
+        self.HISTORY_INDEX = len(self.app.HISTORY)
         self.si = {}
         super().__init__(name, id, classes)
 
@@ -37,7 +34,7 @@ class HomeScreen(Screen[None]):
         self.inputconsole = MeineInput(
             placeholder="Enter command....",
             id="command-input",
-            history=self.HISTORY,
+            history=self.app.HISTORY,
             history_index=self.HISTORY_INDEX,
         )
         self.rich_log = RichLog(id="output")
@@ -145,14 +142,15 @@ class HomeScreen(Screen[None]):
                             )
                     except Exception as e:
                         self.rich_log.write(f"[error] {str(e)}")
-            self.HISTORY.append(cmd)
-            save_history(self.HISTORY)
-            self.Dtree.reload()
-            self.HISTORY_index = len(self.HISTORY)
+            self.app.HISTORY.append(cmd)
+            self.HISTORY_index = len(self.app.HISTORY)
             event.input.value = ""
 
         except PermissionError as e:
             None
+    def key_ctrl_r(self):
+        self.Dtree.reload()
+
 
     async def execute_command(self, cmd: str):
         self.bgrocess_table = self.query_one(DataTable)
