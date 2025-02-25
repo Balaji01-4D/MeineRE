@@ -71,6 +71,11 @@ class MeineAI(App[None]):
             "reboot", "reboot the system after 1 Minute", self.safe_reboot
         )
 
+    def _on_exit_app(self):
+        save_history(self.HISTORY)
+        save_settings(self.SETTINGS)
+        return super()._on_exit_app()
+
     def key_ctrl_k(self):
         """
         Handles the Ctrl+K key press event.
@@ -80,14 +85,12 @@ class MeineAI(App[None]):
         """
         if self.screen.id == HELP_SCREEN_ID:
             self.pop_screen()
+        elif (self.screen.id == SETTINGS_SCREEN_ID):
+            self.switch_screen(HelpScreen(id=HELP_SCREEN_ID))
         else:
             self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
 
-    def _on_exit_app(self):
-        """ check here"""
-        save_history(self.HISTORY)
-        save_settings(self.SETTINGS)
-        return super()._on_exit_app()
+
 
     def key_ctrl_s(self):
         """
@@ -99,6 +102,8 @@ class MeineAI(App[None]):
         """
         if self.screen.id == SETTINGS_SCREEN_ID:
             self.pop_screen()
+        elif (self.screen.id == HELP_SCREEN_ID):
+            self.switch_screen(Settings(id=SETTINGS_SCREEN_ID))
         else:
             self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
 
