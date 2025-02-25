@@ -5,7 +5,7 @@ import platformdirs
 from textual.binding import Binding
 from textual.widgets import Input, DirectoryTree
 
-from Meine.utils.file_loaders import load_Path_expansion
+from Meine.utils.file_manager import load_Path_expansion
 
 actions = [
     "uz",

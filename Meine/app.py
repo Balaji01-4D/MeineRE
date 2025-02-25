@@ -3,16 +3,13 @@ from functools import partial
 from textual.app import App, SystemCommand
 from textual.command import Hit, Hits, Provider
 
-from Meine.utils.file_editor import save_history
 from Meine.Actions.system import System
 from Meine.exceptions import InfoNotify
 from Meine.screens.help import HelpScreen
 from Meine.screens.home import HomeScreen
 from Meine.screens.settings import NameGetterScreen, Settings
-from Meine.utils.file_editor import add_custom_path_expansion
-from Meine.utils.file_loaders import load_settings, load_history
 from Meine.themes import BUILTIN_THEMES
-from Meine.utils.file_editor import clear_history, save_settings
+from Meine.utils.file_manager import save_history, save_settings, load_history, add_custom_path_expansion, load_settings
 
 HOME_SCREEN_ID = "home-screen"
 HELP_SCREEN_ID = "help-screen"

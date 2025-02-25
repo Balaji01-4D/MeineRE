@@ -1,6 +1,6 @@
 {
     "show_hidden_files": false,
     "text_editor_theme": "dracula",
-    "app_theme": "textual-dark",
+    "app_theme": "gruvbox",
     "directory-tree-dock": "left"
 }
