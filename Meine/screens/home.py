@@ -16,6 +16,7 @@ from Meine.widgets.containers import (
 )
 from Meine.screens.textarea import MeineTextAreaScreen
 from Meine.widgets.input import MeineInput
+from Meine.utils.file_manager import load_random_quote
 
 
 class HomeScreen(Screen[None]):
@@ -54,7 +55,7 @@ class HomeScreen(Screen[None]):
         yield self.bgprocess
 
     def _on_mount(self, event):
-        self.title = "Feel Pain Accept Pain and Know Pain , Those who do not know the pain will never understand true Peace - Pain"
+        self.title = load_random_quote()
 
 
     def key_ctrl_b(self):

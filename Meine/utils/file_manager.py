@@ -1,14 +1,18 @@
 import json
 from json import dump
 from pathlib import Path
+import random
 
 import xdialog
 
 from Meine.exceptions import InfoNotify
 
-HISTORY_JSON_PATH: Path = Path(__file__).parent.parent / "resources/history.json"
-SETTINGS_JSON_PATH: Path = Path(__file__).parent.parent / "resources/settings.json"
-CUSTOM_PATH_EXPANSION_JSON_PATH: Path = Path(__file__).parent.parent / "resources/customs.json"
+RESOURCE_PATH = Path(__file__).parent.parent / "resources"
+
+HISTORY_JSON_PATH: Path = RESOURCE_PATH / "history.json"
+SETTINGS_JSON_PATH: Path = RESOURCE_PATH / "settings.json"
+CUSTOM_PATH_EXPANSION_JSON_PATH: Path = RESOURCE_PATH / "customs.json"
+QOUTES_PATH: Path = RESOURCE_PATH / "quotes.json"
 
 
 def save_history(history: list[str]) -> None:
@@ -66,3 +70,13 @@ def load_custom_urls() -> dict[str]:
         text_data = file.read().strip()
         data = json.loads(text_data)
         return data["urls"]
+
+
+def load_random_quote() -> str:
+    """load a random quote from the resource/quoutes.json"""
+    with open(QOUTES_PATH,'r') as file:
+        data = file.read()
+        quotes_list = json.loads(data)
+        random_number = random.randint(1,len(quotes_list))
+        return quotes_list[random_number]
+
