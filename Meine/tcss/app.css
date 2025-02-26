@@ -11,6 +11,10 @@ Input{
 #IO{
     width: 100%;
 }
+Header{
+    color: $primary-lighten-1;
+    text-align: center;
+}
 
 
 Directory_tree_container{

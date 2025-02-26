@@ -40,10 +40,6 @@ class CustomCommand(Provider):
 
 class MeineAI(App[None]):
 
-    SETTINGS = load_settings()
-
-    HISTORY = load_history()
-
 
     COMMANDS = App.COMMANDS | {CustomCommand}
 
@@ -54,7 +50,8 @@ class MeineAI(App[None]):
         self.more_themes = BUILTIN_THEMES
 
     async def on_mount(self):
-
+        self.SETTINGS = load_settings()
+        self.HISTORY = load_history()
         await self.push_screen(HomeScreen(id=HOME_SCREEN_ID))
         for theme in BUILTIN_THEMES.values():
             self.register_theme(theme)

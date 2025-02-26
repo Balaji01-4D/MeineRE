@@ -5,7 +5,7 @@ from pathlib import Path
 from rich.panel import Panel
 from textual.events import Click
 from textual.screen import Screen
-from textual.widgets import DataTable, DirectoryTree, Input, RichLog
+from textual.widgets import DataTable, DirectoryTree, Input, RichLog, Header
 
 from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
 from Meine.main import CLI
@@ -48,9 +48,14 @@ class HomeScreen(Screen[None]):
         self.bgprocess = Background_process_container(classes="-hidden")
         self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
 
+        yield Header()
         yield self.IO_container
         yield self.directory_tree_container
         yield self.bgprocess
+
+    def _on_mount(self, event):
+        self.title = "Feel Pain Accept Pain and Know Pain , Those who do not know the pain will never understand true Peace - Pain"
+
 
     def key_ctrl_b(self):
         """
