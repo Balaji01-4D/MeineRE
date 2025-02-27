@@ -5,5 +5,17 @@
     "ls",
     "ram",
     "cwd",
-    "pwd"
+    "pwd",
+    "ram",
+    "system",
+    "disk",
+    "cpu",
+    "ram",
+    "ip",
+    "key",
+    "me",
+    "time",
+    "user",
+    "ram",
+    "cpu"
 ]
