@@ -24,7 +24,6 @@ class DTree(DirectoryTree):
         super().__init__(path, name=name, id=id, classes=classes, disabled=disabled)
         self.previous_file = None
 
-
     # def on_directory_tree_directory_selected(
     #     self, event: DirectoryTree.DirectorySelected
     # ):
@@ -94,8 +93,6 @@ class DTree(DirectoryTree):
         except Exception:
             return False
 
-
-
     # def _on_mouse_down(self, event: MouseDown):
     #     if event.ctrl:
     #         self.screen.handle_files_click_input(event.widget)
@@ -103,12 +100,11 @@ class DTree(DirectoryTree):
     #         time.sleep(0.2)
     #         self.notify(f"x = {event.x} y = {event.y} {self.cursor_node}")
 
-
     def on_clicks(self, event: Click):
         try:
             if event.ctrl:
                 self.screen.handle_files_click_input(event.widget)
-            else :
+            else:
                 selected_node = self.cursor_node
                 if selected_node == self.root:
                     self.path = selected_node.parent

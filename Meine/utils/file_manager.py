@@ -27,7 +27,7 @@ def clear_history() -> None:
         json.dump([], file, indent=4)
 
 
-def save_settings(settings: dict[str,str]) -> None:
+def save_settings(settings: dict[str, str]) -> None:
     """save the settings by passing the new settings"""
     with open(SETTINGS_JSON_PATH, "w") as file:
         dump(settings, file, indent=4)
@@ -74,9 +74,8 @@ def load_custom_urls() -> dict[str]:
 
 def load_random_quote() -> str:
     """load a random quote from the resource/quoutes.json"""
-    with open(QOUTES_PATH,'r') as file:
+    with open(QOUTES_PATH, "r") as file:
         data = file.read()
         quotes_list = json.loads(data)
-        random_number = random.randint(1,len(quotes_list))
+        random_number = random.randint(1, len(quotes_list))
         return quotes_list[random_number]
-

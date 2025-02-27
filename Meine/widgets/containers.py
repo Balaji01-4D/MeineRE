@@ -17,7 +17,7 @@ class Directory_tree_container(Container):
         )
 
     def compose(self):
-        yield Static("Directory tree",id='directory-tree-container-header')
+        yield Static("Directory tree", id="directory-tree-container-header")
         yield self.dtree
         chdir(self.dtree.path)
 
@@ -30,7 +30,7 @@ class Directory_tree_container(Container):
     #     logger.info('hello wrold')
 
     def _on_click(self, event: Click):
-        if event.widget.id == 'directory-tree-container-header':
+        if event.widget.id == "directory-tree-container-header":
             self.dtree.reload()
 
 

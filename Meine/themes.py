@@ -140,7 +140,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#2D1E2F",  # Dark Purple
         surface="#3B2E50",  # Muted Dark Blue
         panel="#503571",  # Deep Magenta
-    )
+    ),
 }
 
 

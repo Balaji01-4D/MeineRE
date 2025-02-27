@@ -51,7 +51,7 @@ class Settings(ModalScreen):
             prompt="choose a theme",
             allow_blank=False,
             id="select-text-area-theme",
-            value=self.app.SETTINGS["text_editor_theme"]
+            value=self.app.SETTINGS["text_editor_theme"],
         )
 
         self.select_directory_tree_dock = Select(
@@ -126,7 +126,6 @@ class Settings(ModalScreen):
                 "#directory-tree-container"
             ).styles.dock = event.value
             self.app.SETTINGS["directory-tree-dock"] = event.value
-
 
 
 class NameGetterScreen(ModalScreen):

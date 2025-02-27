@@ -25,7 +25,6 @@ class HomeScreen(Screen):
 
     CSS_PATH: Path = Path(__file__).parent.parent / "tcss/app.css"
 
-
     def __init__(self, name=None, id=None, classes=None):
         self.HISTORY_INDEX = len(self.app.HISTORY)
         self.si = {}
@@ -43,11 +42,15 @@ class HomeScreen(Screen):
         self.directory_tree_container = Directory_tree_container(
             classes="-hidden", id="directory-tree-container"
         )
-        self.directory_tree_container.styles.dock = self.app.SETTINGS["directory-tree-dock"]
+        self.directory_tree_container.styles.dock = self.app.SETTINGS[
+            "directory-tree-dock"
+        ]
 
         self.Dtree = self.directory_tree_container.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
-        self.input_output_container = Container(self.rich_log, self.inputconsole, id="IO")
+        self.input_output_container = Container(
+            self.rich_log, self.inputconsole, id="IO"
+        )
 
         yield Header()
         with Container():
@@ -57,7 +60,6 @@ class HomeScreen(Screen):
 
     def _on_mount(self) -> None:
         self.title = load_random_quote()
-
 
     def key_ctrl_b(self):
         """
@@ -71,7 +73,7 @@ class HomeScreen(Screen):
     def handle_files_click_input(self, widget) -> None:
 
         def qoutes_for_spaced_name(name: str) -> None:
-            """returns quoted string if there is whitespace otherwise same """
+            """returns quoted string if there is whitespace otherwise same"""
             return f"'{name}'" if (" " in name) else name
 
         try:
@@ -105,7 +107,6 @@ class HomeScreen(Screen):
 
         except Exception as e:
             self.rich_log.write(f"error clicks {e}")
-
 
     async def on_input_submitted(self, event: Input.Submitted) -> None:
         try:
@@ -159,7 +160,6 @@ class HomeScreen(Screen):
 
     def key_ctrl_r(self) -> None:
         self.Dtree.reload()
-
 
     async def execute_command(self, cmd: str) -> None:
         self.bgrocess_table = self.query_one(DataTable)

@@ -9,7 +9,13 @@ from Meine.screens.help import HelpScreen
 from Meine.screens.home import HomeScreen
 from Meine.screens.settings import NameGetterScreen, Settings
 from Meine.themes import BUILTIN_THEMES
-from Meine.utils.file_manager import save_history, save_settings, load_history, add_custom_path_expansion, load_settings
+from Meine.utils.file_manager import (
+    save_history,
+    save_settings,
+    load_history,
+    add_custom_path_expansion,
+    load_settings,
+)
 
 HOME_SCREEN_ID = "home-screen"
 HELP_SCREEN_ID = "help-screen"
@@ -39,7 +45,6 @@ class CustomCommand(Provider):
 
 
 class MeineAI(App[None]):
-
 
     COMMANDS = App.COMMANDS | {CustomCommand}
 
@@ -82,12 +87,10 @@ class MeineAI(App[None]):
         """
         if self.screen.id == HELP_SCREEN_ID:
             self.pop_screen()
-        elif (self.screen.id == SETTINGS_SCREEN_ID):
+        elif self.screen.id == SETTINGS_SCREEN_ID:
             self.switch_screen(HelpScreen(id=HELP_SCREEN_ID))
         else:
             self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
-
-
 
     def key_ctrl_s(self):
         """
@@ -99,7 +102,7 @@ class MeineAI(App[None]):
         """
         if self.screen.id == SETTINGS_SCREEN_ID:
             self.pop_screen()
-        elif (self.screen.id == HELP_SCREEN_ID):
+        elif self.screen.id == HELP_SCREEN_ID:
             self.switch_screen(Settings(id=SETTINGS_SCREEN_ID))
         else:
             self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
