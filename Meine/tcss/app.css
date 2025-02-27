@@ -3,8 +3,6 @@ Input{
     background: $surface;
 }
 
-
-
 #main{
     layout: horizontal;
 }
@@ -20,18 +18,19 @@ Header{
 
 Directory_tree_container{
     width: 30;
-    height: 100%;
     border: $panel;
     background: $surface;
 
     #directory-tree{
         padding:  1 1;
-        height: 100%;
         width: 100%;
+
     }
     Static {
         background: $surface;
         content-align: center middle;
+        text-style: italic;
+        color: $text;
 
     }
 

@@ -50,9 +50,10 @@ class HomeScreen(Screen[None]):
         self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
 
         yield Header()
-        yield self.IO_container
-        yield self.directory_tree_container
-        yield self.bgprocess
+        with Container():
+            yield self.IO_container
+            yield self.directory_tree_container
+            yield self.bgprocess
 
     def _on_mount(self, event):
         self.title = load_random_quote()
