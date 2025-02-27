@@ -19,11 +19,11 @@ from Meine.widgets.input import MeineInput
 from Meine.utils.file_manager import load_random_quote
 
 
-class HomeScreen(Screen[None]):
+class HomeScreen(Screen):
 
     AUTO_FOCUS = "#command-input"
 
-    CSS_PATH = Path(__file__).parent.parent / "tcss/app.css"
+    CSS_PATH: Path = Path(__file__).parent.parent / "tcss/app.css"
 
 
     def __init__(self, name=None, id=None, classes=None):
@@ -47,15 +47,15 @@ class HomeScreen(Screen[None]):
 
         self.Dtree = self.directory_tree_container.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
-        self.IO_container = Container(self.rich_log, self.inputconsole, id="IO")
+        self.input_output_container = Container(self.rich_log, self.inputconsole, id="IO")
 
         yield Header()
         with Container():
-            yield self.IO_container
+            yield self.input_output_container
             yield self.directory_tree_container
             yield self.bgprocess
 
-    def _on_mount(self, event):
+    def _on_mount(self) -> None:
         self.title = load_random_quote()
 
 
@@ -68,9 +68,10 @@ class HomeScreen(Screen[None]):
         """
         self.bgprocess.toggle_class("-hidden")
 
-    def handle_files_click_input(self, widget):
+    def handle_files_click_input(self, widget) -> None:
 
-        def qoutes_for_spaced_name(name: str):
+        def qoutes_for_spaced_name(name: str) -> None:
+            """returns quoted string if there is whitespace otherwise same """
             return f"'{name}'" if (" " in name) else name
 
         try:
@@ -106,7 +107,7 @@ class HomeScreen(Screen[None]):
             self.rich_log.write(f"error clicks {e}")
 
 
-    async def on_input_submitted(self, event: Input.Submitted):
+    async def on_input_submitted(self, event: Input.Submitted) -> None:
         try:
             cmd = event.value.strip()
             try:
@@ -155,11 +156,12 @@ class HomeScreen(Screen[None]):
 
         except PermissionError as e:
             None
-    def key_ctrl_r(self):
+
+    def key_ctrl_r(self) -> None:
         self.Dtree.reload()
 
 
-    async def execute_command(self, cmd: str):
+    async def execute_command(self, cmd: str) -> None:
         self.bgrocess_table = self.query_one(DataTable)
 
         try:
@@ -188,7 +190,7 @@ class HomeScreen(Screen[None]):
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
             self.bgrocess_table.remove_row(self.added_process)
 
-    def key_ctrl_d(self):
+    def key_ctrl_d(self) -> None:
         """
         Handles the Ctrl+D key press event.
 
@@ -197,7 +199,7 @@ class HomeScreen(Screen[None]):
         """
         self.directory_tree_container.toggle_class("-hidden")
 
-    async def change_directory(self, cmdpath: Path):
+    async def change_directory(self, cmdpath: Path) -> None:
         try:
             dtree = self.query_one("#directory-tree", DirectoryTree)
             dtree.path = cmdpath.resolve()
@@ -210,7 +212,7 @@ class HomeScreen(Screen[None]):
         except Exception as e:
             self.rich_log.write(f"error Error changing directory: {e}")
 
-    def on_click(self, event: Click):
+    def on_click(self, event: Click) -> None:
         try:
             if event.widget.id == "directory-tree" and event.ctrl:
                 self.handle_files_click_input(event.widget)
@@ -240,7 +242,7 @@ class HomeScreen(Screen[None]):
         except:
             None
 
-    async def on_worker_failed(self, event):
+    async def on_worker_failed(self, event) -> None:
         """Handle worker failures."""
         self.rich_log.write(f"[error] Worker failed: {event}")
 
