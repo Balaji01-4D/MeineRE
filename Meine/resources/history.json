@@ -3,5 +3,7 @@
     "guid",
     "guide",
     "ls",
-    "ram"
+    "ram",
+    "cwd",
+    "pwd"
 ]

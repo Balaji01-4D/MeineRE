@@ -2,5 +2,5 @@
     "show_hidden_files": false,
     "text_editor_theme": "dracula",
     "app_theme": "cyberpunk",
-    "directory-tree-dock": "left"
+    "directory-tree-dock": "right"
 }
