@@ -77,5 +77,5 @@ def load_random_quote() -> str:
     with open(QOUTES_PATH, "r") as file:
         data = file.read()
         quotes_list = json.loads(data)
-        random_number = random.randint(1, len(quotes_list))
+        random_number = random.randint(1, len(quotes_list)-1)
         return quotes_list[random_number]
