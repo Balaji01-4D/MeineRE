@@ -1,6 +1,6 @@
 {
     "show_hidden_files": false,
     "text_editor_theme": "dracula",
-    "app_theme": "cyberpunk",
-    "directory-tree-dock": "right"
+    "app_theme": "monokai 0.1",
+    "directory-tree-dock": "left"
 }

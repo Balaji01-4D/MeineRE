@@ -17,5 +17,6 @@
     "time",
     "user",
     "ram",
-    "cpu"
+    "cpu",
+    "cwd"
 ]
