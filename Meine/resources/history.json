@@ -22,5 +22,12 @@
     "del 'SB Collect.pdf'",
     "ls",
     "cwd",
-    "ls"
+    "ls",
+    "cwd",
+    "pwd",
+    "del infobook.exe",
+    "cd snaps",
+    "ls",
+    "cwd",
+    "pwd"
 ]
