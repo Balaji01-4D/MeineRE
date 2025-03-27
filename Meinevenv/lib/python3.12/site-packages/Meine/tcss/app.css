@@ -1,0 +1,94 @@
+Input{
+    color: $text-primary;
+    background: $surface;
+}
+
+#main{
+    layout: horizontal;
+}
+#IO{
+    width: 100%;
+}
+Header{
+    color: $primary-lighten-1;
+    text-align: center;
+    text-style: italic;
+}
+
+
+Directory_tree_container{
+    width: 30;
+    border: $panel;
+    background: $surface;
+
+    #directory-tree{
+        padding:  1 1;
+        width: 100%;
+
+    }
+    Static {
+        background: $surface;
+        content-align: center middle;
+        text-style: italic;
+        color: $text;
+
+    }
+
+}
+
+Directory_tree_container.-hidden{
+    display: none;
+}
+#IO.-hidden{
+    width: 0%;
+}
+#textarea{
+    display: none;
+}
+
+#textarea.-show{
+    display: block;
+    width: 100%;
+}
+Background_process_container{
+    dock:top;
+    height: 100%;
+    background:$surface;
+    align: center middle;
+
+}
+Background_process_container > Vertical{
+    width: 80;
+    height:30;
+    background:$surface;
+
+}
+Background_process_container > Vertical > DataTable{
+    height: 100%;
+    width: 100%;
+}
+Background_process_container.-hidden{
+    display: none;
+}
+
+Toast{
+    padding: 1;
+    color: $primary;
+}
+
+
+
+MeineTextAreaScreen {
+    dock:top;
+    height: 100%;
+    align: center middle;
+}
+MeineTextAreaScreen > Container{
+    width: 90%;
+    height:30;
+
+}
+MeineTextAreaScreen > Container > Static{
+    text-align: center;
+    color: $primary;
+}

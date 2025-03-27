@@ -1,0 +1,2 @@
+[console_scripts]
+meine-cli = Meine.app:run

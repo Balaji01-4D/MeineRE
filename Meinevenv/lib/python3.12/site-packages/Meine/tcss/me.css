@@ -1,0 +1,19 @@
+Myself{
+    align: center middle;
+}
+
+Myself > Container{
+
+    width: auto;
+    height: auto;
+    padding: 0 1;
+    border: #ABB2BF;
+}
+
+Myself > Container > Vertical{
+
+    width: 100;
+    height:70 ;
+
+
+}
