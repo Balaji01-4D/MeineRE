@@ -32,7 +32,7 @@ class HomeScreen(Screen):
 
     def compose(self):
         self.inputconsole = MeineInput(
-            placeholder="Enter command....",
+            placeholder="Enter command.... [/ to jump here]",
             id="command-input",
             history=self.app.HISTORY,
             history_index=self.HISTORY_INDEX,
@@ -263,6 +263,12 @@ class HomeScreen(Screen):
                 return True
         except Exception:
             return False
+
+
+    def key_slash(self):
+        if not self.focused.id == "command-input":
+            self.inputconsole.focus()
+
 
     # def handle_files_click_input(self, widget):
     #     def quotes_for_spaced_name(name: str):
