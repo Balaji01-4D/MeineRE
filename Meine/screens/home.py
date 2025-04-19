@@ -268,6 +268,9 @@ class HomeScreen(Screen):
     def key_slash(self):
         if not self.focused.id == "command-input":
             self.inputconsole.focus()
+            self.inputconsole.select_on_focus = False
+
+
 
 
     # def handle_files_click_input(self, widget):
