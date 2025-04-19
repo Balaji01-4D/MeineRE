@@ -5,33 +5,33 @@
   <img src="https://socialify.git.ci/Balaji01-4D/MeineRE/image?description=1&font=Jost&language=1&name=1&owner=1&pattern=Floating+Cogs&theme=Auto" alt="project-banner">
 </p>
 
-> ⚙️ **MeineRE** is a cross-platform, regex-powered command-line interface for automating file operations, system control, and archive manipulation—delivered in a beautiful terminal UI.  
+> ⚙️ **MeineRE** is a cross-platform, regex-powered command-line interface for automating file operations, system control, and archive manipulation—delivered in a beautiful terminal UI.
 > Modular, asynchronous, and extensible. Built for those who want raw power in a refined shell.
 
 ---
 
 ## 🚀 Features
 
-- **🔍 Regex-Based Command Parsing**  
+- **🔍 Regex-Based Command Parsing**
   Use intuitive commands to delete, copy, move, rename, search, and create files or folders.
 
-- **🗂️ TUI Directory Navigator**  
+- **🗂️ TUI Directory Navigator**
   Browse your filesystem in a reactive terminal UI—keyboard and mouse supported.
 
-- **💬 Live Command Console**  
+- **💬 Live Command Console**
   A built-in shell for interpreting commands and reflecting state changes in real time.
 
-- **⚡ Asynchronous & Modular**  
+- **⚡ Asynchronous & Modular**
   Built with `asyncio`, `aiofiles`, `py7zr`, and modular architecture for responsive performance.
 
-- **🎨 Theming & Config**  
+- **🎨 Theming & Config**
   CSS-powered themes, JSON-based user preferences, and dynamic runtime settings.
 
-- **📊 System Dashboard**  
-  Real-time system insights via one-liner commands:  
+- **📊 System Dashboard**
+  Real-time system insights via one-liner commands:
   `cpu`, `ram`, `gpu`, `battery`, `ip`, `user`, `env`, and more.
 
-- **🧩 Plugin Ready**  
+- **🧩 Plugin Ready**
   Drop in your own Python modules to extend functionality without altering core logic.
 
 ---
@@ -49,11 +49,11 @@
 
 ## 🛠️ Installation
 
-**Install via pip**  
+**Install via pip**
 > Requires Python 3.10+
 
 ```bash
-pip install MeineRE
+pip install Meinere
 ```
 
 Or clone the repo:
