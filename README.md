@@ -137,7 +137,7 @@ Licensed under the [MIT License](LICENSE).
 
 Got feedback, suggestions, or just wanna say hi?
 
-- Instagram: [@Balaji01_4D]([https://www.instagram.com/__balaji.j__/])
+- Instagram: [__balaji.j__](https://www.instagram.com/__balaji.j__/)
 - GitHub Issues: [MeineRE Issues](https://github.com/Balaji01-4D/MeineRE/issues)
 
 ---
