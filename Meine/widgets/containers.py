@@ -10,7 +10,7 @@ from .directory_tree import DTree
 class Directory_tree_container(Container):
 
     def __init__(self, *children, name=None, id=None, classes=None, disabled=False):
-        self.dtree = DTree(path="/home/balaji/testings", id="directory-tree")
+        self.dtree = DTree(path="./", id="directory-tree")
 
         super().__init__(
             *children, name=name, id=id, classes=classes, disabled=disabled
