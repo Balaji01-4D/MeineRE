@@ -15,7 +15,11 @@ from Meine.utils.file_manager import (
     load_history,
     add_custom_path_expansion,
     load_settings,
+    initialize_user_data_files
+
 )
+initialize_user_data_files()
+
 
 HOME_SCREEN_ID = "home-screen"
 HELP_SCREEN_ID = "help-screen"
