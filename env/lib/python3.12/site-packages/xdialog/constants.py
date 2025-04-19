@@ -1,0 +1,5 @@
+YES = 0
+RETRY = 0
+OK = 0
+NO = 1
+CANCEL = 2
