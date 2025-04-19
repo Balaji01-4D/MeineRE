@@ -1,0 +1,61 @@
+Settings{
+    align: center middle;
+}
+
+Settings > Container{
+
+    width: 60%;
+    height: auto;
+    padding: 0 1;
+    border: $primary-lighten-2;
+
+    #settings-title{
+        content-align: center middle;
+        padding: 1;
+        color: $primary-darken-1;
+    }
+    /* Button{
+        border: none;
+    } */
+    /* Switch{
+        border: ;
+    } */
+
+
+
+}
+.caption{
+    padding: 1 0;
+    width: 30;
+    content-align: center middle;
+    color: $primary-lighten-2;
+}
+
+
+NameGetterScreen{
+    align: center middle;
+}
+
+NameGetterScreen > Container{
+
+    width: 50;
+    height: auto;
+    padding: 0 1;
+    border:rgb(68, 68, 68);
+
+    #title{
+        padding: 1 1;
+        text-align:center;
+
+    }
+
+}
+
+
+
+
+#title{
+    padding:1 ;
+    color:$secondary;
+    content-align:center middle;
+}
