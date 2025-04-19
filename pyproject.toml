@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "MeineRE"
-version = "0.1.1"
+version = "0.1.2"
 description = "Asynchronous CLI command parser and executor"
-readme = "README.Md"
+readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
 authors = [
@@ -18,7 +18,7 @@ classifiers = [
     "Operating System :: OS Independent"
 ]
 dependencies = [
-"aiofiles==24.1.0",
+"aiofiles==24.1.0", 
 "appdirs==1.4.4",
 "Brotli==1.1.0",
 "build==1.2.2.post1",
