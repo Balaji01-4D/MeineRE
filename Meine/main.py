@@ -6,7 +6,7 @@ from .utils.file_manager import Quotes, clear_history
 @click.option('--quotes.reset', 'quotes_reset', is_flag=True, help='Reset quotes file to default.')
 @click.option('--quotes.clear', 'quotes_clear', is_flag=True, help='Clear all user quotes.')
 @click.option('--quotes.add', 'quote_to_add', help='Add a new quote string to user quotes.')
-@click.option('--history.clear','history_clear',help='Clear the Inpt history')
+@click.option('--history.clear','history_clear', is_flag=True,help='Clear the Input history')
 def main(quotes_reset, quotes_clear, quote_to_add, history_clear):
     quotes = Quotes()
 
