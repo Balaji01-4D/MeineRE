@@ -1,3 +1,4 @@
+from fileinput import filename
 import json
 import random
 from pathlib import Path
@@ -9,7 +10,6 @@ import importlib.resources as pkg_resources
 from Meine.exceptions import InfoNotify
 
 APP_NAME = "MeineRE"
-
 # ------------------ USER PATHS ------------------
 
 USER_DATA_DIR = Path(user_data_dir(APP_NAME))
@@ -20,12 +20,15 @@ SETTINGS_JSON_PATH = USER_DATA_DIR / "settings.json"
 CUSTOM_JSON_PATH = USER_DATA_DIR / "customs.json"
 QUOTES_JSON_PATH = USER_DATA_DIR / "quotes.json"
 
+
+DEFAULT_RESOURCES_PATH = pkg_resources.files("Meine.resources")
+
 # ------------------ INITIALIZE DEFAULTS IF MISSING ------------------
 
 def _initialize_file_if_missing(target: Path, resource_file: str):
     """Copy default resource file to user directory if it doesn't exist."""
     if not target.exists():
-        with pkg_resources.files("Meine.resources").joinpath(resource_file).open("rb") as default:
+        with DEFAULT_RESOURCES_PATH.joinpath(resource_file).open("rb") as default:
             target.write_bytes(default.read())
 
 def initialize_user_data_files():
@@ -84,4 +87,35 @@ def load_custom_urls() -> dict[str]:
 def load_random_quote() -> str:
     with open(QUOTES_JSON_PATH, "r") as file:
         quotes = json.load(file)
-        return random.choice(quotes)
+        if (quotes):
+            return random.choice(quotes)
+        return "Meine"
+
+
+
+class Quotes:
+
+    FILE_NAME = "quotes.json"
+
+    DEFAULT_PATH = DEFAULT_RESOURCES_PATH.joinpath(FILE_NAME)
+
+    USER_PATH = USER_DATA_DIR / FILE_NAME
+
+    def __init__(self):
+        pass
+
+    def reset(self):
+        with self.DEFAULT_PATH.open("rb") as file:
+            self.USER_PATH.write_bytes(file.read())
+
+    def clear(self):
+        with self.USER_PATH.open("w") as file:
+            json.dump([],file)
+
+    def add_quote(self, quote):
+        with self.USER_PATH.open("r") as file:
+            quotes: list[str] = json.load(file)
+        quotes.append(quote)
+        with self.USER_PATH.open("w") as file:
+            json.dump(quotes, file, indent=4)
+
