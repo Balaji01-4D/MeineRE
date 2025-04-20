@@ -8,7 +8,7 @@ from textual.screen import Screen
 from textual.widgets import DataTable, DirectoryTree, Input, RichLog, Header
 
 from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
-from Meine.main import CLI
+from Meine.ui_handler import CLI
 from Meine.widgets.containers import (
     Background_process_container,
     Container,

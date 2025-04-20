@@ -26,7 +26,7 @@ def _initialize_file_if_missing(target: Path, resource_file: str):
     """Copy default resource file to user directory if it doesn't exist."""
     if not target.exists():
         with pkg_resources.files("Meine.resources").joinpath(resource_file).open("rb") as default:
-            target.write_bytes(default.read())                      
+            target.write_bytes(default.read())
 
 def initialize_user_data_files():
     _initialize_file_if_missing(HISTORY_JSON_PATH, "history.json")
