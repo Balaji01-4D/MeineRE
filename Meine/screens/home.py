@@ -111,46 +111,45 @@ class HomeScreen(Screen):
     async def on_input_submitted(self, event: Input.Submitted) -> None:
         try:
             cmd = event.value.strip()
-            try:
-                self.rich_log.write(eval(cmd, {}, {}))
-            except:
-                if cmd and event.input.id == "command-input":
-                    try:
-                        if "cd " in cmd:
-                            cmdpath = cmd.strip("cd ")
-                            cmdpath = Path(cmdpath)
-                            if cmdpath.is_dir():
-                                self.app.run_worker(
-                                    self.change_directory(cmdpath),
-                                    name="cd_worker",
-                                    description="Change Directory",
-                                )
-                                self.notify(
-                                    message=f"{str(cmdpath.resolve())}",
-                                    title="changed directory",
-                                )
-
-                            else:
-                                message = (
-                                    f"{cmdpath} is file"
-                                    if cmdpath.is_file()
-                                    else f"{cmdpath} Not Found"
-                                )
-                                self.notify(message=message, severity="error")
-
-                        elif "cwd" in cmd:
-                            self.notify(
-                                message=f"{os.getcwd()}",
-                                title="Current working directory",
-                            )
-                        else:
+            if cmd and event.input.id == "command-input":
+                try:
+                    if "cd " in cmd:
+                        cmdpath = cmd.strip("cd ")
+                        cmdpath = Path(cmdpath)
+                        if cmdpath.is_dir():
                             self.app.run_worker(
-                                self.execute_command(cmd),
-                                name="cmd_worker",
-                                description=f"Executing: {cmd}",
+                                self.change_directory(cmdpath),
+                                name="cd_worker",
+                                description="Change Directory",
                             )
-                    except Exception as e:
-                        self.rich_log.write(f"[error] {str(e)}")
+                            self.notify(
+                                message=f"{str(cmdpath.resolve())}",
+                                title="changed directory",
+                            )
+
+                        else:
+                            message = (
+                                f"{cmdpath} is file"
+                                if cmdpath.is_file()
+                                else f"{cmdpath} Not Found"
+                            )
+                            self.notify(message=message, severity="error")
+
+                    elif "cwd" in cmd:
+                        self.notify(
+                            message=f"{os.getcwd()}",
+                            title="Current working directory",
+                        )
+                    elif "clear" in cmd:
+                        self.clear_rich_log()
+                    else:
+                        self.app.run_worker(
+                            self.execute_command(cmd),
+                            name="cmd_worker",
+                            description=f"Executing: {cmd}",
+                        )
+                except Exception as e:
+                    self.rich_log.write(f"[error] {str(e)}")
 
             self.app.HISTORY.append(cmd)
             self.HISTORY_index = len(self.app.HISTORY)
@@ -162,34 +161,27 @@ class HomeScreen(Screen):
     def key_ctrl_r(self) -> None:
         self.Dtree.reload()
 
-    async def execute_command(self, cmd: str) -> None:
-        self.bgrocess_table = self.query_one(DataTable)
 
+    def clear_rich_log(self) -> None:
+        self.rich_log.clear()
+
+
+    async def execute_command(self, cmd: str) -> None:
         try:
             self.executable = asyncio.create_task(CLI(cmd))
-            self.added_process = self.bgrocess_table.add_row(
-                id(self.executable), cmd, "[red]cancel"
-            )
-
             result = await self.executable
             if not isinstance(result, Panel):
                 self.rich_log.write(Panel(result, expand=False))
             else:
                 self.rich_log.write(result)
-            self.bgrocess_table.remove_row(self.added_process)
         except ErrorNotify as e:
             self.notify(message=e.message, title="Error", severity="error")
-            self.bgrocess_table.remove_row(self.added_process)
         except WarningNotify as e:
             self.notify(message=e.message, title="Warning", severity="warning")
-            self.bgrocess_table.remove_row(self.added_process)
         except InfoNotify as e:
             self.notify(message=e.message, title="Information", severity="information")
-            self.bgrocess_table.remove_row(self.added_process)
-
         except Exception as e:
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
-            self.bgrocess_table.remove_row(self.added_process)
 
     def key_ctrl_d(self) -> None:
         """
