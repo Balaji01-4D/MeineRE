@@ -49,7 +49,7 @@ class HomeScreen(Screen):
         self.Dtree = self.directory_tree_container.dtree
         self.bgprocess = Background_process_container(classes="-hidden")
         self.input_output_container = Container(
-            self.rich_log, self.inputconsole, id="IO"
+            self.inputconsole, self.rich_log, id="IO"
         )
 
         yield Header()
