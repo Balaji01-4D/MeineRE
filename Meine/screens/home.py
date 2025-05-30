@@ -116,7 +116,8 @@ class HomeScreen(Screen):
             if cmd and event.input.id == "command-input":
                 try:
                     if "cd " in cmd:
-                        cmdpath = cmd.strip("cd ")
+                        cmdpath = cmd.replace("cd ",'')
+                        self.notify(cmd+cmdpath)
                         cmdpath = Path(cmdpath)
                         if cmdpath.is_dir():
                             self.app.run_worker(
