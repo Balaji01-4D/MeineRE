@@ -92,7 +92,7 @@ async def CLI(Command):
                 return "\n".join(results)
             return await Create(source, "file")
 
-        elif act == {"mkdir","mkd"}:
+        elif act in {"mkdir","mkd"}:
             if isinstance(source, list):
                 results = [await Create(s) for s in source]
                 return "\n".join(results)
