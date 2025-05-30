@@ -11,7 +11,11 @@ from rich.text import Text
 
 from Meine.exceptions import InfoNotify
 from .Myrequest import AlreadyExist
+from .app_theme import get_theme_colors
 
+
+def need_theme():
+    return get_theme_colors()
 
 class File:
 
@@ -32,17 +36,16 @@ class File:
             try:
                 await asyncio.to_thread(FileName.chmod, 0o744)
                 await asyncio.to_thread(FileName.unlink)
-                return f"[success] {FileName.name} Deleted Successfully."
+                return f"[{need_theme()["success"]}]{FileName.name} Deleted Successfully."
             except FileNotFoundError:
                 InfoNotify(f"File Not found")
-
             except PermissionError:
                 InfoNotify(f"Permission denied")
             except Exception as e:
-
-                return f"[error] Error In Deleting {FileName.name}: {e}"
+                InfoNotify(f"Error In Deleting {FileName.name}: {e}")
         else:
-            return f"[error] {FileName.name} Not Found."
+            InfoNotify(f"File Not found")
+
 
     async def Move_File(
         self, Source: Path, Destination: Path
@@ -64,17 +67,16 @@ class File:
             return AlreadyExist(Final.name, Final.parent)
 
         if not Source.exists():
-            return f"[error] {Source.name} Not Found."
+            InfoNotify(f"{Source.name} Not Found.")
         if not Destination.exists() or not Destination.is_dir():
-            return f"[error] {Destination.name} Is Not a Valid Directory."
+            InfoNotify(f"{Destination.name} Is Not a Valid Directory.")
         try:
             await asyncio.to_thread(sl.move, Source, Final)
-            return f"[success] {Source.name} Moved Successfully to {Destination.name}."
+            return f"[{need_theme()["success"]}]{Source.name} Moved Successfully to {Destination.name}."
         except PermissionError:
-            return "[error] Permission Denied."
+            InfoNotify("Permission Denied.")
         except Exception as e:
-
-            return f"[error] Error Moving File: {e}"
+            InfoNotify(f"Error Moving File: {e}")
 
     async def Rename_file(
         self, OldName: Path, NewName: Path
@@ -103,16 +105,16 @@ class File:
         if OldName.exists():
             try:
                 await asyncio.to_thread(OldName.rename, NewName)
-                return f"[success]Renamed Successfully {OldName.name} -> {NewName.name}"
+                return f"[{need_theme()["success"]}]Renamed Successfully {OldName.name} -> {NewName.name}"
             except PermissionError:
-                return f"[error]Permission Denied"
+                InfoNotify(f"Permission Denied")
             except Exception as e:
 
-                return f"[error]Error In Renaming."
+                InfoNotify(f"Error In Renaming.")
         elif not OldName.exists():
-            return f"[error]{OldName.name} Is Not Found."
+            InfoNotify(f"{OldName.name} Is Not Found.")
         elif NewName.exists():
-            return f"[error]Error {NewName.name} Is Aleady in {NewName.resolve().parent.name} Directory."
+            InfoNotify(f"Error {NewName.name} Is Aleady in {NewName.resolve().parent.name} Directory.")
 
     async def Copy_File(
         self, Source: Path, Destination: Path
@@ -136,14 +138,14 @@ class File:
                 await asyncio.to_thread(sl.copy2, Source, Final)
                 return f"{Source.name} Copied Successfully to {Destination.name}."
             except PermissionError:
-                return "[error] Permission Denied."
+                InfoNotify("Permission Denied.")
             except Exception as e:
 
-                return f"[error] Error In Copying: {e}"
+                InfoNotify(f"Error In Copying: {e}")
         elif Source.is_dir():
             return self.Copy_Folder(Source, Destination)
         elif not Source.exists():
-            return f"[error] {Source.name} Does Not Exist."
+            InfoNotify(f"{Source.name} Does Not Exist.")
 
     async def Create_File(self, Name: Path) -> Coroutine[None, None, str]:
         """
@@ -161,14 +163,14 @@ class File:
         try:
             if not Name.exists():
                 await asyncio.to_thread(Name.touch)
-                return f"[success]{Name.name} Is Created in {Name.resolve().parent} Directory"
+                return f"[{need_theme()["success"]}]{Name.name} Is Created in {Name.resolve().parent} Directory"
             else:
-                return f"[error]{Name.name} Is Already in {Name.resolve().parent} Directory"
+                InfoNotify(f"{Name.name} Is Already in {Name.resolve().parent} Directory")
         except PermissionError:
-            return f"[error]Permission Denied"
+            InfoNotify(f"Permission Denied")
         except Exception as e:
 
-            return f"[error]Error{e}"
+            InfoNotify(f"Error{e}")
 
     async def ShowContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
@@ -183,7 +185,7 @@ class File:
 
         """
         if not FileName.exists():
-            return f"[error]{FileName.name} Not Found"
+            InfoNotify(f"{FileName.name} Not Found")
 
         try:
             if FileName.is_file():
@@ -195,12 +197,12 @@ class File:
             elif FileName.is_dir():
                 return self.ShowFolderContents(FileName)
             else:
-                return f"[error]Unsupported file type: {FileName}"
+                InfoNotify(f"Unsupported file type: {FileName}")
         except PermissionError:
-            return f"[error]Permission Denied: {FileName.name}"
+            InfoNotify(f"Permission Denied: {FileName.name}")
         except Exception as e:
 
-            return f"[error]Error Reading {FileName.name}: {str(e)}"
+            InfoNotify(f"Error Reading {FileName.name}: {str(e)}")
 
     async def ClearContent_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
@@ -215,20 +217,20 @@ class File:
         """
 
         if not FileName.exists():
-            return f"[error]{FileName.name} Not Found"
+            InfoNotify(f"{FileName.name} Not Found")
 
         if FileName.is_dir():
-            return f"[error]{FileName.name} is a Directory and cannot be cleared"
+            InfoNotify(f"{FileName.name} is a Directory and cannot be cleared")
 
         try:
             async with aiofiles.open(FileName, mode="w") as _:
                 pass
-            return f"[success]{FileName.name} Content Cleared Successfully"
+            return f"[{need_theme()["success"]}]{FileName.name} Content Cleared Successfully"
         except PermissionError:
-            return f"[error]Permission Denied for {FileName.name}"
+            InfoNotify(f"Permission Denied for {FileName.name}")
         except Exception as e:
 
-            return f"[error]Error Clearing {FileName.name}: {str(e)}"
+            InfoNotify(f"Error Clearing {FileName.name}: {str(e)}")
 
     async def Text_Finder_Directory(
         self, Text: str, Path: str = "."
@@ -327,21 +329,20 @@ class File:
 
         try:
             if Source.exists():
-                return (
-                    f"[error]{Source.name} Already Exists in {Source.resolve().parent}"
-                )
+                InfoNotify(f"{Source.name} Already Exists in {Source.resolve().parent}")
+
             await asyncio.to_thread(Source.mkdir, parents=True, exist_ok=False)
-            return f"[success]{Source.name} Created Successfully at {Source.resolve().parent}"
+            return f"[{need_theme()["success"]}]{Source.name} Created Successfully at {Source.resolve().parent}"
 
         except PermissionError:
-            return f"[error]Permission Denied: Cannot Create {Source.name}"
+            InfoNotify(f"Permission Denied: Cannot Create {Source.name}")
 
         except FileExistsError:
-            return f"[error]{Source.name} Already Exists"
+            InfoNotify(f"{Source.name} Already Exists")
 
         except Exception as e:
 
-            return f"[error]Error Creating Folder {Source.name}: {str(e)}"
+            InfoNotify(f"Error Creating Folder {Source.name}: {str(e)}")
 
     async def Move_Folder(
         self, Source: Path, Destination: Path
@@ -362,22 +363,22 @@ class File:
             Final = Destination / Source.name
 
             if Final.exists():
-                return f"[error]{Final.name} Already Exists in {Final.resolve().parent}"
+                InfoNotify(f"{Final.name} Already Exists in {Final.resolve().parent}")
 
             if not Source.exists():
-                return f"[error]{Source.name} Not Found"
+                InfoNotify(f"{Source.name} Not Found")
             if not Destination.exists():
-                return f"[error]{Destination.name} Directory Not Found"
+                InfoNotify(f"{Destination.name} Directory Not Found")
             if not Destination.is_dir():
-                return f"[error]{Destination.name} Is Not a Directory"
+                InfoNotify(f"{Destination.name} Is Not a Directory")
 
             await asyncio.to_thread(sl.move, Source, Destination)
-            return f"[success]{Source.name} Moved Successfully to {Destination.resolve().name}"
+            return f"[{need_theme()["success"]}]{Source.name} Moved Successfully to {Destination.resolve().name}"
 
         except PermissionError:
-            return "[error]Permission Denied"
+            InfoNotify("Permission Denied")
         except Exception as e:
-            return f"[error]Error Moving File or Directory: {str(e)}"
+            InfoNotify(f"Error Moving File or Directory: {str(e)}")
 
     async def Copy_Folder(
         self, Source: Path, Destination: Path
@@ -398,30 +399,30 @@ class File:
             Final = Destination / Source.name
 
             if Final.exists():
-                return f"[error]{Final.name} Already Exists in {Final.resolve().parent}"
+                InfoNotify(f"{Final.name} Already Exists in {Final.resolve().parent}")
             if not Source.exists():
-                return f"[error]{Source.name} Does Not Exist"
+                InfoNotify(f"{Source.name} Does Not Exist")
             if not Destination.exists():
-                return f"[error]{Destination.name} Directory Not Found"
+                InfoNotify(f"{Destination.name} Directory Not Found")
             if not Destination.is_dir():
-                return f"[error]{Destination.name} Is Not a Directory"
+                InfoNotify(f"{Destination.name} Is Not a Directory")
 
             if Source.is_dir():
                 await asyncio.to_thread(sl.copytree, Source, Final, dirs_exist_ok=True)
-                return f"[success]{Source.name} Directory Copied Successfully to {Destination.resolve().name}"
+                return f"[{need_theme()["success"]}]{Source.name} Directory Copied Successfully to {Destination.resolve().name}"
 
             # Handle copying file
             elif Source.is_file():
                 await asyncio.to_thread(sl.copy2, Source, Final)
-                return f"[success]{Source.name} File Copied Successfully to {Destination.resolve().name}"
+                return f"[{need_theme()["success"]}]{Source.name} File Copied Successfully to {Destination.resolve().name}"
 
             else:
-                return f"[error]Unsupported File Type: {Source.name}"
+                InfoNotify(f"Unsupported File Type: {Source.name}")
 
         except PermissionError:
-            return "[error]Permission Denied"
+            InfoNotify("Permission Denied")
         except Exception as e:
-            return f"[error]Error in Copying: {str(e)}"
+            InfoNotify(f"Error in Copying: {str(e)}")
 
     async def Delete_Folder(self, FolderName: Path) -> Coroutine[None, None, str]:
         """
@@ -437,7 +438,7 @@ class File:
         """
 
         if not FolderName.exists():
-            return f"[error]{FolderName.name} Not Found."
+            InfoNotify(f"{FolderName.name} Not Found.")
 
         try:
             # Use asyncio.to_thread for blocking I/O operations
@@ -445,12 +446,11 @@ class File:
                 await asyncio.to_thread(sl.rmtree, FolderName)
             else:
                 await asyncio.to_thread(FolderName.unlink)
-            return f"[success]{FolderName.name} Deleted Successfully."
+            return f"[{need_theme()["success"]}]{FolderName.name} Deleted Successfully."
         except PermissionError:
-            return f"[error]Permission Denied for {FolderName.name}"
+            InfoNotify(f"Permission Denied for {FolderName.name}")
         except Exception as e:
-
-            return f"[error]Error Deleting {FolderName.name}: {str(e)}"
+            InfoNotify(f"Error Deleting {FolderName.name}: {str(e)}")
 
 
 async def Helper(Text: str, Path: str) -> list[str]:
