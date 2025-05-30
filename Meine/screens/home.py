@@ -19,9 +19,9 @@ from Meine.widgets.input import MeineInput
 from Meine.utils.file_manager import load_random_quote
 
 
+
+
 class HomeScreen(Screen):
-
-
 
     AUTO_FOCUS = "#command-input"
 
@@ -117,7 +117,6 @@ class HomeScreen(Screen):
                 try:
                     if "cd " in cmd:
                         cmdpath = cmd.replace("cd ",'')
-                        self.notify(cmd+cmdpath)
                         cmdpath = Path(cmdpath)
                         if cmdpath.is_dir():
                             self.app.run_worker(
@@ -175,7 +174,8 @@ class HomeScreen(Screen):
             result = await self.executable
             if result:
                 if not isinstance(result, Panel):
-                    self.rich_log.write(Panel(result, expand=False))
+                    theme = self.app.current_theme
+                    self.rich_log.write(Panel(result, expand=False, style=theme.surface ))
                 else:
                     self.rich_log.write(result)
         except ErrorNotify as e:

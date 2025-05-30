@@ -39,16 +39,6 @@ class MeineAI(App[None]):
             self.register_theme(theme)
         self.theme = self.SETTINGS["app_theme"]
 
-    def get_system_commands(self, screen):
-        yield from super().get_system_commands(screen)
-        yield SystemCommand("Settings", "open settings", self.key_ctrl_s)
-        yield SystemCommand("Help", "open the help screen", self.key_ctrl_k)
-        yield SystemCommand(
-            "shutdown", "shutdown the system after 1 Minute", self.safe_shutdown
-        )
-        yield SystemCommand(
-            "reboot", "reboot the system after 1 Minute", self.safe_reboot
-        )
 
     def _on_exit_app(self):
         save_history(self.HISTORY)

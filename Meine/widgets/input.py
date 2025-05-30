@@ -1,9 +1,10 @@
 from pathlib import Path
-from re import search
+import os
 
 import platformdirs
 from textual.binding import Binding
 from textual.widgets import Input, DirectoryTree
+from textual.suggester import SuggestFromList
 
 from Meine.utils.file_manager import load_Path_expansion
 
@@ -31,6 +32,8 @@ class MeineInput(Input):
         Binding("up", "history_up", "navigate the history up", show=False),
         Binding("down", "history_down", "navigate the history down", show=False),
     ]
+
+    suggestions = []
 
     def __init__(
         self,
@@ -82,6 +85,24 @@ class MeineInput(Input):
             "#directory-tree", expect_type=DirectoryTree
         )
 
+    def _get_hint_text(self)  -> tuple[list[str],None|str]:
+        values_list = self.value.split(" ")
+        size = len(values_list)
+
+        if (size == 1):
+            return values_list, None
+        else:
+            hint = values_list.pop()
+            return values_list, hint
+
+    def get_suggestion_on_tab_pressed(self, hint=None):
+        items = os.listdir('.')
+        if hint:
+            return [item for item in items if item.startswith(hint)]
+        return items
+
+
+
     def action_history_up(self):
         if self.history_index > 0:
             self.history_index -= 1
@@ -89,15 +110,22 @@ class MeineInput(Input):
             self.cursor_position = len(self.value)
 
     def on_input_changed(self):
-        matched_keyword = search(r"(p|d)\{(.+)\}", self.value)
-        if matched_keyword:
-            prefix = matched_keyword.group(1)
-            if prefix == "p":
-                self.replace_with_path_expansion(matched_keyword.group(2))
-            elif prefix == "d":
-                self.replace_with_directory_node_name(matched_keyword.group(2))
-        else:
-            None
+        self.suggestions, hint = self._get_hint_text()
+        suggestion = [" ".join(self.suggestions) + " " + item for item in self.get_suggestion_on_tab_pressed(hint)]
+        self.suggester = SuggestFromList(suggestion)
+
+
+
+    # def on_input_changed(self):
+    #     matched_keyword = search(r"(p|d)\{(.+)\}", self.value)
+    #     if matched_keyword:
+    #         prefix = matched_keyword.group(1)
+    #         if prefix == "p":
+    #             self.replace_with_path_expansion(matched_keyword.group(2))
+    #         elif prefix == "d":
+    #             self.replace_with_directory_node_name(matched_keyword.group(2))
+    #     else:
+    #         None
 
     def replace_with_directory_node_name(self, keyword: str) -> None:
         try:
@@ -157,3 +185,4 @@ class MeineInput(Input):
 
     def on_input_submitted(self):
         self.history_index += 1
+        self.suggestions.clear()
