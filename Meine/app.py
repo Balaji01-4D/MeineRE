@@ -1,10 +1,5 @@
-from functools import partial
-
 from textual.app import App, SystemCommand
-from textual.command import Hit, Hits, Provider
 
-from Meine.Actions.system import System
-from Meine.exceptions import InfoNotify
 from Meine.screens.help import HelpScreen
 from Meine.screens.home import HomeScreen
 from Meine.screens.settings import NameGetterScreen, Settings
@@ -28,29 +23,7 @@ CUSTOM_PATH_COMMAND = "Add custom path expansion"
 CUSTOM_PATH_HELP = "Add a custom path expansion"
 
 
-class CustomCommand(Provider):
-
-    async def search(self, query: str) -> Hits:
-
-        C = "add custom path expansions"
-        matcher = self.matcher(query)
-
-        score = matcher.match(C)
-        if score > 0:
-            yield Hit(
-                score,
-                matcher.highlight(C),
-                partial(
-                    self.app.push_screen,
-                    NameGetterScreen(title=f"{C}", callback=add_custom_path_expansion),
-                ),
-                help=f"adding a custom path expansions",
-            )
-
-
 class MeineAI(App[None]):
-
-    COMMANDS = App.COMMANDS | {CustomCommand}
 
     def __init__(
         self, driver_class=None, css_path=None, watch_css=False, ansi_color=False
@@ -123,34 +96,16 @@ class MeineAI(App[None]):
         else:
             self.notify("You are in the home screen")
 
-    def safe_shutdown(self):
-        try:
-            sys = System()
-            sys.ShutDown()
-        except InfoNotify as e:
-            if "Minute" in e.message:
-                self.notify(e.message)
-                self.set_timer(5, self.exit)
-            else:
-                self.notify(e.message)
-
-    def safe_reboot(self):
-        try:
-            sys = System()
-            sys.Reboot()
-        except InfoNotify as e:
-            if "Minute" in e.message:
-                self.notify(e.message)
-                self.set_timer(5, self.exit)
-            else:
-                self.notify(e.message)
 
     def push_NameGetter_screen(self, title, callback):
         self.push_screen(NameGetterScreen(title, callback))
 
 
+
+app = MeineAI()
+
 def run():
-    MeineAI().run()
+    app.run()
 
 
 

@@ -5,7 +5,7 @@ from pathlib import Path
 from rich.panel import Panel
 from textual.events import Click
 from textual.screen import Screen
-from textual.widgets import DataTable, DirectoryTree, Input, RichLog, Header
+from textual.widgets import DirectoryTree, Input, RichLog, Header
 
 from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
 from Meine.ui_handler import CLI
@@ -20,6 +20,8 @@ from Meine.utils.file_manager import load_random_quote
 
 
 class HomeScreen(Screen):
+
+
 
     AUTO_FOCUS = "#command-input"
 
@@ -170,10 +172,11 @@ class HomeScreen(Screen):
         try:
             self.executable = asyncio.create_task(CLI(cmd))
             result = await self.executable
-            if not isinstance(result, Panel):
-                self.rich_log.write(Panel(result, expand=False))
-            else:
-                self.rich_log.write(result)
+            if result:
+                if not isinstance(result, Panel):
+                    self.rich_log.write(Panel(result, expand=False))
+                else:
+                    self.rich_log.write(result)
         except ErrorNotify as e:
             self.notify(message=e.message, title="Error", severity="error")
         except WarningNotify as e:
