@@ -1,11 +1,11 @@
 
-# MeineRE
+# meine
 
 <p align="center">
-  <img src="https://socialify.git.ci/Balaji01-4D/MeineRE/image?description=1&font=Jost&language=1&name=1&owner=1&pattern=Floating+Cogs&theme=Auto" alt="project-banner">
+  <img src="https://socialify.git.ci/Balaji01-4D/meine/image?description=1&font=Jost&language=1&name=1&owner=1&pattern=Floating+Cogs&theme=Auto" alt="project-banner">
 </p>
 
-> ⚙️ **MeineRE** is a cross-platform, regex-powered command-line interface for automating file operations, system control, and archive manipulation—delivered in a beautiful terminal UI.
+> ⚙️ **meine** is a cross-platform, regex-powered command-line interface for automating file operations, system control, and archive manipulation—delivered in a beautiful terminal UI.
 > Modular, asynchronous, and extensible. Built for those who want raw power in a refined shell.
 
 ---
@@ -39,10 +39,10 @@
 ## 📸 Screenshots
 
 <p float="left">
-  <img src="https://github.com/Balaji01-4D/MeineRE/blob/main/img/opening.png" width="100%" alt="Opening screen">
-  <img src="https://github.com/Balaji01-4D/MeineRE/blob/main/img/input.png" width="100%" alt="Input shell">
-  <img src="https://github.com/Balaji01-4D/MeineRE/blob/main/img/texteditor.png" width="100%" alt="Text editor">
-  <img src="https://github.com/Balaji01-4D/MeineRE/blob/main/img/settings.png" width="100%" alt="Settings screen">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/opening.png" width="100%" alt="Opening screen">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/input.png" width="100%" alt="Input shell">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/texteditor.png" width="100%" alt="Text editor">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/settings.png" width="100%" alt="Settings screen">
 </p>
 
 ---
@@ -53,14 +53,14 @@
 > Requires Python 3.10+
 
 ```bash
-pip install Meinere
+pip install meine
 ```
 
 Or clone the repo:
 
 ```bash
-git clone https://github.com/Balaji01-4D/MeineRE
-cd MeineRE
+git clone https://github.com/Balaji01-4D/meine
+cd meine
 pip install .
 ```
 
@@ -82,8 +82,8 @@ pip install .
 ## 🧱 Project Structure
 
 ```text
-MeineRE/
-├── Meine/              # Core package
+meine/
+├── meine/              # Core package
 │   ├── app.py          # Main entry point
 │   ├── themes.py       # Theme loader
 │   ├── runtime_config.json
@@ -118,8 +118,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 To contribute:
 
 ```bash
-git clone https://github.com/Balaji01-4D/MeineRE
-cd MeineRE
+git clone https://github.com/Balaji01-4D/meine
+cd meine
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
@@ -138,6 +138,6 @@ Licensed under the [MIT License](LICENSE).
 Got feedback, suggestions, or just wanna say hi?
 
 - Instagram: [__balaji.j__](https://www.instagram.com/__balaji.j__/)
-- GitHub Issues: [MeineRE Issues](https://github.com/Balaji01-4D/MeineRE/issues)
+- GitHub Issues: [meine Issues](https://github.com/Balaji01-4D/meine/issues)
 
 ---

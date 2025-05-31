@@ -64,16 +64,16 @@ dependencies = [
 ]
 
 [project.scripts]
-meine = "Meine.main:main"
+meine = "meine.main:main"
 
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.packages.find]
-include = ["Meine", "Meine.*"]
+include = ["meine", "meine.*"]
 
 [tool.setuptools.package-data]
-"Meine" = [
+"meine" = [
     "resources/*.json",
     "tcss/*.tcss"
 ]
