@@ -36,7 +36,7 @@ class File:
             try:
                 await asyncio.to_thread(FileName.chmod, 0o744)
                 await asyncio.to_thread(FileName.unlink)
-                return f"[{need_theme()["success"]}]{FileName.name} Deleted Successfully."
+                return f"[{need_theme()["foreground"]}]{FileName.name} Deleted Successfully."
             except FileNotFoundError:
                 raise InfoNotify(f"File Not found")
             except PermissionError:
@@ -72,7 +72,7 @@ class File:
             raise InfoNotify(f"{Destination.name} Is Not a Valid Directory.")
         try:
             await asyncio.to_thread(sl.move, Source, Final)
-            return f"[{need_theme()["success"]}]{Source.name} Moved Successfully to {Destination.name}."
+            return f"[{need_theme()["foreground"]}]{Source.name} Moved Successfully to {Destination.name}."
         except PermissionError:
             raise InfoNotify("Permission Denied.")
         except Exception as e:
@@ -105,7 +105,7 @@ class File:
         if OldName.exists():
             try:
                 await asyncio.to_thread(OldName.rename, NewName)
-                return f"[{need_theme()["success"]}]Renamed Successfully {OldName.name} -> {NewName.name}"
+                return f"[{need_theme()["foreground"]}]Renamed Successfully {OldName.name} -> {NewName.name}"
             except PermissionError:
                 raise InfoNotify(f"Permission Denied")
             except Exception as e:
@@ -163,7 +163,7 @@ class File:
         try:
             if not Name.exists():
                 await asyncio.to_thread(Name.touch)
-                return f"[{need_theme()["success"]}]{Name.name} Is Created in {Name.resolve().parent} Directory"
+                return f"[{need_theme()["foreground"]}]{Name.name} Is Created in {Name.resolve().parent} Directory"
             else:
                 raise InfoNotify(f"{Name.name} Is Already in {Name.resolve().parent} Directory")
         except PermissionError:
@@ -225,7 +225,7 @@ class File:
         try:
             async with aiofiles.open(FileName, mode="w") as _:
                 pass
-            return f"[{need_theme()["success"]}]{FileName.name} Content Cleared Successfully"
+            return f"[{need_theme()["foreground"]}]{FileName.name} Content Cleared Successfully"
         except PermissionError:
             raise InfoNotify(f"Permission Denied for {FileName.name}")
         except Exception as e:
@@ -332,7 +332,7 @@ class File:
             if Source.exists():
                 return AlreadyExist(Source.name, Source.parent)
             await asyncio.to_thread(Source.mkdir, parents=True, exist_ok=False)
-            return f"[{need_theme()["success"]}]{Source.name} Created Successfully at {Source.resolve().parent}"
+            return f"[{need_theme()["foreground"]}]{Source.name} Created Successfully at {Source.resolve().parent}"
         except PermissionError:
             raise InfoNotify(f"Permission Denied: Cannot Create {Source.name}")
 
@@ -370,7 +370,7 @@ class File:
                 raise InfoNotify(f"{Destination.name} Is Not a Directory")
 
             await asyncio.to_thread(sl.move, Source, Destination)
-            return f"[{need_theme()["success"]}]{Source.name} Moved Successfully to {Destination.resolve().name}"
+            return f"[{need_theme()["foreground"]}]{Source.name} Moved Successfully to {Destination.resolve().name}"
 
         except PermissionError:
             raise InfoNotify("Permission Denied")
@@ -406,12 +406,12 @@ class File:
 
             if Source.is_dir():
                 await asyncio.to_thread(sl.copytree, Source, Final, dirs_exist_ok=True)
-                return f"[{need_theme()["success"]}]{Source.name} Directory Copied Successfully to {Destination.resolve().name}"
+                return f"[{need_theme()["foreground"]}]{Source.name} Directory Copied Successfully to {Destination.resolve().name}"
 
             # Handle copying file
             elif Source.is_file():
                 await asyncio.to_thread(sl.copy2, Source, Final)
-                return f"[{need_theme()["success"]}]{Source.name} File Copied Successfully to {Destination.resolve().name}"
+                return f"[{need_theme()["foreground"]}]{Source.name} File Copied Successfully to {Destination.resolve().name}"
 
             else:
                 raise InfoNotify(f"Unsupported File Type: {Source.name}")
@@ -442,7 +442,7 @@ class File:
                 await asyncio.to_thread(sl.rmtree, FolderName)
             else:
                 await asyncio.to_thread(FolderName.unlink)
-            return f"[{need_theme()["success"]}]{FolderName.name} Deleted Successfully."
+            return f"[{need_theme()["foreground"]}]{FolderName.name} Deleted Successfully."
         except PermissionError:
             raise InfoNotify(f"Permission Denied for {FolderName.name}")
         except Exception as e:

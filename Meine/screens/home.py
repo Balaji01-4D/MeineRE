@@ -174,7 +174,7 @@ class HomeScreen(Screen):
             if result:
                 if not isinstance(result, Panel):
                     theme = self.app.current_theme
-                    self.rich_log.write(Panel(result, expand=False, style=theme.surface))
+                    self.rich_log.write(Panel(result, expand=False, style=theme.primary))
                 else:
                     self.rich_log.write(result)
         except InfoNotify as e:

@@ -10,6 +10,8 @@ import py7zr
 from rich.panel import Panel
 from rich.table import Table
 
+from Meine.exceptions import InfoNotify
+
 
 class Zip:
 
@@ -18,7 +20,6 @@ class Zip:
             if not Source.exists():
                 return f"{Source.name} Is Not Found."
 
-            # Determine the compression format and call corresponding method
             if format in {"zip", "z"}:
                 await asyncio.to_thread(self._compress_zip, Source)
                 return f"{Source.name} Compressed Successfully as zip."
@@ -35,9 +36,9 @@ class Zip:
                 return f"Unsupported compression format: {format}. Please use zip, tar, gz, or 7z."
 
         except PermissionError:
-            return "Permission Denied"
+            raise InfoNotify("Permission Denied")
         except Exception as e:
-            return f"Error in compressing {Source.name}: {str(e)}"
+            raise InfoNotify(f"Error in compressing {Source.name}: {str(e)}")
 
     # Helper methods for each compression format
     def _compress_zip(self, Source: Path):
@@ -109,9 +110,9 @@ class Zip:
                 return f"Unsupported file format: {Source.suffix}. Please use .zip, .tar, .gz, or .7z for extraction."
 
         except PermissionError:
-            return "Permission Denied"
+            raise InfoNotify("Permission Denied")
         except Exception as e:
-            return f"Error In Extracting {Source.name}: {str(e)}"
+            raise InfoNotify(f"Error In Extracting {Source.name}: {str(e)}")
 
     # Helper methods for each extraction format
     def _extract_zip(self, Source: Path):
@@ -159,9 +160,9 @@ class Zip:
                 return f"{archive_file.name} is not a valid archive file format."
 
         except PermissionError:
-            return "Permission Denied"
+            raise InfoNotify("Permission Denied")
         except Exception as e:
-            return f"Error occurred: {str(e)}"
+            raise InfoNotify(f"Error occurred: {str(e)}")
 
     # Function for handling .zip files
     async def _list_zip_contents(self, zip_file: Path, content_table: Table) -> str:
