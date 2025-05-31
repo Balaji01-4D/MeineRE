@@ -1,4 +1,3 @@
-from math import log
 from pathlib import Path
 import os
 
@@ -8,7 +7,6 @@ from textual.widgets import Input, DirectoryTree
 from textual.suggester import SuggestFromList
 
 from meine.utils.file_manager import load_Path_expansion
-from meine.logger_config import logger
 
 actions = [
     "cd",
@@ -119,13 +117,6 @@ class MeineInput(Input):
         self.suggestions, hint, separator = self._get_hint_text()
         if (self.suggestions):
             suggestion = [" ".join(self.suggestions) + separator + item for item in self.get_suggestion_on_tab_pressed(hint) if item not in self.value]
-            logger.info(
-                f"""suggestion list = {suggestion}\n
-                suggestions = {self.suggestions}\n
-                inputText = {self.value}\n
-                hint = {hint}
-                tabpressed = {[item for item in self.get_suggestion_on_tab_pressed(hint)]}
-                """)
             self.suggester = SuggestFromList(suggestion, case_sensitive=False)
 
 

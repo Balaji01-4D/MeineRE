@@ -3,5 +3,5 @@ include SECURITY.md
 include README.Md
 include requirements.txt
 
-recursive-include Meine/resources *.json
-recursive-include Meine/tcss *.tcss                                 
+recursive-include meine/resources *.json
+recursive-include meine/tcss *.tcss

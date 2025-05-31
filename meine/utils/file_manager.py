@@ -9,7 +9,7 @@ import importlib.resources as pkg_resources
 
 from meine.exceptions import InfoNotify
 
-APP_NAME = "MeineRE"
+APP_NAME = "meine"
 # ------------------ USER PATHS ------------------
 
 USER_DATA_DIR = Path(user_data_dir(APP_NAME))
@@ -21,7 +21,7 @@ CUSTOM_JSON_PATH = USER_DATA_DIR / "customs.json"
 QUOTES_JSON_PATH = USER_DATA_DIR / "quotes.json"
 
 
-DEFAULT_RESOURCES_PATH = pkg_resources.files("Meine.resources")
+DEFAULT_RESOURCES_PATH = pkg_resources.files("meine.resources")
 
 # ------------------ INITIALIZE DEFAULTS IF MISSING ------------------
 

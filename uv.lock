@@ -249,7 +249,7 @@ wheels = [
 ]
 
 [[package]]
-name = "meinere"
+name = "meine"
 version = "1.0.3"
 source = { editable = "." }
 dependencies = [

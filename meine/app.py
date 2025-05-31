@@ -1,4 +1,4 @@
-from textual.app import App, SystemCommand
+from textual.app import App
 
 from meine.screens.help import HelpScreen
 from meine.screens.home import HomeScreen
@@ -8,10 +8,8 @@ from meine.utils.file_manager import (
     save_history,
     save_settings,
     load_history,
-    add_custom_path_expansion,
     load_settings,
     initialize_user_data_files
-
 )
 initialize_user_data_files()
 
