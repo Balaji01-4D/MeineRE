@@ -1,6 +1,6 @@
 import click
-from .app import run
-from .utils.file_manager import Quotes, clear_history
+from meine.app import run
+from meine.utils.file_manager import Quotes, clear_history
 
 @click.command()
 @click.option('--quotes.reset', 'quotes_reset', is_flag=True, help='Reset quotes file to default.')

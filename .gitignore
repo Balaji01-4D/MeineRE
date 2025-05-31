@@ -8,4 +8,4 @@ env/
 venv/
 .vscode/
 .idea/
-                    
+run.py

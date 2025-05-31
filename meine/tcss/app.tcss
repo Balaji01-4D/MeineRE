@@ -1,7 +1,96 @@
+$main-lighten-2: $primary-lighten-2;
+$main-lighten-1: $primary-lighten-1;
+$main: $primary;
+$main-darken-1: $primary-darken-1;
+$main-darken-2: $primary-darken-2;
+$main-border-text-color: $accent;
+$main-border-color: $main-lighten-1 50%;
+$main-border-color-focus: $main-lighten-1 100%;
+
+$left-border-trim: vkey $main-lighten-2 15%;
+
+
+* {
+  /* scrollbar-color: $accent 30%;
+  scrollbar-color-hover: $accent 50%;
+  scrollbar-color-active: $accent 80%;
+  scrollbar-background: $surface-darken-1;
+  scrollbar-background-hover: $surface-darken-1;
+  scrollbar-background-active: $surface-darken-1;*/
+  scrollbar-size-vertical: 1;
+  link-style: none;
+  link-color-hover: $accent;
+  link-background-hover: $main 0%;
+  link-style-hover: u not dim bold;
+
+    &:focus {
+        background-tint: transparent;
+        /* background: #151729;
+        border: tall #43548b; */
+    }
+}
 Input{
     color: $text-primary;
-    background: $surface;
 }
+Screen {
+  background: $background;
+  padding: 0 2 1 2;
+  &:inline {
+    height: 80vh;
+    padding: 0 2;
+  }
+}
+Toast {
+  background: $background-darken-1;
+  border-right: none;
+  &.-information {
+    border-left: outer $main-lighten-1;
+    & .toast--title {
+      color: $main-lighten-2;
+    }
+  }
+}
+Tooltip {
+  background: $background-darken-1;
+  border: wide $main-border-color;
+}
+
+TextArea {
+  padding: 1 2;
+  border: round $main-border-color;
+  border-title-color: $main-border-text-color;
+  border-subtitle-color: $main-border-text-color;
+  &:focus {
+    border: round $main-border-color-focus;
+    border-title-style: bold;
+    & .text-area--selection {
+      background: $main 60%;
+    }
+  }
+  & .text-area--cursor-line {
+    background: $background 0%;
+  }
+
+  & .text-area--cursor-gutter {
+    background: $background 0%;
+  }
+  &:focus .text-area--cursor-gutter {
+    color: yellowgreen;
+    background: $background 0%;
+  }
+  & .text-area--selection {
+    background: $main-lighten-2 25%;
+  }
+
+  &.selection-mode {
+    border: none;
+    height: auto;
+    max-height: 75vh;
+    width: 100%;
+    padding: 0;
+  }
+}
+
 
 #main{
     layout: horizontal;
@@ -16,22 +105,31 @@ Header{
 }
 
 
+
 Directory_tree_container{
     width: 30;
-    border: $panel;
-    background: $surface;
+    /* border: $primary; */
 
     #directory-tree{
         padding:  1 1;
         width: 100%;
+        background: $background-lighten-1;
+        scrollbar-gutter: stable;
+        /* width: auto;
+        height: 1fr;
+        padding: 0 1;
+        margin-bottom: 1;  why is this needed? */
+        border: blank;
+
+
 
     }
+
     Static {
         background: $surface;
         content-align: center middle;
-        text-style: italic;
         color: $text;
-
+        height:2;
     }
 
 }
@@ -70,12 +168,6 @@ Background_process_container > Vertical > DataTable{
 Background_process_container.-hidden{
     display: none;
 }
-
-Toast{
-    padding: 1;
-    color: $primary;
-}
-
 
 
 MeineTextAreaScreen {
