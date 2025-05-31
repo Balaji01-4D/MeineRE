@@ -1,2 +1,2 @@
-import Meine.main as main
+import meine.main as main
 main.main()

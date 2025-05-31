@@ -7,7 +7,7 @@ import xdialog
 from appdirs import user_data_dir
 import importlib.resources as pkg_resources
 
-from Meine.exceptions import InfoNotify
+from meine.exceptions import InfoNotify
 
 APP_NAME = "MeineRE"
 # ------------------ USER PATHS ------------------

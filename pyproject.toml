@@ -3,8 +3,8 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Meinere"
-version = "1.0.3"
+name = "meine"
+version = "1.0.4"
 description = "⚡MeineRe - A regex-powered, asynchronous CLI file manager and system utility built with Textual. It combines intuitive command parsing with rich terminal UI, allowing you to navigate directories, manage files, and fetch system info—fast."
 readme = "README.md"
 requires-python = ">=3.11"

@@ -7,16 +7,16 @@ from textual.events import Click
 from textual.screen import Screen
 from textual.widgets import DirectoryTree, Input, RichLog, Header
 
-from Meine.exceptions import InfoNotify
-from Meine.ui_handler import CLI
-from Meine.widgets.containers import (
+from meine.exceptions import InfoNotify
+from meine.ui_handler import CLI
+from meine.widgets.containers import (
     Background_process_container,
     Container,
     Directory_tree_container,
 )
-from Meine.screens.textarea import MeineTextAreaScreen
-from Meine.widgets.input import MeineInput
-from Meine.utils.file_manager import load_random_quote
+from meine.screens.textarea import MeineTextAreaScreen
+from meine.widgets.input import MeineInput
+from meine.utils.file_manager import load_random_quote
 
 
 

@@ -5,8 +5,8 @@ from textual.binding import Binding
 from textual.events import Click
 from textual.widgets import DirectoryTree
 
-from Meine.screens.textarea import MeineTextAreaScreen
-from Meine.utils.file_manager import load_settings
+from meine.screens.textarea import MeineTextAreaScreen
+from meine.utils.file_manager import load_settings
 
 
 class DTree(DirectoryTree):

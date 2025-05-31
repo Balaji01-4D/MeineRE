@@ -2473,3 +2473,372 @@
                 hint = None
                 tabpressed = ['config', 'MeineRE', 'diagnose.md', 'temp']
                 
+2025-05-31 18:28:45,672 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:28:45,954 - input.py - suggestion list = ['cd __pycache__', 'cd uv.lock', 'cd .vscode', 'cd .git', 'cd img', 'cd Meinere.egg-info', 'cd dist', 'cd pyproject.toml', 'cd Meine', 'cd logs', 'cd LICENSE', 'cd .gitignore', 'cd .venv', 'cd README.md', 'cd requirements.txt', 'cd tests', 'cd MANIFEST.in']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:28:55,199 - input.py - suggestion list = ['mk config', 'mk MeineRE', 'mk temp']
+
+                suggestions = ['mk']
+
+                inputText = mk
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'temp']
+                
+2025-05-31 18:29:04,675 - input.py - suggestion list = ['rm new', 'rm config', 'rm MeineRE', 'rm temp']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['new', 'config', 'MeineRE', 'temp']
+                
+2025-05-31 18:30:29,472 - input.py - suggestion list = ['c config', 'c MeineRE', 'c temp']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'temp']
+                
+2025-05-31 18:30:29,708 - input.py - suggestion list = ['cd config', 'cd MeineRE', 'cd temp']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'temp']
+                
+2025-05-31 18:30:31,653 - input.py - suggestion list = ['c .cache', 'c Downloads', 'c .local', 'c Templates', 'c .vscode', 'c Idea', 'c Desktop', 'c .gitconfig', 'c .gnupg', 'c .android', 'c .gtkrc-2.0', 'c Rom', 'c .face', 'c .dotnet', 'c .openjfx', 'c .face.icon', 'c .bash_history', 'c Phone', 'c .clipboard', 'c .m2', 'c .profile', 'c .bashrc', 'c .config', 'c Videos', 'c .var', 'c .pki', 'c temp', 'c .ssr', 'c Projects', 'c .npm', 'c .java', 'c Pictures', 'c .sudo_as_admin_successful', 'c KernelSU', 'c .jdks', 'c .bash_logout', 'c Documents', 'c .streamlit', 'c Public', 'c Music']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['.cache', 'Downloads', '.local', 'Templates', '.vscode', 'Idea', 'Desktop', '.gitconfig', '.gnupg', '.android', '.gtkrc-2.0', 'Rom', '.face', '.dotnet', '.openjfx', '.face.icon', '.bash_history', 'Phone', '.clipboard', '.m2', '.profile', '.bashrc', '.config', 'Videos', '.var', '.pki', 'temp', '.ssr', 'Projects', '.npm', '.java', 'Pictures', '.sudo_as_admin_successful', 'KernelSU', '.jdks', '.bash_logout', 'Documents', '.streamlit', 'Public', 'Music']
+                
+2025-05-31 18:30:31,874 - input.py - suggestion list = ['cd .cache', 'cd Downloads', 'cd .local', 'cd Templates', 'cd .vscode', 'cd Idea', 'cd Desktop', 'cd .gitconfig', 'cd .gnupg', 'cd .android', 'cd .gtkrc-2.0', 'cd Rom', 'cd .face', 'cd .dotnet', 'cd .openjfx', 'cd .face.icon', 'cd .bash_history', 'cd Phone', 'cd .clipboard', 'cd .m2', 'cd .profile', 'cd .bashrc', 'cd .config', 'cd Videos', 'cd .var', 'cd .pki', 'cd temp', 'cd .ssr', 'cd Projects', 'cd .npm', 'cd .java', 'cd Pictures', 'cd .sudo_as_admin_successful', 'cd KernelSU', 'cd .jdks', 'cd .bash_logout', 'cd Documents', 'cd .streamlit', 'cd Public', 'cd Music']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['.cache', 'Downloads', '.local', 'Templates', '.vscode', 'Idea', 'Desktop', '.gitconfig', '.gnupg', '.android', '.gtkrc-2.0', 'Rom', '.face', '.dotnet', '.openjfx', '.face.icon', '.bash_history', 'Phone', '.clipboard', '.m2', '.profile', '.bashrc', '.config', 'Videos', '.var', '.pki', 'temp', '.ssr', 'Projects', '.npm', '.java', 'Pictures', '.sudo_as_admin_successful', 'KernelSU', '.jdks', '.bash_logout', 'Documents', '.streamlit', 'Public', 'Music']
+                
+2025-05-31 18:30:34,485 - input.py - suggestion list = ['c Projectpixelage']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['Projectpixelage']
+                
+2025-05-31 18:30:34,745 - input.py - suggestion list = ['cd Projectpixelage']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['Projectpixelage']
+                
+2025-05-31 18:30:37,168 - input.py - suggestion list = ['c ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607', 'c ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607.zip', 'c vendor_boot.img']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607', 'ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607.zip', 'vendor_boot.img']
+                
+2025-05-31 18:30:37,434 - input.py - suggestion list = ['cd ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607', 'cd ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607.zip', 'cd vendor_boot.img']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607', 'ProjectPixelage-v2.8-cancunf-15.0-UNOFFICIAL-20250517-1607.zip', 'vendor_boot.img']
+                
+2025-05-31 18:30:45,147 - input.py - suggestion list = ['rm output', 'rm payload_properties.txt', 'rm apex_info.pb']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt', 'apex_info.pb']
+                
+2025-05-31 18:30:48,408 - input.py - suggestion list = ['rm output', 'rm payload_properties.txt']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:49,010 - input.py - suggestion list = ['rm output', 'rm payload_properties.txt']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:50,078 - input.py - suggestion list = ['c output', 'c payload_properties.txt']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:50,340 - input.py - suggestion list = ['cd output', 'cd payload_properties.txt']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:51,031 - input.py - suggestion list = ['cd output', 'cd payload_properties.txt']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:51,186 - input.py - suggestion list = ['c output', 'c payload_properties.txt']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:51,563 - input.py - suggestion list = ['c output', 'c payload_properties.txt']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:51,805 - input.py - suggestion list = ['cd output', 'cd payload_properties.txt']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:52,520 - input.py - suggestion list = ['cd output', 'cd payload_properties.txt']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:30:55,075 - input.py - suggestion list = ['rm system_ext.img', 'rm system.img', 'rm gpueb.img', 'rm vendor_dlkm.img', 'rm vbmeta.img', 'rm product.img', 'rm boot.img', 'rm vendor_boot.img', 'rm vendor.img', 'rm vbmeta_system.img']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:07,959 - input.py - suggestion list = ['rm system_ext.img', 'rm system.img', 'rm gpueb.img', 'rm vendor_dlkm.img', 'rm vbmeta.img', 'rm product.img', 'rm boot.img', 'rm vendor_boot.img', 'rm vendor.img', 'rm vbmeta_system.img']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:10,237 - input.py - suggestion list = ['rm system_ext.img', 'rm system.img', 'rm gpueb.img', 'rm vendor_dlkm.img', 'rm vbmeta.img', 'rm product.img', 'rm boot.img', 'rm vendor_boot.img', 'rm vendor.img', 'rm vbmeta_system.img']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:10,737 - input.py - suggestion list = ['rm system_ext.img', 'rm system.img', 'rm gpueb.img', 'rm vendor_dlkm.img', 'rm vbmeta.img', 'rm product.img', 'rm boot.img', 'rm vendor_boot.img', 'rm vendor.img', 'rm vbmeta_system.img']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:11,338 - input.py - suggestion list = ['c system_ext.img', 'c system.img', 'c gpueb.img', 'c vendor_dlkm.img', 'c vbmeta.img', 'c product.img', 'c boot.img', 'c vendor_boot.img', 'c vendor.img', 'c vbmeta_system.img']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:11,584 - input.py - suggestion list = ['cd system_ext.img', 'cd system.img', 'cd gpueb.img', 'cd vendor_dlkm.img', 'cd vbmeta.img', 'cd product.img', 'cd boot.img', 'cd vendor_boot.img', 'cd vendor.img', 'cd vbmeta_system.img']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:11,851 - input.py - suggestion list = ['cd system_ext.img', 'cd system.img', 'cd gpueb.img', 'cd vendor_dlkm.img', 'cd vbmeta.img', 'cd product.img', 'cd boot.img', 'cd vendor_boot.img', 'cd vendor.img', 'cd vbmeta_system.img']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:12,114 - input.py - suggestion list = ['c system_ext.img', 'c system.img', 'c gpueb.img', 'c vendor_dlkm.img', 'c vbmeta.img', 'c product.img', 'c boot.img', 'c vendor_boot.img', 'c vendor.img', 'c vbmeta_system.img']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:18,394 - input.py - suggestion list = ['rm system_ext.img', 'rm system.img', 'rm gpueb.img', 'rm vendor_dlkm.img', 'rm vbmeta.img', 'rm product.img', 'rm boot.img', 'rm vendor_boot.img', 'rm vendor.img', 'rm vbmeta_system.img']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:35,152 - input.py - suggestion list = ['c system_ext.img', 'c system.img', 'c gpueb.img', 'c vendor_dlkm.img', 'c vbmeta.img', 'c product.img', 'c boot.img', 'c vendor_boot.img', 'c vendor.img', 'c vbmeta_system.img']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:35,376 - input.py - suggestion list = ['cd system_ext.img', 'cd system.img', 'cd gpueb.img', 'cd vendor_dlkm.img', 'cd vbmeta.img', 'cd product.img', 'cd boot.img', 'cd vendor_boot.img', 'cd vendor.img', 'cd vbmeta_system.img']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['system_ext.img', 'system.img', 'gpueb.img', 'vendor_dlkm.img', 'vbmeta.img', 'product.img', 'boot.img', 'vendor_boot.img', 'vendor.img', 'vbmeta_system.img']
+                
+2025-05-31 18:31:36,899 - input.py - suggestion list = ['rm output', 'rm payload_properties.txt']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:31:37,764 - input.py - suggestion list = ['c output', 'c payload_properties.txt']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:31:37,989 - input.py - suggestion list = ['cd output', 'cd payload_properties.txt']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:31:39,711 - input.py - suggestion list = ['cd output', 'cd payload_properties.txt']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:31:40,430 - input.py - suggestion list = ['c output', 'c payload_properties.txt']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:31:40,700 - input.py - suggestion list = ['z output', 'z payload_properties.txt']
+
+                suggestions = ['z']
+
+                inputText = z
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:31:41,140 - input.py - suggestion list = ['zip output', 'zip payload_properties.txt']
+
+                suggestions = ['zip']
+
+                inputText = zip
+
+                hint = None
+                tabpressed = ['output', 'payload_properties.txt']
+                
+2025-05-31 18:54:16,104 - input.py - suggestion list = ['rm output.zip', 'rm output', 'rm payload_properties.txt']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['output.zip', 'output', 'payload_properties.txt']
+                

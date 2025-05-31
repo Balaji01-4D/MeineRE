@@ -1,10 +1,10 @@
 from textual.app import App, SystemCommand
 
-from Meine.screens.help import HelpScreen
-from Meine.screens.home import HomeScreen
-from Meine.screens.settings import NameGetterScreen, Settings
-from Meine.themes import BUILTIN_THEMES
-from Meine.utils.file_manager import (
+from meine.screens.help import HelpScreen
+from meine.screens.home import HomeScreen
+from meine.screens.settings import NameGetterScreen, Settings
+from meine.themes import BUILTIN_THEMES
+from meine.utils.file_manager import (
     save_history,
     save_settings,
     load_history,

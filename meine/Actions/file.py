@@ -9,7 +9,7 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 
-from Meine.exceptions import InfoNotify
+from meine.exceptions import InfoNotify
 from .Myrequest import AlreadyExist
 from .app_theme import get_theme_colors
 

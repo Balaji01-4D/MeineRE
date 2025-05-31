@@ -1,4 +1,4 @@
-from Meine.exceptions import InfoNotify
+from meine.exceptions import InfoNotify
 
 
 def GetName(Action):

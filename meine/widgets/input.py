@@ -7,8 +7,8 @@ from textual.binding import Binding
 from textual.widgets import Input, DirectoryTree
 from textual.suggester import SuggestFromList
 
-from Meine.utils.file_manager import load_Path_expansion
-from Meine.logger_config import logger
+from meine.utils.file_manager import load_Path_expansion
+from meine.logger_config import logger
 
 actions = [
     "cd",

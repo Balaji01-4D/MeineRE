@@ -4,8 +4,8 @@ from re import Match, Pattern
 
 from rich.table import Table
 
-from Meine.Actions import File, System, Zip
-from Meine.exceptions import InfoNotify
+from meine.Actions import File, System, Zip
+from meine.exceptions import InfoNotify
 
 d: dict[str, Pattern] = {
     "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),

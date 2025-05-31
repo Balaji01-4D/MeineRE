@@ -10,7 +10,7 @@ import py7zr
 from rich.panel import Panel
 from rich.table import Table
 
-from Meine.exceptions import InfoNotify
+from meine.exceptions import InfoNotify
 
 
 class Zip:

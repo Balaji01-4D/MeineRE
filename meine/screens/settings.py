@@ -6,8 +6,8 @@ from textual.screen import ModalScreen
 from textual.widgets import Button, Input, Select, Static, Switch
 
 
-from Meine.screens.me import Myself
-from Meine.utils.file_manager import clear_history
+from meine.screens.me import Myself
+from meine.utils.file_manager import clear_history
 
 
 class Settings(ModalScreen):

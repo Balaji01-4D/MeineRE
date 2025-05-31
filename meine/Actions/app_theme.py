@@ -1,5 +1,5 @@
 from textual.theme import Theme
-import Meine.app as app
+import meine.app as app
 
 def get_theme_colors():
 
