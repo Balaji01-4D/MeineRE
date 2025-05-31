@@ -1,3 +1,4 @@
+from math import log
 from pathlib import Path
 import os
 
@@ -7,8 +8,11 @@ from textual.widgets import Input, DirectoryTree
 from textual.suggester import SuggestFromList
 
 from Meine.utils.file_manager import load_Path_expansion
+from Meine.logger_config import logger
 
 actions = [
+    "cd",
+    "rm",
     "uz",
     "z",
     "zip",
@@ -17,6 +21,7 @@ actions = [
     "mk",
     "create",
     "make",
+    "mv",
     "unzip",
     "delete",
     "copy",
@@ -88,12 +93,17 @@ class MeineInput(Input):
     def _get_hint_text(self)  -> tuple[list[str],None|str]:
         values_list = self.value.split(" ")
         size = len(values_list)
+        if (values_list[0] in actions):
+            if (size <= 1):
+                return values_list, None, " "
 
-        if (size == 1):
-            return values_list, None
-        else:
-            hint = values_list.pop()
-            return values_list, hint
+            elif (size == 2):
+                hint = values_list.pop()
+                if (hint and ',' in hint[-1]): return values_list + [hint], None, ""
+            else:
+                hint = values_list.pop()
+                return values_list, hint, " "
+        return [],None, " "
 
     def get_suggestion_on_tab_pressed(self, hint=None):
         items = os.listdir('.')
@@ -102,19 +112,28 @@ class MeineInput(Input):
         return items
 
 
+    def key_backspace(self):
+        self.suggestions.clear()
+
+    def on_input_changed(self):
+        self.suggestions, hint, separator = self._get_hint_text()
+        if (self.suggestions):
+            suggestion = [" ".join(self.suggestions) + separator + item for item in self.get_suggestion_on_tab_pressed(hint) if item not in self.value]
+            logger.info(
+                f"""suggestion list = {suggestion}\n
+                suggestions = {self.suggestions}\n
+                inputText = {self.value}\n
+                hint = {hint}
+                tabpressed = {[item for item in self.get_suggestion_on_tab_pressed(hint)]}
+                """)
+            self.suggester = SuggestFromList(suggestion, case_sensitive=False)
+
 
     def action_history_up(self):
         if self.history_index > 0:
             self.history_index -= 1
             self.value = self.history[self.history_index]
             self.cursor_position = len(self.value)
-
-    def on_input_changed(self):
-        self.suggestions, hint = self._get_hint_text()
-        suggestion = [" ".join(self.suggestions) + " " + item for item in self.get_suggestion_on_tab_pressed(hint)]
-        self.suggester = SuggestFromList(suggestion)
-
-
 
     # def on_input_changed(self):
     #     matched_keyword = search(r"(p|d)\{(.+)\}", self.value)
