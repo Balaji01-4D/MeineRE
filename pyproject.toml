@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "meine"
-version = "1.0.0"
+version = "1.0.1"
 description = "⚡MeineRe - A regex-powered, asynchronous CLI file manager and system utility built with Textual. It combines intuitive command parsing with rich terminal UI, allowing you to navigate directories, manage files, and fetch system info—fast."
 readme = "README.md"
 requires-python = ">=3.11"
