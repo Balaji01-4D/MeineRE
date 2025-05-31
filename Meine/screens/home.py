@@ -7,7 +7,7 @@ from textual.events import Click
 from textual.screen import Screen
 from textual.widgets import DirectoryTree, Input, RichLog, Header
 
-from Meine.exceptions import ErrorNotify, InfoNotify, WarningNotify
+from Meine.exceptions import InfoNotify
 from Meine.ui_handler import CLI
 from Meine.widgets.containers import (
     Background_process_container,
@@ -39,7 +39,7 @@ class HomeScreen(Screen):
             history=self.app.HISTORY,
             history_index=self.HISTORY_INDEX,
         )
-        self.rich_log = RichLog(id="output")
+        self.rich_log = RichLog(id="output",highlight=True)
 
         self.directory_tree_container = Directory_tree_container(
             classes="-hidden", id="directory-tree-container"
@@ -175,15 +175,11 @@ class HomeScreen(Screen):
             if result:
                 if not isinstance(result, Panel):
                     theme = self.app.current_theme
-                    self.rich_log.write(Panel(result, expand=False, style=theme.surface ))
+                    self.rich_log.write(Panel(result, expand=False, style=theme.surface))
                 else:
                     self.rich_log.write(result)
-        except ErrorNotify as e:
-            self.notify(message=e.message, title="Error", severity="error")
-        except WarningNotify as e:
-            self.notify(message=e.message, title="Warning", severity="warning")
         except InfoNotify as e:
-            self.notify(message=e.message, title="Information", severity="information")
+            self.notify(message=e.message, title="ERROR", severity="error")
         except Exception as e:
             self.rich_log.write(f"[error] Command execution failed: {str(e)}")
 

@@ -1,3 +1,6 @@
+from Meine.exceptions import InfoNotify
+
+
 def GetName(Action):
     print(f"Need a File or Folder to {Action}")
 
@@ -23,4 +26,4 @@ def AlreadyExist(Source: str, Destination: str) -> str:
     The file with name '< {Source} >' already exists in the '< {Destination} >' target directory
         Please choose a different name or Please choose another directory or location
     """
-    return f"The file with name '< {Source} >' already exists in the '< {Destination} >' target directory .\nPlease choose a different name or Please choose another directory or location"
+    raise InfoNotify(f"The file with name '< {Source} >' already exists in the '< {Destination} >' target directory .\nPlease choose a different name or Please choose another directory or location")
