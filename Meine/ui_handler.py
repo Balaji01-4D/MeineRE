@@ -5,7 +5,7 @@ from re import Match, Pattern
 from rich.table import Table
 
 from Meine.Actions import File, System, Zip
-from Meine.exceptions import ErrorNotify
+from Meine.exceptions import InfoNotify
 
 d: dict[str, Pattern] = {
     "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
@@ -45,9 +45,9 @@ async def CLI(Command):
             results = [await Rename(s, n) for s, n in zip(source, newname)]
             return "\n".join(results)
         elif not isinstance(source, list) and isinstance(newname, list):
-            raise ErrorNotify("[#E06C75]Multiple Source Need to Rename Multiple")
+            raise InfoNotify("[#E06C75]Multiple Source Need to Rename Multiple")
         elif isinstance(source, list) and not isinstance(newname, list):
-            raise ErrorNotify("[#E06C75]Multiple New Name Need to Rename Multiple")
+            raise InfoNotify("[#E06C75]Multiple New Name Need to Rename Multiple")
         else:
             return await Rename(source, newname)
 
@@ -100,7 +100,7 @@ async def CLI(Command):
 
         elif act == "show":
             if isinstance(source, list):
-                raise ErrorNotify("show file content accepts a single file")
+                raise InfoNotify("show file content accepts a single file")
             return await files.ShowContent_File(Path(source))
 
         elif act == "clr":
@@ -172,7 +172,7 @@ async def CLI(Command):
         elif source.is_file():
             return await files.Text_Finder_File(text, source)
         else:
-            raise ErrorNotify("Source Not Found")
+            raise InfoNotify("Source Not Found")
 
     # Command-to-handler mapping
     handlers = {
@@ -190,7 +190,7 @@ async def CLI(Command):
             if key in handlers:
                 return await handlers[key](RegexMatch)
 
-    raise ErrorNotify("[#E06C75]Command not recognized.")
+    raise InfoNotify("Command not recognized.")
 
 
 async def Copy(Source: str, Destination: str) -> str:
@@ -204,11 +204,11 @@ async def Copy(Source: str, Destination: str) -> str:
             result = await files.Copy_Folder(sourcePath, destinationPath)
             return result
         else:
-            raise ErrorNotify(f"{Source} Not Found")
+            raise InfoNotify(f"{Source} Not Found")
     elif destinationPath.is_file():
-        raise ErrorNotify(f"{destinationPath} is a File")
+        raise InfoNotify(f"{destinationPath} is a File")
     else:
-        raise ErrorNotify(f"{destinationPath.name} Not Found")
+        raise InfoNotify(f"{destinationPath.name} Not Found")
 
 
 async def Move(Source: str, Destination: str) -> str:
@@ -222,11 +222,11 @@ async def Move(Source: str, Destination: str) -> str:
             result = await files.Move_Folder(sourcePath, destinationPath)
             return result
         else:
-            raise ErrorNotify(f"{Source} Not Found")
+            raise InfoNotify(f"{Source} Not Found")
     elif destinationPath.is_file():
-        raise ErrorNotify(f"{destinationPath.name} is a File")
+        raise InfoNotify(f"{destinationPath.name} is a File")
     else:
-        raise ErrorNotify(f"{destinationPath.name} Not Found")
+        raise InfoNotify(f"{destinationPath.name} Not Found")
 
 
 async def Rename(Source: str, Newname: str) -> str:
@@ -239,7 +239,7 @@ async def Rename(Source: str, Newname: str) -> str:
         result = await files.Rename_file(sourcePath, NewnamePath)
         return result
     else:
-        raise ErrorNotify(f"{Source} Not Found")
+        raise InfoNotify(f"{Source} Not Found")
 
 
 async def Delete(Source: str) -> str:
@@ -251,7 +251,7 @@ async def Delete(Source: str) -> str:
         result = await files.Delete_Folder(sourcePath)
         return result
     else:
-        raise ErrorNotify(f"{Source} Not Found")
+        raise InfoNotify(f"{Source} Not Found")
 
 
 async def Create(source: str, hint="folder") -> str:

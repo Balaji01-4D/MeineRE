@@ -167,7 +167,6 @@ class HomeScreen(Screen):
     def clear_rich_log(self) -> None:
         self.rich_log.clear()
 
-
     async def execute_command(self, cmd: str) -> None:
         try:
             self.executable = asyncio.create_task(CLI(cmd))

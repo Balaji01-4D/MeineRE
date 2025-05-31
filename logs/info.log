@@ -2041,3 +2041,390 @@
                 hint = None
                 tabpressed = ['.gitattributes', 'justfile', '.git', 'kernel', '.github', 'manager', 'userspace', 'LICENSE', '.gitignore']
                 
+2025-05-31 15:48:36,395 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 15:48:37,119 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 15:48:37,730 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 15:48:37,955 - input.py - suggestion list = ['cd __pycache__', 'cd uv.lock', 'cd .vscode', 'cd .git', 'cd img', 'cd Meinere.egg-info', 'cd dist', 'cd pyproject.toml', 'cd Meine', 'cd logs', 'cd LICENSE', 'cd .gitignore', 'cd .venv', 'cd README.md', 'cd requirements.txt', 'cd tests', 'cd MANIFEST.in']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 15:48:38,964 - input.py - suggestion list = ['c config', 'c MeineRE', 'c diagnose.md', 'c temp']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'diagnose.md', 'temp']
+                
+2025-05-31 15:48:39,215 - input.py - suggestion list = ['cd config', 'cd MeineRE', 'cd diagnose.md', 'cd temp']
+
+                suggestions = ['cd']
+
+                inputText = cd
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'diagnose.md', 'temp']
+                
+2025-05-31 15:48:39,803 - input.py - suggestion list = ['cd ,config', 'cd ,MeineRE', 'cd ,diagnose.md', 'cd ,temp']
+
+                suggestions = ['cd', ',']
+
+                inputText = cd ,
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'diagnose.md', 'temp']
+                
+2025-05-31 15:48:40,017 - input.py - suggestion list = ['cd ,,config', 'cd ,,MeineRE', 'cd ,,diagnose.md', 'cd ,,temp']
+
+                suggestions = ['cd', ',,']
+
+                inputText = cd ,,
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'diagnose.md', 'temp']
+                
+2025-05-31 15:48:40,487 - input.py - suggestion list = ['cd ,config', 'cd ,MeineRE', 'cd ,diagnose.md', 'cd ,temp']
+
+                suggestions = ['cd', ',']
+
+                inputText = cd ,
+
+                hint = None
+                tabpressed = ['config', 'MeineRE', 'diagnose.md', 'temp']
+                
+2025-05-31 16:25:14,644 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:31:07,183 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:31:07,386 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:32:08,177 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:32:08,378 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:34:26,160 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:34:26,388 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:36:24,853 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:36:25,131 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:12,772 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:13,284 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:13,649 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:14,391 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:17,964 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:18,185 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:20,168 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:37:20,802 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:39:06,005 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:39:06,133 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:39:56,751 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:39:56,942 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:49:12,815 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:49:13,352 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:49:13,950 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:49:20,301 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 17:49:21,490 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:08:22,350 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:08:23,004 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:09:05,956 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:09:07,083 - input.py - suggestion list = ['rm __pycache__', 'rm uv.lock', 'rm .vscode', 'rm .git', 'rm img', 'rm Meinere.egg-info', 'rm dist', 'rm pyproject.toml', 'rm Meine', 'rm logs', 'rm LICENSE', 'rm .gitignore', 'rm .venv', 'rm README.md', 'rm requirements.txt', 'rm tests', 'rm MANIFEST.in']
+
+                suggestions = ['rm']
+
+                inputText = rm
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:14:11,171 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:14:11,404 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:18:18,213 - input.py - suggestion list = ['c __pycache__', 'c uv.lock', 'c .vscode', 'c .git', 'c img', 'c Meinere.egg-info', 'c dist', 'c pyproject.toml', 'c Meine', 'c logs', 'c LICENSE', 'c .gitignore', 'c .venv', 'c README.md', 'c requirements.txt', 'c tests', 'c MANIFEST.in']
+
+                suggestions = ['c']
+
+                inputText = c
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                
+2025-05-31 18:18:18,435 - input.py - suggestion list = ['cp __pycache__', 'cp uv.lock', 'cp .vscode', 'cp .git', 'cp img', 'cp Meinere.egg-info', 'cp dist', 'cp pyproject.toml', 'cp Meine', 'cp logs', 'cp LICENSE', 'cp .gitignore', 'cp .venv', 'cp README.md', 'cp requirements.txt', 'cp tests', 'cp MANIFEST.in']
+
+                suggestions = ['cp']
+
+                inputText = cp
+
+                hint = None
+                tabpressed = ['__pycache__', 'uv.lock', '.vscode', '.git', 'img', 'Meinere.egg-info', 'dist', 'pyproject.toml', 'Meine', 'logs', 'LICENSE', '.gitignore', '.venv', 'README.md', 'requirements.txt', 'tests', 'MANIFEST.in']
+                

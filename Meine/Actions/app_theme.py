@@ -11,7 +11,7 @@ def get_theme_colors():
         "warning": _theme.warning,
         "error": _theme.error,
         "success": _theme.success,
-        "accent": _theme.success,
+        "accent": _theme.accent,
         "foreground": _theme.foreground,
         "background": _theme.background,
         "surface": _theme.surface,
