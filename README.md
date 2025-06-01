@@ -1,24 +1,21 @@
+<h1 align="center">MEINE</h1>
 
-# meine
+<div align="center">
 
-<p align="center">
-  <img src="https://socialify.git.ci/Balaji01-4D/meine/image?description=1&font=Jost&language=1&name=1&owner=1&pattern=Floating+Cogs&theme=Auto" alt="project-banner">
-</p>
+<a href="https://github.com/Balaji01-4D/meine/stargazers"><img src="https://img.shields.io/github/stars/Balaji01-4D/meine" alt="Stars Badge"/></a>
+<a href="https://github.com/Balaji01-4D/meine/network/members"><img src="https://img.shields.io/github/forks/Balaji01-4D/meine" alt="Forks Badge"/></a>
+<a href="https://github.com/Balaji01-4D/meine/pulls"><img src="https://img.shields.io/github/issues-pr/Balaji01-4D/meine" alt="Pull Requests Badge"/></a>
+<a href="https://github.com/Balaji01-4D/meine/issues"><img src="https://img.shields.io/github/issues/Balaji01-4D/meine" alt="Issues Badge"/></a>
+<a href="https://github.com/Balaji01-4D/meine/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Balaji01-4D/meine?color=2b9348"></a>
+<a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Balaji01-4D/meine?color=2b9348" alt="License Badge"/></a>
 
-> ⚙️ **meine** is a cross-platform, regex-powered command-line interface for automating file operations, system control, and archive manipulation—delivered in a beautiful terminal UI.
-> Modular, asynchronous, and extensible. Built for those who want raw power in a refined shell.
+<img alt="Meine Demo" src="img/lv_0_20250531235724-ezgif.com-optimize.gif" />
 
----
+<i>Loved the project? Please consider <a href="https://ko-fi.com/balaji01">donating</a> to help it improve!</i>
 
-## 📸 Screenshots
+</div>
 
-<p float="left">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" width="100%" alt="Input shell">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" width="100%" alt="Text editor">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new3.png" width="100%" alt="Settings screen">
-</p>
 
----
 ## 🚀 Features
 
 - **🔍 Regex-Based Command Parsing**
@@ -42,6 +39,15 @@
 
 - **🧩 Plugin Ready**
   Drop in your own Python modules to extend functionality without altering core logic.
+
+---
+## 📸 Screenshots
+
+<p float="left">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" width="100%" alt="Input shell">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" width="100%" alt="Text editor">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new3.png" width="100%" alt="Settings screen">
+</p>
 
 ---
 
@@ -68,74 +74,14 @@ pip install .
 
 | Action      | Syntax Example                                  |
 |-------------|--------------------------------------------------|
-| **Delete**  | `del file.txt`  ·  `rm file1.txt, file2.txt`     |
-| **Copy**    | `copy a.txt to b.txt` · `cp a1.txt, a2.txt to d/`|
-| **Move**    | `move a.txt to d/` · `mv f1.txt, f2.txt to ../`  |
+| **Delete**  | `del file.txt`  ·  `rm file1.txt,file2.txt`     |
+| **Copy**    | `copy a.txt to b.txt` · `cp a1.txt,a2.txt to d/`|
+| **Move**    | `move a.txt to d/` · `mv f1.txt,f2.txt to ../`  |
 | **Rename**  | `rename old.txt as new.txt`                      |
-| **Create**  | `mk file.txt` · `mkdir folder1, folder2`         |
+| **Create**  | `mk file.txt` · `mkdir folder1,folder2`         |
 | **Search**  | `search "text" folder/` · `find "term" notes.md` |
 
 ---
 
-## 🧱 Project Structure
 
-```text
-meine/
-├── meine/              # Core package
-│   ├── app.py          # Main entry point
-│   ├── themes.py       # Theme loader
-│   ├── runtime_config.json
-│   ├── tcss/           # Terminal CSS files
-│   ├── resources/      # JSON static data
-│   ├── widgets/        # UI components
-│   ├── screens/        # Screen layouts (text editor, dashboard, etc.)
-│   ├── Actions/        # File and system command handlers
-│   └── utils/          # Helper functions
-├── pyproject.toml      # PEP-517/518 build config
-├── README.md
-├── requirements.txt
-└── LICENSE
-```
 
----
-
-## ✨ Roadmap
-
-- [ ] Plugin Manager System
-- [ ] Git & GitHub integration
-- [ ] Built-in Task Scheduler
-- [ ] Voice Command Support
-- [ ] Remote SSH Execution
-
----
-
-## 🙌 Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-To contribute:
-
-```bash
-git clone https://github.com/Balaji01-4D/meine
-cd meine
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .
-```
-
----
-
-## 📄 License
-
-Licensed under the [MIT License](LICENSE).
-
----
-
-## 💬 Connect
-
-Got feedback, suggestions, or just wanna say hi?
-
-- Instagram: [__balaji.j__](https://www.instagram.com/__balaji.j__/)
-- GitHub Issues: [meine Issues](https://github.com/Balaji01-4D/meine/issues)
-
----
