@@ -236,24 +236,66 @@ class File:
         self, Text: str, Path: str = "."
     ) -> Coroutine[None, None, Table | str]:
         """
-        Asynchronously searches for a text string in all files within a directory.
-
-        Args:
-            Text (str): The text string to search for.
-            Path (str, optional): The directory path to search in. Defaults to the current directory.
-
-        Returns:
-            Coroutine[None, None, Table | str]: A table with matching file names and line numbers
-            if matches are found, otherwise a "Text Not Found" message.
+        Asynchronously searches for text in files with improved performance.
         """
         match_tables = Table(show_lines=True)
         match_tables.add_column("Line.no")
-        match_tables.add_column("Filenmae")
-        result = await Helper(Text, Path)
+        match_tables.add_column("Filename")
+        match_tables.add_column("Preview")
 
-        if result:
-            for file_path, line_num in result:
-                match_tables.add_row(str(line_num), file_path)
+        # File extensions to skip (binary files)
+        SKIP_EXTENSIONS = {'.pyc', '.pyo', '.so', '.dll', '.exe', '.bin', '.jpg', '.png', '.gif', '.pdf'}
+
+        async def is_binary_file(file_path: str) -> bool:
+            try:
+                chunk_size = 1024
+                async with aiofiles.open(file_path, 'rb') as f:
+                    chunk = await f.read(chunk_size)
+                    return b'\0' in chunk
+            except Exception:
+                return True
+
+        async def search_file(file_path: str) -> list:
+            if any(file_path.endswith(ext) for ext in SKIP_EXTENSIONS):
+                return []
+
+            if await is_binary_file(file_path):
+                return []
+
+            results = []
+            try:
+                async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
+                    line_num = 0
+                    async for line in f:
+                        line_num += 1
+                        if Text in line:
+                            # Get a preview of the matching line (truncated if too long)
+                            preview = line.strip()
+                            if len(preview) > 50:
+                                preview = preview[:47] + "..."
+                            results.append((line_num, file_path, preview))
+            except (UnicodeDecodeError, IOError):
+                pass
+            return results
+
+        # Process files in parallel
+        all_files = []
+        for root, _, files in os.walk(Path):
+            all_files.extend(os.path.join(root, file) for file in files)
+
+        # Process files in chunks to avoid overwhelming the system
+        chunk_size = 100
+        results = []
+
+        for i in range(0, len(all_files), chunk_size):
+            chunk = all_files[i:i + chunk_size]
+            chunk_results = await asyncio.gather(*[search_file(f) for f in chunk])
+            for file_results in chunk_results:
+                results.extend(file_results)
+
+        if results:
+            for line_num, file_path, preview in results:
+                match_tables.add_row(str(line_num), file_path, preview)
             return match_tables
         else:
             return "Text Not Found"
@@ -288,33 +330,33 @@ class File:
     async def search_items(
         self, query: str, path: str = ".", search_type: str = "both"
     ) -> Coroutine[None, None, Table | str]:
-
         matches_table = Table(show_lines=True)
         matches_table.add_column("Found")
         matches_table.add_column("Type")
         matches = []
-        try:
-            for root, dirs, files in os.walk(path):
-                if search_type in ("folders", "both"):
-                    for folder in dirs:
-                        if folder.startswith(query):
-                            matches.append(os.path.join(root, folder))
-                            matches_table.add_row(
-                                str(os.path.join(root, folder)), "Folder"
-                            )
 
-                if search_type in ("files", "both"):
-                    for file in files:
-                        if file.startswith(query):
-                            matches.append(os.path.join(root, file))
-                            matches_table.add_row(
-                                str(os.path.join(root, folder)), "File"
-                            )
+        async def process_directory():
+            try:
+                # Use asyncio.to_thread to make os.walk non-blocking
+                for root, dirs, files in await asyncio.to_thread(os.walk, path):
+                    if search_type in ("folders", "both"):
+                        for folder in dirs:
+                            if folder.lower().startswith(query.lower()):
+                                folder_path = os.path.join(root, folder)
+                                matches.append(folder_path)
+                                matches_table.add_row(str(folder_path), "Folder")
 
-            return matches_table
-        except Exception as e:
+                    if search_type in ("files", "both"):
+                        for file in files:
+                            if file.lower().startswith(query.lower()):
+                                file_path = os.path.join(root, file)
+                                matches.append(file_path)
+                                matches_table.add_row(str(file_path), "File")
+            except Exception as e:
+                raise InfoNotify(f"Search error: {str(e)}")
 
-            return []
+        await process_directory()
+        return matches_table if matches else "No matches found."
 
     async def Create_Folder(self, Source: Path) -> Coroutine[None, None, str]:
         """

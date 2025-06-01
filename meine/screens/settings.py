@@ -89,6 +89,7 @@ class Settings(ModalScreen):
                 id="about_me_bt",
                 tooltip="about the developer",
             ),
+            id="settings-container"
         )
 
     def on_click(self, event: Click) -> None:

@@ -11,6 +11,7 @@ from rich.console import Group
 from rich.panel import Panel
 from rich.progress import BarColumn, Progress
 from rich.table import Table
+from rich.text import Text
 
 from ..exceptions import InfoNotify
 from .other import SizeHelper
@@ -46,19 +47,7 @@ class System:
     async def Time(self) -> Panel:
         date = dt.datetime.now().date()
         time = dt.datetime.now().time()
-        return f"""[{get_theme_colors()['accent']}]DATE : {date}\nTIME : {time}
-         [{get_theme_colors()["primary"]}]"primary"\n
-        [{get_theme_colors()["secondary"]}] "secondary"\n ,
-        [{get_theme_colors()["warning"]}]"warning"\n,
-        [{get_theme_colors()["error"]}]"error"\n,
-        [{get_theme_colors()["success"]}]"success": \n,
-        [{get_theme_colors()["accent"]}]"accent": \n
-        [{get_theme_colors()["foreground"]}]"foreground"\n,
-        [{get_theme_colors()["background"]}]"background"\n,
-        [{get_theme_colors()["foreground"]}]"foreground"\n,
-        [{get_theme_colors()["panel"]}]"panel"\n,
-        [{get_theme_colors()["boost"]}]"boost"\n,
-        """
+        return f"""[{get_theme_colors()['accent']}]DATE : {date}\nTIME : {time}"""
 
     async def DiskSpace(self, Destination: Path = Path("/")) -> Panel:
         try:
@@ -234,61 +223,152 @@ class System:
 
         return gp
 
-    async def Battery(self) -> Panel:
+    async def Battery(self) -> Panel | str:
+        """Get detailed battery information with improved error handling."""
         theme = get_theme_colors()
-        battery = await asyncio.to_thread(psutil.sensors_battery)
 
-        if battery:
-            BtPercent = round(battery.percent)
+        try:
+            battery = await asyncio.to_thread(psutil.sensors_battery)
+
+            if not battery:
+                return f"[{theme['error']}]No battery detected on this system"
+
+            # Calculate battery percentage and time remaining
+            percent = round(battery.percent)
+            time_left = battery.secsleft if battery.secsleft != -1 else None
+
+            # Create progress bar
             progress = Progress(
                 "[progress.description]{task.description}",
-                BarColumn(bar_width=30, complete_style=theme['accent']),
+                BarColumn(
+                    bar_width=30,
+                    complete_style=theme['success'] if percent > 20 else theme['error'],
+                ),
                 "{task.percentage:>3.0f}%",
             )
-            bt = progress.add_task(
-                f"[bold cyan]  BATTERY % ", total=100, completed=BtPercent
-            )
-            progress.update(bt, completed=BtPercent)
 
-            status_message = (
-                f"[{theme['accent']}]{'Charging' if battery.power_plugged else 'Not Charging'}"
+            progress.add_task(
+                f"[{theme['foreground']}]Battery Level",
+                total=100,
+                completed=percent
             )
-            status = Panel(
-                f"[{theme['foreground']}]Battery Status: {status_message}",
-                expand=False,
+
+            # Create status information
+            status_items = [
+                f"[{theme['foreground']}]Status: [{theme['accent']}]{'Charging' if battery.power_plugged else 'On Battery'}",
+                f"[{theme['foreground']}]Plugged In: [{theme['accent']}]{'Yes' if battery.power_plugged else 'No'}"
+            ]
+
+            if time_left and not battery.power_plugged:
+                hours = time_left // 3600
+                minutes = (time_left % 3600) // 60
+                status_items.append(
+                    f"[{theme['foreground']}]Time Remaining: [{theme['accent']}]{hours:02d}:{minutes:02d}"
+                )
+
+            status_panel = Panel(
+                "\n".join(status_items),
                 border_style=theme['primary'],
+                title=f"[{theme['accent']}]Battery Information"
             )
-            gp = Group(progress, status)
-            return gp
 
-        return f"[{theme['error']}]No battery information available.",
+            return Group(progress, status_panel)
 
-    async def NetWork(self) -> Panel:
+        except Exception as e:
+            return f"[{theme['error']}]Error getting battery information: {str(e)}"
+
+    async def NetWork(self) -> Table:
+        """Get detailed network information with improved error handling."""
         theme = get_theme_colors()
-        net_info = await asyncio.to_thread(psutil.net_if_addrs)
+        import socket
 
-        net = Table(title=f"Network Information",border_style=theme['primary'],title_style=theme['accent'])
+        try:
+            # Get network interfaces and stats concurrently
+            net_if_addrs, net_if_stats = await asyncio.gather(
+                asyncio.to_thread(psutil.net_if_addrs),
+                asyncio.to_thread(psutil.net_if_stats)
+            )
 
-        net.add_column(f"Interface", no_wrap=True, header_style=theme['accent'])
-        net.add_column(f"Address", no_wrap=True, header_style=theme['accent'])
-        net.add_column(f"Family", no_wrap=True, justify="left", header_style=theme['accent'])
+            net = Table(
+                title=f"[{theme['accent']}]Network Information",
+                border_style=theme['primary'],
+                show_lines=True
+            )
 
-        for interface, addresses in net_info.items():
-            for address in addresses:
-                net.add_row(interface, address.address, address.family.name,style=theme['foreground'])
+            # Add columns for detailed network information
+            net.add_column("Interface", header_style=theme['accent'])
+            net.add_column("Address", header_style=theme['accent'])
+            net.add_column("Type", header_style=theme['accent'])
+            net.add_column("Status", header_style=theme['accent'])
+            net.add_column("Speed", header_style=theme['accent'])
 
-        return net
+            for interface, addresses in net_if_addrs.items():
+                # Get interface statistics
+                stats = net_if_stats.get(interface)
+                is_up = stats.isup if stats else False
+                speed = f"{stats.speed} Mb/s" if stats and stats.speed > 0 else "N/A"
 
-    async def ENV(self) -> Table:
+                # Group addresses by family
+                for addr in addresses:
+                    # Determine address type
+                    if addr.family == socket.AF_INET:
+                        addr_type = "IPv4"
+                    elif addr.family == socket.AF_INET6:
+                        addr_type = "IPv6"
+                    elif addr.family == psutil.AF_LINK:
+                        addr_type = "MAC"
+                    else:
+                        addr_type = "Unknown"
+
+                    # Add row with status indicators
+                    status = f"[{theme['success']}]Up" if is_up else f"[{theme['error']}]Down"
+
+                    net.add_row(
+                        interface,
+                        addr.address,
+                        addr_type,
+                        status,
+                        speed,
+                        style=theme['foreground']
+                    )
+
+            return net
+
+        except Exception as e:
+            raise InfoNotify(f"Error getting network information: {str(e)}")
+
+    async def ENV(self, page: int = 1, items_per_page: int = 20, filter_text: str = "") -> Table:
         theme = get_theme_colors()
-        env_vars = await asyncio.to_thread(os.environ.items)
 
-        env = Table(show_lines=True, title=f"[{theme['accent']}]ENV", border_style=theme['primary'])
-        env.add_column(f"key", no_wrap=True, header_style=theme['accent'])
-        env.add_column(f"value", no_wrap=True, header_style=theme['accent'])
+        # Get environment variables asynchronously
+        env_items = await asyncio.to_thread(lambda: list(os.environ.items()))
 
-        for key, value in env_vars:
-            env.add_row(key, value,style=theme['foreground'])
+        # Apply filter if specified
+        if filter_text:
+            env_items = [
+                (k, v) for k, v in env_items
+                if filter_text.lower() in k.lower() or filter_text.lower() in v.lower()
+            ]
+
+        # Calculate pagination
+        total_items = len(env_items)
+        total_pages = max(1, (total_items + items_per_page - 1) // items_per_page)
+        page = min(max(1, page), total_pages)
+
+        start_idx = (page - 1) * items_per_page
+        end_idx = min(start_idx + items_per_page, total_items)
+
+        env = Table(
+            show_lines=True,
+            title=f"[{theme['accent']}]ENV (Page {page}/{total_pages})",
+            border_style=theme['primary']
+        )
+        env.add_column("key", no_wrap=True, header_style=theme['accent'])
+        env.add_column("value", no_wrap=True, header_style=theme['accent'])
+
+        # Add the current page's items
+        for key, value in env_items[start_idx:end_idx]:
+            env.add_row(key, value, style=theme['foreground'])
 
         return env
 
@@ -324,67 +404,145 @@ class System:
         return f"[{theme['foreground']}]Current User:[{theme['accent']}] {getpass.getuser()}"
 
 
-    async def DiskInfo(self):
+    async def DiskInfo(self) -> Table:
+        """Get disk information with improved async handling and error checking."""
         theme = get_theme_colors()
-
 
         tableofdisk = Table(
-            show_lines=True, border_style=theme['primary'], title=f"[{theme['primary']}]Disk Info"
+            show_lines=True,
+            border_style=theme['primary'],
+            title=f"[{theme['accent']}]Disk Information"
         )
-        headers = ["Device", "Total Size", "Used", "Free", "Usage"]
-        alternative = None
+        headers = ["Device", "Mount Point", "File System", "Total Size", "Used", "Free", "Usage"]
+
         for header in headers:
-            alternative = theme['foreground']
-            tableofdisk.add_column(header, style=alternative, header_style=theme['accent'])
+            tableofdisk.add_column(header, header_style=theme['accent'])
 
-        partitions = await asyncio.to_thread(psutil.disk_partitions)
+        try:
+            # Get partitions asynchronously
+            partitions = await asyncio.to_thread(psutil.disk_partitions, all=True)
 
-        for partition in partitions:
+            # Gather disk usage information in parallel
+            async def get_partition_info(partition):
+                try:
+                    usage = await asyncio.to_thread(psutil.disk_usage, partition.mountpoint)
+                    return {
+                        'partition': partition,
+                        'usage': usage
+                    }
+                except (PermissionError, FileNotFoundError):
+                    return None
 
-            usage = psutil.disk_usage(partition.mountpoint)
+            # Process all partitions concurrently
+            partition_infos = await asyncio.gather(
+                *[get_partition_info(p) for p in partitions]
+            )
+
+            # Add rows for valid partitions
+            for info in partition_infos:
+                if info is not None:
+                    partition = info['partition']
+                    usage = info['usage']
+
             tableofdisk.add_row(
                 partition.device,
-                f"{usage.total / (1024 ** 3):.2f} GB",
-                f"{usage.used / (1024 ** 3):.2f} GB",
-                f"{usage.free / (1024 ** 3):.2f} GB",
+                        partition.mountpoint,
+                        partition.fstype or "N/A",
+                        f"{usage.total / (1024 ** 3):.1f} GB",
+                        f"{usage.used / (1024 ** 3):.1f} GB",
+                        f"{usage.free / (1024 ** 3):.1f} GB",
                 f"{usage.percent}%",
+                        style=theme['foreground']
             )
-        return tableofdisk
 
-    async def Processes(self):
+            return tableofdisk
+
+        except Exception as e:
+            raise InfoNotify(f"Error getting disk information: {str(e)}")
+
+    async def Processes(self, limit: int = 50):
+        """Get system processes with pagination and optimized CPU usage calculation."""
         theme = get_theme_colors()
-        tableofproccess = Table(show_lines=True, border_style=theme['primary'])
-        headers = ["PID", "Name", "Status", "Memory (RAM)", "CPU Usage (%)"]
+
+        tableofprocess = Table(
+            show_lines=True,
+            border_style=theme['primary']
+        )
+
+        headers = ["PID", "Name", "Status", "Memory (MB)", "CPU Usage (%)"]
+        alt_style = theme['accent']
+
         for header in headers:
-            tableofproccess.add_column(header, style=theme['foreground'], header_style=theme['foreground'])
-        for proc in psutil.process_iter(attrs=["pid", "name", "status", "memory_info"]):
-            try:
-                pid = proc.info["pid"]
-                name = proc.info["name"]
-                status = proc.info["status"]
-                memory = proc.info["memory_info"].rss / (1024 * 1024)
-                cpu_usage = proc.cpu_percent(interval=0.1)
-                tableofproccess.add_row(
-                    str(pid),
-                    name,
-                    str(status),
-                    f"{memory:.2f} MB",
-                    f"{cpu_usage:.2f}%",
-                )
+            tableofprocess.add_column(header, style=alt_style)
 
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                pass
-
-        return tableofproccess
-
-    async def ProcessKill(self, pid):
         try:
-            process = asyncio.to_thread(psutil.Process, pid)
-            asyncio.to_thread(process.kill)
-            return f"Process with PID {pid} has been terminated."
+            initial_cpu_times = {}
+            processes = []
+
+            # FIXED: Changed to regular function for threading
+            def get_process_info():
+                for proc in psutil.process_iter(['pid', 'name', 'status', 'memory_info', 'cpu_times']):
+                    try:
+                        info = proc.info
+                        initial_cpu_times[info['pid']] = info['cpu_times']
+                        processes.append(proc)
+                    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                        continue
+                    if len(processes) >= limit:
+                        break
+
+            await asyncio.to_thread(get_process_info)
+
+            # Measure elapsed time
+            interval = 0.1
+            await asyncio.sleep(interval)
+
+            for proc in processes[:limit]:
+                try:
+                    pid = proc.pid
+                    info = proc.as_dict(['name', 'status', 'memory_info', 'cpu_times'])
+
+                    initial_times = initial_cpu_times.get(pid)
+                    current_times = info['cpu_times']
+
+                    if initial_times and current_times:
+                        # Correct CPU usage calculation
+                        initial_total = initial_times.user + initial_times.system
+                        current_total = current_times.user + current_times.system
+                        cpu_usage = ((current_total - initial_total) / interval) * 100
+                    else:
+                        cpu_usage = 0.0
+
+                    memory = info['memory_info'].rss / (1024 * 1024)  # MB
+
+                    tableofprocess.add_row(
+                    str(pid),
+                        info['name'],
+                        str(info['status']),
+                        f"{memory:.1f}",
+                        f"{cpu_usage:.1f}",
+                        style=theme['foreground']
+                    )
+                except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                    continue
+
+            return tableofprocess
+
+        except Exception as e:
+            raise InfoNotify(f"Error getting process information: {str(e)}")
+
+    async def ProcessKill(self, pid: int) -> str:
+        """Kill a process by its PID with proper async handling."""
+        try:
+            # Create Process object and kill it asynchronously
+            process = await asyncio.to_thread(psutil.Process, int(pid))
+            await asyncio.to_thread(process.kill)
+            return f"[{get_theme_colors()['success']}]Process with PID {pid} has been terminated."
+        except ValueError:
+            return f"[{get_theme_colors()['error']}]Invalid PID format: {pid}"
         except psutil.NoSuchProcess:
-            return f"No process with PID {pid} exists."
+            return f"[{get_theme_colors()['error']}]No process with PID {pid} exists."
         except psutil.AccessDenied:
-            return f"Permission denied to terminate the process {pid}."
-        except Exception:
-            return f"Permission denied to terminate the process {pid}"
+            return f"[{get_theme_colors()['error']}]Permission denied to terminate process {pid}."
+        except Exception as e:
+            return f"[{get_theme_colors()['error']}]Error terminating process {pid}: {str(e)}"

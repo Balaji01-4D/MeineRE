@@ -8,16 +8,17 @@ from meine.Actions import File, System, Zip
 from meine.exceptions import InfoNotify
 
 d: dict[str, Pattern] = {
-    "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
-    "onepath": re.compile(r"""(d|rm|r|del|mk|mkdir|mkd|create|delete|clr|show)\s+(.+)"""),
-    "rename": re.compile(r"(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)"),
+    "twopath": re.compile(r"(c|m|mv|cp|copy|move)\s+([^/\0]+?)\s+(?:to)\s+([^/\0]+)"),
+    "onepath": re.compile(r"(d|rm|r|del|mk|mkdir|mkd|create|delete|clr|show)\s+([^/\0]+)"),
+    "rename": re.compile(r"(rename|rn)\s+([^/\0]+?)\s+(?:as|to)\s+([^/\0]+)"),
     "system": re.compile(
-        r"(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process)\s?(\s[^\s]+)?"
+        r"(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process|kill|shutdown)(?:\s+([^\s]+))?",
+        re.IGNORECASE
     ),
-    "search_text": re.compile(r"""(find|where|search)\s+["'](.+)["']\s+(.+)"""),
-    "notepad": re.compile(r"(write|notepad|wr)\s+(.+)"),
-    "compress": re.compile(r"""(z|uz|zip|tar|gz|7z|unzip)\s+(.+)"""),
-    "backup": re.compile(r"""(backup|bk)\s+(.+)"""),
+    "search_text": re.compile(r"""(find|where|search)\s+["']([^"']+)["']\s+([^/\0]+)"""),
+    "notepad": re.compile(r"(write|notepad|wr)\s+([^/\0]+)"),
+    "compress": re.compile(r"(z|uz|zip|tar|gz|7z|unzip)\s+([^/\0]+)"),
+    "backup": re.compile(r"(backup|bk)\s+([^/\0]+)"),
 }
 
 files = File()
@@ -25,7 +26,11 @@ systems = System()
 zips = Zip()
 
 
-async def CLI(Command):
+async def CLI(Command: str):
+    """Optimized CLI command handler."""
+    # Early validation
+    if not Command or not Command.strip():
+        raise InfoNotify("Empty command")
 
     async def handle_rename(RegexMatch: Match):
         source_unknown_type: str = RegexMatch.group(2)
@@ -174,7 +179,7 @@ async def CLI(Command):
         else:
             raise InfoNotify("Source Not Found")
 
-    # Command-to-handler mapping
+    # Command handler mapping
     handlers = {
         "rename": handle_rename,
         "twopath": handle_two_path,
@@ -184,81 +189,88 @@ async def CLI(Command):
         "search_text": handle_text_find,
     }
 
+    # Try each pattern once
     for key, pattern in d.items():
-        RegexMatch = pattern.match(Command)
-        if RegexMatch:
-            if key in handlers:
-                return await handlers[key](RegexMatch)
+        if key in handlers:  # Only check patterns that have handlers
+            if match := pattern.match(Command):
+                return await handlers[key](match)
 
     raise InfoNotify("Command not recognized.")
 
 
 async def Copy(Source: str, Destination: str) -> str:
-    sourcePath = Path(Source.strip("'"))
-    destinationPath = Path(Destination.strip("'"))
-    if destinationPath.is_dir():
-        if sourcePath.is_file():
-            result = await files.Copy_File(sourcePath, destinationPath)
-            return result
-        elif sourcePath.is_dir():
-            result = await files.Copy_Folder(sourcePath, destinationPath)
-            return result
-        else:
+    """Optimized copy operation with minimal path operations."""
+    try:
+        sourcePath = Path(Source.strip("'"))
+        destinationPath = Path(Destination.strip("'"))
+
+        if not sourcePath.exists():
             raise InfoNotify(f"{Source} Not Found")
-    elif destinationPath.is_file():
-        raise InfoNotify(f"{destinationPath} is a File")
-    else:
-        raise InfoNotify(f"{destinationPath.name} Not Found")
+
+        if not destinationPath.is_dir():
+            raise InfoNotify(f"{Destination} is not a valid directory")
+
+        if sourcePath.is_file():
+            return await files.Copy_File(sourcePath, destinationPath)
+        return await files.Copy_Folder(sourcePath, destinationPath)
+    except Exception as e:
+        raise InfoNotify(str(e))
 
 
 async def Move(Source: str, Destination: str) -> str:
-    sourcePath = Path(Source.strip("'"))
-    destinationPath = Path(Destination.strip("'"))
-    if destinationPath.is_dir():
-        if sourcePath.is_file():
-            result = await files.Move_File(sourcePath, destinationPath)
-            return result
-        elif sourcePath.is_dir():
-            result = await files.Move_Folder(sourcePath, destinationPath)
-            return result
-        else:
+    """Optimized move operation with minimal path operations."""
+    try:
+        sourcePath = Path(Source.strip("'"))
+        destinationPath = Path(Destination.strip("'"))
+
+        if not sourcePath.exists():
             raise InfoNotify(f"{Source} Not Found")
-    elif destinationPath.is_file():
-        raise InfoNotify(f"{destinationPath.name} is a File")
-    else:
-        raise InfoNotify(f"{destinationPath.name} Not Found")
+
+        if not destinationPath.is_dir():
+            raise InfoNotify(f"{Destination} is not a valid directory")
+
+        if sourcePath.is_file():
+            return await files.Move_File(sourcePath, destinationPath)
+        return await files.Move_Folder(sourcePath, destinationPath)
+    except Exception as e:
+        raise InfoNotify(str(e))
 
 
 async def Rename(Source: str, Newname: str) -> str:
-    sourcePath = Path(Source.strip("'"))
-    NewnamePath = Path(Newname.strip("'"))
-    if sourcePath.is_file():
-        result = await files.Rename_file(sourcePath, NewnamePath)
-        return result
-    elif sourcePath.is_dir():
-        result = await files.Rename_file(sourcePath, NewnamePath)
-        return result
-    else:
-        raise InfoNotify(f"{Source} Not Found")
+    """Optimized rename operation with minimal path operations."""
+    try:
+        sourcePath = Path(Source.strip("'"))
+        NewnamePath = Path(Newname.strip("'"))
+
+        if not sourcePath.exists():
+            raise InfoNotify(f"{Source} Not Found")
+
+        return await files.Rename_file(sourcePath, NewnamePath)
+    except Exception as e:
+        raise InfoNotify(str(e))
 
 
 async def Delete(Source: str) -> str:
-    sourcePath: Path = Path(Source.strip("'"))
-    if sourcePath.is_file():
-        result = await files.Delete_File(sourcePath)
-        return result
-    elif sourcePath.is_dir():
-        result = await files.Delete_Folder(sourcePath)
-        return result
-    else:
-        raise InfoNotify(f"{Source} Not Found")
+    """Optimized delete operation with minimal path operations."""
+    try:
+        sourcePath = Path(Source.strip("'"))
+
+        if not sourcePath.exists():
+            raise InfoNotify(f"{Source} Not Found")
+
+        if sourcePath.is_file():
+            return await files.Delete_File(sourcePath)
+        return await files.Delete_Folder(sourcePath)
+    except Exception as e:
+        raise InfoNotify(str(e))
 
 
 async def Create(source: str, hint="folder") -> str:
-    source = source.strip("'")
-    if hint != "folder":
-        result = await files.Create_File(Path(source))
-        return result
-    else:
-        result = await files.Create_Folder(Path(source))
-        return result
+    """Optimized create operation with minimal path operations."""
+    try:
+        sourcePath = Path(source.strip("'"))
+        if hint != "folder":
+            return await files.Create_File(sourcePath)
+        return await files.Create_Folder(sourcePath)
+    except Exception as e:
+        raise InfoNotify(str(e))

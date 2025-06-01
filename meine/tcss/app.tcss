@@ -8,8 +8,14 @@ $main-border-color: $main-lighten-1 50%;
 $main-border-color-focus: $main-lighten-1 100%;
 
 $left-border-trim: vkey $main-lighten-2 15%;
+HomeScreen{
+  width: 100%;
+  height: 100%;
+}
 
-
+Footer{
+  display: none;
+}
 * {
   /* scrollbar-color: $accent 30%;
   scrollbar-color-hover: $accent 50%;
@@ -20,7 +26,7 @@ $left-border-trim: vkey $main-lighten-2 15%;
   scrollbar-size-vertical: 1;
   link-style: none;
   link-color-hover: $accent;
-  link-background-hover: $main 0%;
+  link-background-hover: $primary 15%;
   link-style-hover: u not dim bold;
 
     &:focus {
@@ -29,8 +35,10 @@ $left-border-trim: vkey $main-lighten-2 15%;
         border: tall #43548b; */
     }
 }
+
 Input{
-    color: $text-primary;
+    color: $text;
+
 }
 Screen {
   background: $background;
@@ -41,45 +49,59 @@ Screen {
   }
 }
 Toast {
-  background: $background-darken-1;
+  background: $surface;
   border-right: none;
   &.-information {
-    border-left: outer $main-lighten-1;
+    border-left: outer $primary;
+    background: $primary 10%;
     & .toast--title {
       color: $main-lighten-2;
     }
   }
+  &.-error {
+    border-left: outer $error;
+    background: $error 10%;
+  }
+  &.-success {
+    border-left: outer $success;
+    background: $success 10%;
+  }
+  &.-warning {
+    border-left: outer $warning;
+    background: $warning 10%;
+  }
 }
 Tooltip {
-  background: $background-darken-1;
-  border: wide $main-border-color;
+  background: $surface;
+  border: solid $primary 20%;
 }
 
 TextArea {
   padding: 1 2;
-  border: round $main-border-color;
-  border-title-color: $main-border-text-color;
-  border-subtitle-color: $main-border-text-color;
+  background: $surface;
+  border: solid $primary 40%;
+  border-title-color: $accent;
+  border-subtitle-color: $accent;
   &:focus {
-    border: round $main-border-color-focus;
+    border: solid $primary;
     border-title-style: bold;
     & .text-area--selection {
-      background: $main 60%;
+      background: $primary 30%;
     }
   }
   & .text-area--cursor-line {
-    background: $background 0%;
+    background: $primary 10%;
   }
 
   & .text-area--cursor-gutter {
-    background: $background 0%;
+    background: $surface;
+    color: $secondary;
   }
   &:focus .text-area--cursor-gutter {
-    color: yellowgreen;
-    background: $background 0%;
+    color: $accent;
   }
   & .text-area--selection {
-    background: $main-lighten-2 25%;
+    background: $primary 30%;
   }
 
   &.selection-mode {
@@ -99,9 +121,9 @@ TextArea {
     width: 100%;
 }
 Header{
-    color: $primary-lighten-1;
+    color: $primary;
     text-align: center;
-    text-style: italic;
+
 }
 
 
@@ -113,7 +135,7 @@ Directory_tree_container{
     #directory-tree{
         padding:  1 1;
         width: 100%;
-        background: $background-lighten-1;
+        background: $surface;
         scrollbar-gutter: stable;
         /* width: auto;
         height: 1fr;
@@ -126,10 +148,10 @@ Directory_tree_container{
     }
 
     Static {
-        background: $surface;
+        background: $primary 5%;
         content-align: center middle;
         color: $text;
-        height:2;
+        height:1;
     }
 
 }
@@ -151,7 +173,7 @@ Directory_tree_container.-hidden{
 Background_process_container{
     dock:top;
     height: 100%;
-    background:$surface;
+    background:$surface 95%;
     align: center middle;
 
 }
@@ -159,7 +181,7 @@ Background_process_container > Vertical{
     width: 80;
     height:30;
     background:$surface;
-
+    border: solid $primary 20%;
 }
 Background_process_container > Vertical > DataTable{
     height: 100%;
@@ -174,13 +196,16 @@ MeineTextAreaScreen {
     dock:top;
     height: 100%;
     align: center middle;
+    background: $background;
 }
 MeineTextAreaScreen > Container{
     width: 90%;
     height:30;
-
+    background: $surface;
+    border: solid $primary 20%;
 }
 MeineTextAreaScreen > Container > Static{
     text-align: center;
     color: $primary;
+    text-style: bold;
 }
