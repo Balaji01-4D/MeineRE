@@ -43,11 +43,21 @@
 ---
 ## 📸 Screenshots
 
-<p float="left">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" width="100%" alt="Input shell">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" width="100%" alt="Text editor">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new3.png" width="100%" alt="Settings screen">
+<p align="center">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" alt="Input shell" width="45%" hspace="10">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new3.png" alt="Settings screen" width="45%" hspace="10">
 </p>
+
+<p align="center">
+  <b>Input Shell</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Command Output</b>
+</p>
+
+<p align="center">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" alt="Text editor" width="60%">
+</p>
+
+<p align="center"><b>Dynamic Suggestions</b></p>
+
 
 ---
 
