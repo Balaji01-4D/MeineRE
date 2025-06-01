@@ -10,6 +10,15 @@
 
 ---
 
+## 📸 Screenshots
+
+<p float="left">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" width="100%" alt="Input shell">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" width="100%" alt="Text editor">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new3.png" width="100%" alt="Settings screen">
+</p>
+
+---
 ## 🚀 Features
 
 - **🔍 Regex-Based Command Parsing**
@@ -33,17 +42,6 @@
 
 - **🧩 Plugin Ready**
   Drop in your own Python modules to extend functionality without altering core logic.
-
----
-
-## 📸 Screenshots
-
-<p float="left">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/opening.png" width="100%" alt="Opening screen">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/input.png" width="100%" alt="Input shell">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/texteditor.png" width="100%" alt="Text editor">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/settings.png" width="100%" alt="Settings screen">
-</p>
 
 ---
 
