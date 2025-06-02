@@ -21,7 +21,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
       { text: 'Reference', link: '/reference/' },
-      { text: 'GitHub', link: 'https://github.com/balaji/meine' }
+      { text: 'GitHub', link: 'https://github.com/Balaji01-4D/meine' }
     ],
 
     sidebar: {
@@ -63,7 +63,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/balaji/meine' }
+      { icon: 'github', link: 'https://github.com/Balaji01-4D/meine' }
     ],
 
     footer: {
