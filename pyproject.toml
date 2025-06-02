@@ -10,8 +10,8 @@ readme = "README.md"
 requires-python = ">=3.11"
 keywords = ["cli", "file-manager", "textual", "regex", "terminal-ui"]
 [project.urls]
-"Homepage" = "https://github.com/yourusername/meine"
-"Bug Tracker" = "https://github.com/yourusername/meine/issues"
+"Homepage" = "https://github.com/Balaji01-4D/meinee"
+"Bug Tracker" = "https://github.com/Balaji01-4D/meine/issues"
 license = { file = "LICENSE" }
 authors = [
     { name = "balaji j", email = "j.balaji2468@gmail.com" }
