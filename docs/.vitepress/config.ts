@@ -4,6 +4,16 @@ export default defineConfig({
   title: 'Meine',
   description: 'A cross-platform, regex-powered CLI for file operations with beautiful TUI',
   lastUpdated: true,
+  base: '/meine/',
+
+  head: [
+    ['link', { rel: 'icon', type: 'image/png', href: '/logo.png' }],
+    ['meta', { name: 'theme-color', content: '#6c5ce7' }],
+    ['meta', { name: 'og:type', content: 'website' }],
+    ['meta', { name: 'og:title', content: 'Meine' }],
+    ['meta', { name: 'og:description', content: 'A cross-platform, regex-powered CLI for file operations with beautiful TUI' }],
+    ['meta', { name: 'og:image', content: '/logo.png' }],
+  ],
 
   themeConfig: {
     logo: '/logo.png',
@@ -65,6 +75,11 @@ export default defineConfig({
 
     search: {
       provider: 'local'
+    },
+
+    // Meine-specific theme customization
+    appearance: {
+      accent: '#6c5ce7'
     }
   }
 })
