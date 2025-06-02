@@ -2,9 +2,9 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the specified branch
   push:
-    branches: ["main"]
+    branches: ["nextUpdate"]  # Changed to match your branch name
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Not needed if lastUpdated is not enabled
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -37,12 +37,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies
+        working-directory: docs
         run: |
-          cd docs
-          npm ci
+          npm clean-install
       - name: Build
+        working-directory: docs
         run: |
-          cd docs
           npm run docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
