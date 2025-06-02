@@ -19,19 +19,17 @@ export default defineConfig({
     logo: '/logo.png',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'Reference', link: '/reference/commands' },
-      { text: 'GitHub', link: 'https://github.com/Balaji01-4D/meine' }
+      { text: 'Guide', link: '/guide/' },
+      { text: 'Reference', link: '/reference/' },
+      { text: 'GitHub', link: 'https://github.com/balaji/meine' }
     ],
 
     sidebar: {
       '/guide/': [
         {
-          text: 'Introduction',
+          text: 'Guide',
           items: [
-            { text: 'Getting Started', link: '/guide/getting-started' },
-            { text: 'Installation', link: '/guide/installation' },
-            { text: 'Basic Usage', link: '/guide/basic-usage' }
+            { text: 'Getting Started', link: '/guide/getting-started' }
           ]
         },
         {
@@ -65,7 +63,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/Balaji01-4D/meine' }
+      { icon: 'github', link: 'https://github.com/balaji/meine' }
     ],
 
     footer: {
@@ -75,11 +73,6 @@ export default defineConfig({
 
     search: {
       provider: 'local'
-    },
-
-    // Meine-specific theme customization
-    appearance: {
-      accent: '#6c5ce7'
     }
   }
 })
