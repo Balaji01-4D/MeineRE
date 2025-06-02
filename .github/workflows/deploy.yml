@@ -26,19 +26,15 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Install dependencies
-        run: |
-          cd website
-          yarn install
+        run: yarn install
 
       - name: Build
-        run: |
-          cd website
-          yarn docs:build
+        run: yarn docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: website/docs/.vitepress/dist
+          path: docs/.vitepress/dist
 
   deploy:
     environment:

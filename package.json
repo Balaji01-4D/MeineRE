@@ -1,14 +1,14 @@
 {
-  "name": "KernelSU_website",
+  "name": "meine-docs",
   "version": "1.0.0",
-  "description": "KernelSU official website: https://kernelsu.org",
+  "description": "Meine documentation website",
   "main": "index.js",
-  "repository": "https://kernelsu.org",
-  "author": "weishu",
+  "repository": "https://github.com/Balaji01-4D/meine",
+  "author": "Balaji J",
   "license": "MIT",
   "devDependencies": {
-    "vitepress": "^1.6.3",
-    "vue": "^3.5.14"
+    "vitepress": "^1.0.0-rc.40",
+    "vue": "^3.4.15"
   },
   "scripts": {
     "docs:dev": "vitepress dev docs",

@@ -9,3 +9,12 @@ venv/
 .vscode/
 .idea/
 run.py
+
+# VitePress
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# Node
+node_modules/
+.DS_Store
+*.log
