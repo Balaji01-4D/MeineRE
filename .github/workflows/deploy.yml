@@ -44,6 +44,8 @@ jobs:
         working-directory: docs
         run: |
           npm run docs:build
+          # Ensure .nojekyll exists in the build output
+          touch .vitepress/dist/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
