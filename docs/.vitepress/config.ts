@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'Meine',
   description: 'A cross-platform, regex-powered CLI for file operations with beautiful TUI',
   lastUpdated: true,
+  ignoreDeadLinks: true,
   base: '/meine/',
 
   head: [

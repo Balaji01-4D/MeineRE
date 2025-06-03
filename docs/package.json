@@ -2,11 +2,13 @@
   "name": "meine-docs",
   "version": "1.0.0",
   "description": "Documentation for Meine - A terminal-based file management application",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
+
   },
   "keywords": [
     "documentation",
@@ -16,6 +18,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vitepress": "^1.0.0"
   }
 }
