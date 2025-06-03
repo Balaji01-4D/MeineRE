@@ -13,7 +13,7 @@ d: dict[str, Pattern] = {
     "rename": re.compile(r"(rename|rn)\s+([^/\0]+?)\s+(?:as|to)\s+([^/\0]+)"),
     "system": re.compile(
         r"(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process|kill|shutdown)(?:\s+([^\s]+))?",
-        re.IGNORECASE
+        re.IGNORECASEt
     ),
     "search_text": re.compile(r"""(find|where|search)\s+["']([^"']+)["']\s+([^/\0]+)"""),
     "notepad": re.compile(r"(write|notepad|wr)\s+([^/\0]+)"),

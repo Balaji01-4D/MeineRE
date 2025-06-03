@@ -2,6 +2,7 @@
 
 Meine provides powerful file operations through its regex-based command system. This guide covers all the available file operations and their advanced usage.
 
+
 ## Basic Operations
 
 ### Delete Files
@@ -12,15 +13,18 @@ del file.txt
 rm file.txt
 
 # Delete multiple files
-del file1.txt, file2.txt
-rm *.txt
-
-# Delete with confirmation
-del -i file.txt
-
-# Force delete
-del -f locked_file.txt
+del file1.txt,file2.txt
 ```
+::: warning
+**Risk:**
+Deleting system files using `meine` is **not reversible**. Proceed with caution.
+:::
+
+::: tip
+**Alternative Commands for `delete`:**
+You can also use `rm`, `delete`, `del`, or `d`.
+:::
+
 
 ### Copy Files
 
@@ -30,164 +34,89 @@ copy source.txt to destination/
 cp source.txt destination/
 
 # Copy multiple files
-copy file1.txt, file2.txt to backup/
-cp *.txt backup/
-
-# Copy with progress
-copy -p large_file.iso to backup/
-
-# Copy preserving attributes
-copy -a config.json to settings/
+copy file1.txt,file2.txt to backup/
 ```
+::: tip
+**Alternative Commands for `copy`:**
+You can also use `cp` or `c` as alternatives to `copy`.
+:::
 
 ### Move Files
 
 ```bash
 # Move a single file
 move old.txt to new/location/
-mv old.txt new/location/
+mv old.txt to new/location/
 
 # Move multiple files
-move *.pdf to documents/
-mv file1.txt, file2.txt archive/
-
-# Move with confirmation
-move -i important.doc to backup/
+mv file1.txt,file2.txt to archive/
 ```
+::: tip
+**Alternative Commands for `move`:**
+You can also use `mv` or `m` as alternatives to `move`.
+:::
+
 
 ### Rename Files
 
 ```bash
 # Rename a single file
 rename oldname.txt as newname.txt
-ren document.txt as report.txt
+rn document.txt to report.txt
 
-# Rename with pattern
-rename *.txt as *.md
-ren "report (old).txt" as "report (new).txt"
+# Rename multiple files
+rn old1.txt,old2.py as new1.txt,new2.py
+rename old1.txt as new1
 ```
+::: tip
+**Alternative Command for `rename`:**
+You can also use `rn`.
 
-## Advanced Operations
+You can rename files with or without including the file extension in the `new name`.
+:::
 
-### Batch Operations
+
+
+### Others
 
 ```bash
-# Delete all .tmp files recursively
-del -r **/*.tmp
+# show the file content in the output console
+show file1.txt
 
-# Copy all Python files to backup
-copy **/*.py to backup/
+#clear the file content
+clr file1.txt
 
-# Move all images to photos directory
-move **/*.{jpg,png,gif} to photos/
 ```
+::: warning
+**Binary Files Not Supported:**
+The show commands do not support binary files.
+:::
 
-### Pattern Matching
+::: tip
+**Quick Access:**
+You can use the text area to view by clicking them directly in the directory tree.
+:::
 
-Meine supports various pattern matching syntax:
+::: info
+**Upcoming Feature:**
+File editing will be available in future updates.
+:::
 
-```bash
-# Wildcard matching
-*.txt           # All .txt files
-file?.txt       # file1.txt, fileA.txt, etc.
-file[1-3].txt   # file1.txt, file2.txt, file3.txt
 
-# Regular expressions
-/^data.*\.csv$/  # Files starting with "data" and ending with .csv
-/.*backup.*/     # Files containing "backup"
-```
+## Additional Instructions
 
-### File Attributes
+- Always use **single quotes** for filenames that contain spaces.
 
-```bash
-# Show file attributes
-attr file.txt
+    **Example:** `move 'high school' to documents`
 
-# Copy preserving all attributes
-copy -a source.txt to dest/
+- Do **not** change the directory while a process is running.
+  This may cause errors—whether you're using the `cd` command or navigating through the directory tree.
 
-# Change file permissions
-chmod 644 file.txt
-```
+- When handling multiple files, if an error occurs partway through, the operations are performed up to the error point.
 
-### Archive Operations
+    For example, if you move `files A, B, and C` to `folder D` and **file B is not found**, file A will be moved `successfully without any notification`.
+::: info
+**Upcoming Feature:**
+These limitations will be addressed in future updates.
+:::
 
-```bash
-# Create archive
-archive create archive.zip file1.txt file2.txt
-zip new.zip *.txt
-
-# Extract archive
-extract archive.zip
-unzip archive.zip
-
-# List archive contents
-list archive.zip
-```
-
-## Safety Features
-
-### Confirmation Prompts
-
-Add `-i` or `--interactive` to enable confirmation prompts:
-
-```bash
-del -i important.txt
-move -i *.txt to backup/
-copy -i config.json to /etc/
-```
-
-### Dry Run
-
-Use `-n` or `--dry-run` to simulate operations:
-
-```bash
-del -n *.txt
-move -n documents/ to archive/
-```
-
-### Backup
-
-Create backups before operations:
-
-```bash
-del --backup file.txt
-move --backup source/ to dest/
-```
-
-## Error Handling
-
-### Common Error Messages
-
-- `Permission denied`: Insufficient permissions
-- `File not found`: File doesn't exist
-- `Directory not empty`: Cannot delete non-empty directory
-- `File exists`: Destination file already exists
-
-### Error Recovery
-
-```bash
-# Force operation
-del -f locked_file.txt
-
-# Skip errors
-copy --skip-errors source/ to dest/
-
-# Create parent directories
-move --parents file.txt to new/path/
-```
-
-## Best Practices
-
-1. Use `--dry-run` for complex operations
-2. Enable interactive mode (`-i`) for important files
-3. Create backups for critical operations
-4. Use pattern matching carefully
-5. Check permissions before operations
-
-## Next Steps
-
-- Learn about [System Commands](/guide/system-commands)
-- Explore [Terminal UI](/guide/terminal-ui) features
-- Set up [Keyboard Shortcuts](/guide/shortcuts)
-- Configure [Settings](/guide/configuration)

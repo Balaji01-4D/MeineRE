@@ -6,6 +6,7 @@ To start Meine, open your terminal and type:
 
 ```bash
 meine
+python -m meine
 ```
 
 This will launch the Terminal User Interface (TUI) with a three-panel layout:
@@ -111,9 +112,3 @@ Basic settings can be accessed through:
 - Command line options
 - Configuration file (`~/.config/meine/config.json`)
 
-## Next Steps
-
-- Learn about [File Operations](/guide/file-operations) in detail
-- Explore [System Commands](/guide/system-commands)
-- Customize your [Terminal UI](/guide/terminal-ui)
-- Set up [Keyboard Shortcuts](/guide/shortcuts)

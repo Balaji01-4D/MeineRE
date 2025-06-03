@@ -29,7 +29,6 @@ Monitor your system with simple commands:
 ```bash
 cpu     # CPU usage and stats
 ram     # Memory information
-gpu     # GPU details
 battery # Battery status
 ip      # Network information
 ```
@@ -44,16 +43,15 @@ pip install meine
 2. Launch the application:
 ```bash
 meine
+python -m meine # OR
 ```
 
 3. Use the help command to see available options:
 ```bash
-help
+meine --help
 ```
 
 ## Next Steps
 
 - Learn about [Installation](/guide/installation) options
 - Explore [File Operations](/guide/file-operations)
-- Customize your [Configuration](/guide/configuration)
-- Check out the [Terminal UI](/guide/terminal-ui) features

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Meine documentation website",
   "main": "index.js",
-  "repository": "https://github.com/Balaji01-4D/meine",
+  "repository": "https://www.github.com/Balaji01-4D/meine",
   "author": "Balaji J",
   "license": "MIT",
   "devDependencies": {
@@ -14,7 +14,8 @@
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "deploy": "gh-pages -d docs/.vitepress/dist -b gh-pages"
   },
   "type": "module"
 }

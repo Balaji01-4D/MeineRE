@@ -5,7 +5,7 @@ hero:
   text: A Beautiful Terminal File Manager
   tagline: Cross-platform, regex-powered CLI for file operations with an elegant TUI
   image:
-    src: /logo.png
+    src: /logowithoutbg.png
     alt: Meine
   actions:
     - theme: brand

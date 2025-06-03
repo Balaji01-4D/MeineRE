@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
+dist/
 build/
 .venv/
 env/
@@ -9,11 +10,11 @@ venv/
 .idea/
 run.py
 
-# VitePress
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 
-# Node
 node_modules/
 .DS_Store
 *.log
+
+test.py
