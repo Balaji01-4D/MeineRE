@@ -28,15 +28,14 @@ features:
     title: Live Command Console
     details: A built-in shell for interpreting commands and reflecting state changes in real time.
 
-  - icon: ⚡
-    title: Asynchronous & Modular
-    details: Built with asyncio, aiofiles, py7zr, and modular architecture for responsive performance.
+  # - icon: ⚡
+  #   title: Asynchronous & Modular
+  #   details: Built with asyncio, aiofiles, py7zr, and modular architecture for responsive performance.
 
-  - icon: 🎨
-    title: Theming & Config
-    details: CSS-powered themes, JSON-based user preferences, and dynamic runtime settings.
+  # - icon: 🎨
+  #   title: Theming & Config
+  #   details: CSS-powered themes, JSON-based user preferences, and dynamic runtime settings.
 
-  - icon: 📊
-    title: System Dashboard
-    details: Real-time system insights via one-liner commands for CPU, RAM, GPU, battery, network, and more.
----
+  # - icon: 📊
+  #   title: System Dashboard
+  #   details: Real-time system insights via one-liner commands for CPU, RAM, GPU, battery, network, and more.
