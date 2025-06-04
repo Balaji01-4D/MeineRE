@@ -106,7 +106,7 @@ class MeineInput(Input):
         except ValueError:
             return [], None, " "
 
-    def get_suggestion_on_tab_pressed(self, hint: str | None = None) -> list[str]:
+    def suggestion_provider(self, hint: str | None = None) -> list[str]:
         """Optimized file suggestion generation."""
         try:
             items = os.scandir('.')  # More efficient than listdir
@@ -130,7 +130,7 @@ class MeineInput(Input):
             current_value = self.value.lower()
             suggestions = [
                 " ".join(self.suggestions) + separator + item
-                for item in self.get_suggestion_on_tab_pressed(hint)
+                for item in self.suggestion_provider(hint)
                 if item.lower() not in current_value
             ]
             if suggestions:
