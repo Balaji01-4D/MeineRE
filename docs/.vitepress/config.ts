@@ -5,10 +5,10 @@ export default defineConfig({
   description: 'A cross-platform, regex-powered CLI for file operations with beautiful TUI',
   lastUpdated: true,
   ignoreDeadLinks: true,
-  base: '/meine/',
+  base: '/',
 
   head: [
-    ['link', { rel: 'icon', type: 'image/x-icon', href: '/meine/favicon.ico' }],
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     ['meta', { name: 'theme-color', content: '#6c5ce7' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:title', content: 'Meine' }],
@@ -49,7 +49,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2024-present Balaji J'
+      copyright: 'Copyright © 2024-present Balaji and Keerthi.'
     },
 
     search: {
