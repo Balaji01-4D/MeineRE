@@ -46,19 +46,7 @@ class System:
     async def Time(self) -> Panel:
         date = dt.datetime.now().date()
         time = dt.datetime.now().time()
-        return f"""[{get_theme_colors()['accent']}]DATE : {date}\nTIME : {time}
-         [{get_theme_colors()["primary"]}]"primary"\n
-        [{get_theme_colors()["secondary"]}] "secondary"\n ,
-        [{get_theme_colors()["warning"]}]"warning"\n,
-        [{get_theme_colors()["error"]}]"error"\n,
-        [{get_theme_colors()["success"]}]"success": \n,
-        [{get_theme_colors()["accent"]}]"accent": \n
-        [{get_theme_colors()["foreground"]}]"foreground"\n,
-        [{get_theme_colors()["background"]}]"background"\n,
-        [{get_theme_colors()["foreground"]}]"foreground"\n,
-        [{get_theme_colors()["panel"]}]"panel"\n,
-        [{get_theme_colors()["boost"]}]"boost"\n,
-        """
+        return f"""[{get_theme_colors()['accent']}]DATE : {date}\nTIME : {time}"""
 
     async def DiskSpace(self, Destination: Path = Path("/")) -> Panel:
         try:
