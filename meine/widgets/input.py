@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from re import search
 
 import platformdirs
 from textual.binding import Binding
@@ -89,7 +90,6 @@ class MeineInput(Input):
         )
 
     def _get_hint_text(self) -> tuple[list[str], str | None, str]:
-        """Optimized hint text extraction."""
         try:
             first, *rest = self.value.split(maxsplit=2)
             if first not in actions:
@@ -107,9 +107,8 @@ class MeineInput(Input):
             return [], None, " "
 
     def suggestion_provider(self, hint: str | None = None) -> list[str]:
-        """Optimized file suggestion generation."""
         try:
-            items = os.scandir('.')  # More efficient than listdir
+            items = os.scandir('.')
             if hint:
                 hint_lower = hint.lower()
                 return [item.name for item in items if item.name.lower().startswith(hint_lower)]
@@ -118,15 +117,17 @@ class MeineInput(Input):
             return []
 
     def on_input_changed(self) -> None:
-        """Optimized input change handler."""
         if not self.value:
             self.suggestions.clear()
             self.suggester = None
             return
 
+        matched_keyword = search(r"\{(.+)\}", self.value)
+        if matched_keyword:
+            self.replace_with_path_expansion(matched_keyword.group(1))
+
         self.suggestions, hint, separator = self._get_hint_text()
         if self.suggestions:
-            # Only generate suggestions if we have a valid command
             current_value = self.value.lower()
             suggestions = [
                 " ".join(self.suggestions) + separator + item
@@ -169,22 +170,11 @@ class MeineInput(Input):
         self.suggestions.clear()
         self.suggester = None
 
-    def replace_with_directory_node_name(self, keyword: str) -> None:
-        """Optimized directory node name replacement."""
-        try:
-            line = int(keyword)
-            if node := self.directory_tree.get_node_at_line(line):
-                self.value = self.value.replace(f"d{{{keyword}}}", node.data.path.name)
-            else:
-                self.notify("Node not found at specified line")
-        except ValueError:
-            self.notify("Invalid line number")
 
     def replace_with_path_expansion(self, keyword: str) -> None:
         """Optimized path expansion replacement with cached paths."""
         current_dir = Path.cwd()
 
-        # Use class-level cache for default paths
         if not hasattr(self, '_default_paths'):
             self._default_paths = {
                 "home": Path.home(),
@@ -198,11 +188,10 @@ class MeineInput(Input):
                 "documents": platformdirs.user_documents_dir(),
                 "desktop": platformdirs.user_desktop_dir(),
             }
-            # Load custom expansions only once
             self._default_paths.update(load_Path_expansion().get("path_expansions", {}))
 
         if path := self._default_paths.get(keyword):
-            self.value = self.value.replace(f"p{{{keyword}}}", str(path))
+            self.value = self.value.replace(f"{{{keyword}}}", str(path))
         else:
             self.notify(
                 f"Path expansion '{keyword}' not found",
